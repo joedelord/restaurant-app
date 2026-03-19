@@ -1,3 +1,115 @@
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from rest_framework import generics, permissions
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from .models import RestaurantTable, Reservation, Category, MenuItem, Order
+from .serializers import (
+    UserSerializer,
+    UserRegisterSerializer,
+    RestaurantTableSerializer,
+    ReservationSerializer,
+    CategorySerializer,
+    MenuItemSerializer,
+    OrderSerializer,
+    OrderCreateSerializer,
+)
 
-# Create your views here.
+User = get_user_model()
+
+
+class CreateUserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegisterSerializer
+    permission_classes = [AllowAny]
+
+
+class MeView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
+class RestaurantTableListView(generics.ListAPIView):
+    queryset = RestaurantTable.objects.filter(is_active=True).order_by("table_number")
+    serializer_class = RestaurantTableSerializer
+    permission_classes = [AllowAny]
+
+
+class CategoryListView(generics.ListAPIView):
+    queryset = Category.objects.all().order_by("display_order", "name")
+    serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
+
+
+class MenuItemListView(generics.ListAPIView):
+    queryset = MenuItem.objects.filter(is_available=True).select_related("category").order_by("category__display_order", "name")
+    serializer_class = MenuItemSerializer
+    permission_classes = [AllowAny]
+
+
+class ReservationListCreateView(generics.ListCreateAPIView):
+    serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if getattr(user, "role", None) in ["admin", "staff"]:
+            return Reservation.objects.select_related("user", "table").order_by("-reservation_time")
+
+        return Reservation.objects.select_related("user", "table").filter(user=user).order_by("-reservation_time")
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class ReservationDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if getattr(user, "role", None) in ["admin", "staff"]:
+            return Reservation.objects.select_related("user", "table").all()
+
+        return Reservation.objects.select_related("user", "table").filter(user=user)
+
+
+class OrderListView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if getattr(user, "role", None) in ["admin", "staff"]:
+            return Order.objects.select_related("reservation", "table").prefetch_related("items__menu_item").order_by("-created_at")
+
+        return Order.objects.select_related("reservation", "table").prefetch_related("items__menu_item").filter(
+            reservation__user=user
+        ).order_by("-created_at")
+
+
+class OrderCreateView(generics.CreateAPIView):
+    serializer_class = OrderCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.none()
+
+
+class OrderDetailView(generics.RetrieveAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if getattr(user, "role", None) in ["admin", "staff"]:
+            return Order.objects.select_related("reservation", "table").prefetch_related("items__menu_item")
+
+        return Order.objects.select_related("reservation", "table").prefetch_related("items__menu_item").filter(
+            reservation__user=user
+        )
