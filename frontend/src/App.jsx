@@ -17,8 +17,11 @@ const App = () => {
         <Route path="/menu" element={<Menu />} />
         <Route path="/table" element={<Table />} />
         <Route path="/about" element={<About />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login route="/api/users/login/" />} />
+        <Route
+          path="/register"
+          element={<Register route="/api/users/register/" />}
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

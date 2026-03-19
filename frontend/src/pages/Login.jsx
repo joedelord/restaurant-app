@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
-const Login = () => {
+const Login = ({ route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,10 +14,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await api.post("/api/users/login/", {
-        email,
-        password,
-      });
+      const res = await api.post(route, { email, password });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       navigate("/");
@@ -67,22 +64,6 @@ const Login = () => {
               required
             />
           </div>
-          <label for="remember" class="flex items-center mb-5">
-            <input
-              id="remember"
-              type="checkbox"
-              value=""
-              class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
-              required
-            />
-            <p class="ms-2 text-sm font-medium text-heading select-none">
-              I agree with the{" "}
-              <a href="#" class="text-fg-brand hover:underline">
-                terms and conditions
-              </a>
-              .
-            </p>
-          </label>
           {loading}
           <button
             type="submit"
