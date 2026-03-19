@@ -4,7 +4,7 @@ import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 const Login = () => {
-  const [mail, setMail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -14,20 +14,20 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await api.post(route, { email, password });
-      if (method === "login") {
-        localStorage.setItem(ACCESS_TOKEN, res.data.access);
-        localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-        navigate("/");
-      } else {
-        navigate("/login");
-      }
+      const res = await api.post("/api/users/login/", {
+        email,
+        password,
+      });
+      localStorage.setItem(ACCESS_TOKEN, res.data.access);
+      localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+      navigate("/");
     } catch (error) {
       alert(error);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div>
       <h1 className="text-2xl text-center m-10">Login</h1>
@@ -43,8 +43,8 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              value={mail}
-              onChange={(e) => setMail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="name@flowbite.com"
               required
