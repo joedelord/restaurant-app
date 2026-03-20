@@ -17,7 +17,7 @@ const Login = ({ route }) => {
       const res = await api.post(route, { email, password });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-      navigate("/");
+      navigate("/about");
     } catch (error) {
       alert(error);
     } finally {
@@ -27,7 +27,7 @@ const Login = ({ route }) => {
 
   return (
     <div>
-      <h1 className="text-2xl text-center m-10">Login</h1>
+      <h1 className="text-2xl text-center m-10">Kirjaudu</h1>
       <div className="w-150 border-black border-2 p-5 rounded-md m-auto">
         <form onSubmit={handleSubmit} class="max-w-sm mx-auto">
           <div class="mb-5">
