@@ -1,11 +1,7 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class IsStaffOrAdmin(BasePermission):
-    """
-    Sallii pääsyn vain staff- ja admin-käyttäjille.
-    """
-
     message = "You do not have permission to perform this action."
 
     def has_permission(self, request, view):
@@ -19,11 +15,10 @@ class IsStaffOrAdmin(BasePermission):
 
 class IsOwnerOrStaffOrAdmin(BasePermission):
     """
-    Sallii pääsyn objektin omistajalle sekä staff/admin-käyttäjille.
-
-    Tukee objekteja, joilla on:
-    - user
-    - reservation.user
+    Sallii:
+    - staff/admin: kaiken
+    - owner: lukuoikeuden omaan objektiin
+    - reservation-status endpointissä owner voi myös perua oman varauksensa
     """
 
     message = "You do not have permission to access this resource."
@@ -37,13 +32,25 @@ class IsOwnerOrStaffOrAdmin(BasePermission):
         if getattr(user, "role", None) in ["staff", "admin"]:
             return True
 
-        # Esim. Reservation-objekti: obj.user
+        owner_match = False
+
         if hasattr(obj, "user"):
-            return obj.user == user
+            owner_match = obj.user == user
+        else:
+            reservation = getattr(obj, "reservation", None)
+            if reservation and hasattr(reservation, "user"):
+                owner_match = reservation.user == user
 
-        # Esim. Order-objekti: obj.reservation.user
-        reservation = getattr(obj, "reservation", None)
-        if reservation and hasattr(reservation, "user"):
-            return reservation.user == user
+        if not owner_match:
+            return False
 
+        # Owner saa lukea omia resurssejaan
+        if request.method in SAFE_METHODS:
+            return True
+
+        # Owner saa päivittää reservation-status endpointin kautta omaa varaustaan
+        if view.__class__.__name__ == "ReservationStatusUpdateView" and request.method == "PATCH":
+            return True
+
+        # Muut muokkaukset ownerilta estetään
         return False

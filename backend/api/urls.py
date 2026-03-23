@@ -18,9 +18,11 @@ urlpatterns = [
     # RESERVATIONS
     path("reservations/", views.ReservationListCreateView.as_view(), name="reservation-list-create"),
     path("reservations/<int:pk>/", views.ReservationDetailView.as_view(), name="reservation-detail"),
+    path("reservations/<int:pk>/status/", views.ReservationStatusUpdateView.as_view(), name="reservation-status-update"),
 
     # ORDERS
     path("orders/", views.OrderListView.as_view(), name="order-list"),
     path("orders/create/", views.OrderCreateView.as_view(), name="order-create"),
     path("orders/<int:pk>/", views.OrderDetailView.as_view(), name="order-detail"),
+    path("orders/<int:pk>/status/", views.OrderStatusUpdateView.as_view(), name="order-status-update"),
 ]

@@ -14,10 +14,12 @@ from .serializers import (
     LoginSerializer,
     RestaurantTableSerializer,
     ReservationSerializer,
+    ReservationStatusUpdateSerializer,
     CategorySerializer,
     MenuItemSerializer,
     OrderSerializer,
     OrderCreateSerializer,
+    OrderStatusUpdateSerializer,
 )
 
 User = get_user_model()
@@ -92,6 +94,15 @@ class ReservationDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Reservation.objects.select_related("user", "table").all()
+    
+
+class ReservationStatusUpdateView(generics.UpdateAPIView):
+    serializer_class = ReservationStatusUpdateSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
+    http_method_names = ["patch"]
+
+    def get_queryset(self):
+        return Reservation.objects.select_related("user", "table").all()
 
 
 class OrderListView(generics.ListAPIView):
@@ -119,6 +130,19 @@ class OrderCreateView(generics.CreateAPIView):
 class OrderDetailView(generics.RetrieveAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
+
+    def get_queryset(self):
+        return (
+            Order.objects.select_related("reservation", "table")
+            .prefetch_related("items__menu_item")
+            .all()
+        )
+    
+    
+class OrderStatusUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusUpdateSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
+    http_method_names = ["patch"]
 
     def get_queryset(self):
         return (

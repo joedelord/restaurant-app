@@ -254,6 +254,29 @@ class ReservationSerializer(serializers.ModelSerializer):
 
         return attrs
 
+class ReservationStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ["status"]
+
+    def validate_status(self, value):
+        request = self.context.get("request")
+        user = getattr(request, "user", None)
+
+        if not user or not user.is_authenticated:
+            raise serializers.ValidationError("Authentication required.")
+
+        if is_staff_or_admin(user):
+            if value not in RESERVATION_STAFF_ALLOWED_STATUSES:
+                raise serializers.ValidationError("Invalid reservation status.")
+            return value
+
+        if value != "cancelled":
+            raise serializers.ValidationError(
+                "You may only cancel your reservation."
+            )
+
+        return value
 
 # =========================
 # ORDER SERIALIZERS
