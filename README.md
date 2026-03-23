@@ -72,7 +72,7 @@ Built with **Django (REST API)** and **React (Vite + Tailwind CSS)**.
 
 backend/
 ├── api/
-├── backend/
+├── config/
 ├── manage.py
 ├── requirements.txt
 
