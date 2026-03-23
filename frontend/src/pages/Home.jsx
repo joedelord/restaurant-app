@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import LogoutButton from "../components/LogoutButton";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Tervetuloa koti-sivulle</h1>
-      <p>Tässä on perusohjelman sisääntulo.</p>
-      <Link to="/about">Siirry About-sivulle</Link>
+    <div className="text-center">
+      <h1 className="text-3xl m-4">Tervetuloa koti-sivulle</h1>
+      <p className="m-4">Tässä on perusohjelman sisääntulo.</p>
+      <LogoutButton />
     </div>
   );
 };

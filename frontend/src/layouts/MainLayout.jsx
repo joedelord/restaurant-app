@@ -10,8 +10,6 @@ const MainLayout = () => {
       <Navbar>
         <NavbarSection>
           <NavbarItem href="/">Home</NavbarItem>
-          <NavbarItem href="/menu">Menu</NavbarItem>
-          <NavbarItem href="/table">Table</NavbarItem>
           <NavbarItem href="/about">About</NavbarItem>
           <NavbarItem href="/login">Login</NavbarItem>
           <NavbarItem href="/register">Register</NavbarItem>

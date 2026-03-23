@@ -1,5 +1,8 @@
 from decimal import Decimal
+from django.db import transaction
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import (
     User,
     RestaurantTable,
@@ -9,7 +12,6 @@ from .models import (
     Order,
     OrderItem,
 )
-
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,11 +47,44 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop("password")
-        user = User.objects.create_user( #type:ignore
+        user = User.objects.create_user(    #type:ignore
+            password=password,
             role="customer",
             **validated_data,
         )
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Virheellinen sähköposti tai salasana.")
+
+        if not user.check_password(password):
+            raise serializers.ValidationError("Virheellinen sähköposti tai salasana.")
+
+        if not user.is_active:
+            raise serializers.ValidationError("Käyttäjätili ei ole aktiivinen.")
+
+        refresh = RefreshToken.for_user(user)
+
+        return {
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "user": {
+                "id": user.id,      #type:ignore
+                "email": user.email,
+                "role": user.role,
+            },
+        }
 
 
 class RestaurantTableSerializer(serializers.ModelSerializer):
@@ -104,8 +139,8 @@ class ReservationSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, attrs):
-        table = attrs.get("table") or getattr(self.instance, "table", None)
-        party_size = attrs.get("party_size") or getattr(self.instance, "party_size", None)
+        table = attrs.get("table", getattr(self.instance, "table", None))
+        party_size = attrs.get("party_size", getattr(self.instance, "party_size", None))
 
         if table and party_size and party_size > table.seats:
             raise serializers.ValidationError(
@@ -255,6 +290,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["id", "total_price", "created_at"]
 
+    @transaction.atomic
     def create(self, validated_data):
         items_data = validated_data.pop("items", [])
         order = Order.objects.create(

@@ -4,7 +4,9 @@ from . import views
 urlpatterns = [
     # AUTH / USERS
     path("users/register/", views.CreateUserView.as_view(), name="user-register"),
+    path("users/login/", views.LoginView.as_view(), name="user-login"),
     path("users/me/", views.MeView.as_view(), name="user-me"),
+    path("users/logout/", views.LogoutView.as_view(), name="logout"),
 
     # TABLES
     path("tables/", views.RestaurantTableListView.as_view(), name="table-list"),
