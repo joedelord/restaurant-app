@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "./constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -25,10 +25,12 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("access");
-      localStorage.removeItem("refresh");
+    const url = error.config?.url || "";
+    const isLogoutRoute = url.includes("/users/logout/");
 
+    if (error.response?.status === 401 && !isLogoutRoute) {
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
       window.location.href = "/login";
     }
 
