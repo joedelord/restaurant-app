@@ -5,7 +5,7 @@ const Home = () => {
     <div>
       <h1>Tervetuloa koti-sivulle</h1>
       <p>Tässä on perusohjelman sisääntulo.</p>
-      <Link to="/about">Siirry About-sivulle</Link>
+      <Link to="/about">Kirjaudu ulos</Link>
     </div>
   );
 };

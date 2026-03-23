@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 
-const Register = ({ route }) => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -13,6 +13,21 @@ const Register = ({ route }) => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const getErrorMessage = (error) => {
+    const data = error?.response?.data;
+
+    if (!data) return "Rekisteröityminen epäonnistui.";
+
+    if (data.email?.[0]) return data.email[0];
+    if (data.password?.[0]) return data.password[0];
+    if (data.first_name?.[0]) return data.first_name[0];
+    if (data.last_name?.[0]) return data.last_name[0];
+    if (data.phone_number?.[0]) return data.phone_number[0];
+    if (data.detail) return data.detail;
+
+    return "Rekisteröityminen epäonnistui.";
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +40,7 @@ const Register = ({ route }) => {
     setLoading(true);
 
     try {
-      await api.post(route, {
+      await api.post("/api/users/register/", {
         email,
         password,
         first_name: firstName,
@@ -38,22 +53,17 @@ const Register = ({ route }) => {
       navigate("/login");
     } catch (error) {
       console.error(error);
-      alert(
-        error.response?.data?.email?.[0] ||
-          error.response?.data?.password?.[0] ||
-          error.response?.data?.detail ||
-          "Rekisteröityminen epäonnistui.",
-      );
+      alert(getErrorMessage(error));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="px-4 py-10">
       <h1 className="text-2xl text-center m-10">Rekisteröidy</h1>
 
-      <div className="w-150 border-black border-2 p-5 rounded-md m-auto">
+      <div className="w-full max-w-xl border-black border-2 p-5 rounded-md mx-auto">
         <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
           <div className="mb-5">
             <label
@@ -69,6 +79,7 @@ const Register = ({ route }) => {
               onChange={(e) => setEmail(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="name@example.com"
+              autoComplete="email"
               required
             />
           </div>
@@ -87,6 +98,7 @@ const Register = ({ route }) => {
               onChange={(e) => setFirstName(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Etunimi"
+              autoComplete="given-name"
               required
             />
           </div>
@@ -105,6 +117,7 @@ const Register = ({ route }) => {
               onChange={(e) => setLastName(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Sukunimi"
+              autoComplete="family-name"
               required
             />
           </div>
@@ -123,6 +136,7 @@ const Register = ({ route }) => {
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="+358 40 123 4567"
+              autoComplete="tel"
             />
           </div>
 
@@ -140,6 +154,7 @@ const Register = ({ route }) => {
               onChange={(e) => setPassword(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Vähintään 8 merkkiä"
+              autoComplete="new-password"
               required
             />
           </div>
@@ -158,6 +173,7 @@ const Register = ({ route }) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Kirjoita salasana uudelleen"
+              autoComplete="new-password"
               required
             />
           </div>
@@ -182,6 +198,13 @@ const Register = ({ route }) => {
           >
             {loading ? "Luodaan tiliä..." : "Rekisteröidy"}
           </button>
+
+          <p className="mt-4 text-sm text-body">
+            Onko sinulla jo tili?{" "}
+            <Link to="/login" className="underline">
+              Kirjaudu sisään
+            </Link>
+          </p>
         </form>
       </div>
     </div>
