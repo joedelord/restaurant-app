@@ -1,14 +1,20 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import PageLoader from "../components/PageLoader";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthorized } = useAuth();
+  const location = useLocation();
 
   if (isAuthorized === null) {
-    return <div>Loading...</div>;
+    return <PageLoader />;
   }
 
-  return isAuthorized ? children : <Navigate to="/login" replace />;
+  if (!isAuthorized) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;
