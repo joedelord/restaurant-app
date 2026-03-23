@@ -1,12 +1,13 @@
 from django.contrib.auth import get_user_model
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 
 from .models import RestaurantTable, Reservation, Category, MenuItem, Order
+from .permissions import IsStaffOrAdmin, IsOwnerOrStaffOrAdmin
 from .serializers import (
     UserSerializer,
     UserRegisterSerializer,
@@ -74,15 +75,12 @@ class ReservationListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        base_queryset = Reservation.objects.select_related("user", "table")
 
-        if getattr(user, "role", None) in ["admin", "staff"]:
-            return Reservation.objects.select_related("user", "table").order_by("-reservation_time")
+        if getattr(user, "role", None) in ["staff", "admin"]:
+            return base_queryset.order_by("-reservation_time")
 
-        return (
-            Reservation.objects.select_related("user", "table")
-            .filter(user=user)
-            .order_by("-reservation_time")
-        )
+        return base_queryset.filter(user=user).order_by("-reservation_time")
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -90,15 +88,10 @@ class ReservationListCreateView(generics.ListCreateAPIView):
 
 class ReservationDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReservationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
 
     def get_queryset(self):
-        user = self.request.user
-
-        if getattr(user, "role", None) in ["admin", "staff"]:
-            return Reservation.objects.select_related("user", "table").all()
-
-        return Reservation.objects.select_related("user", "table").filter(user=user)
+        return Reservation.objects.select_related("user", "table").all()
 
 
 class OrderListView(generics.ListAPIView):
@@ -107,52 +100,55 @@ class OrderListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-
-        if getattr(user, "role", None) in ["admin", "staff"]:
-            return (
-                Order.objects.select_related("reservation", "table")
-                .prefetch_related("items__menu_item")
-                .order_by("-created_at")
-            )
-
-        return (
+        base_queryset = (
             Order.objects.select_related("reservation", "table")
             .prefetch_related("items__menu_item")
-            .filter(reservation__user=user)
-            .order_by("-created_at")
         )
+
+        if getattr(user, "role", None) in ["staff", "admin"]:
+            return base_queryset.order_by("-created_at")
+
+        return base_queryset.filter(reservation__user=user).order_by("-created_at")
 
 
 class OrderCreateView(generics.CreateAPIView):
     serializer_class = OrderCreateSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
 
 class OrderDetailView(generics.RetrieveAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
 
     def get_queryset(self):
-        user = self.request.user
-
-        if getattr(user, "role", None) in ["admin", "staff"]:
-            return Order.objects.select_related("reservation", "table").prefetch_related("items__menu_item")
-
         return (
             Order.objects.select_related("reservation", "table")
             .prefetch_related("items__menu_item")
-            .filter(reservation__user=user)
+            .all()
         )
-    
+
+
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        refresh_token = request.data.get("refresh")
+
+        if not refresh_token:
+            return Response(
+                {"detail": "Refresh token is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         try:
-            refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Successfully logged out."},
+                status=status.HTTP_205_RESET_CONTENT,
+            )
+        except TokenError:
+            return Response(
+                {"detail": "Invalid or expired refresh token."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
