@@ -21,12 +21,14 @@ const Register = () => {
     const data = error?.response?.data;
 
     if (!data) return "Rekisteröityminen epäonnistui.";
+    if (typeof data.detail === "string") return data.detail;
     if (data.email?.[0]) return data.email[0];
     if (data.password?.[0]) return data.password[0];
     if (data.first_name?.[0]) return data.first_name[0];
     if (data.last_name?.[0]) return data.last_name[0];
     if (data.phone_number?.[0]) return data.phone_number[0];
-    if (data.detail) return data.detail;
+    if (typeof data.non_field_errors?.[0] === "string")
+      return data.non_field_errors[0];
 
     return "Rekisteröityminen epäonnistui.";
   };
@@ -42,7 +44,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await api.post("/api/users/register/", {
+      await api.post("/users/register/", {
         email,
         password,
         first_name: firstName,
@@ -52,7 +54,7 @@ const Register = () => {
       });
 
       alert("Rekisteröityminen onnistui. Voit nyt kirjautua sisään.");
-      navigate("/login");
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
       alert(getErrorMessage(error));

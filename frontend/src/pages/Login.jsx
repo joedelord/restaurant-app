@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import AuthCard from "../components/auth/AuthCard";
 import AuthField from "../components/auth/AuthField";
@@ -12,14 +12,19 @@ const Login = () => {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const getErrorMessage = (error) => {
     const data = error?.response?.data;
 
     if (!data) return "Kirjautuminen epäonnistui.";
-    if (data.detail) return data.detail;
+    if (typeof data.detail === "string") return data.detail;
     if (data.email?.[0]) return data.email[0];
     if (data.password?.[0]) return data.password[0];
+    if (typeof data.non_field_errors?.[0] === "string")
+      return data.non_field_errors[0];
 
     return "Kirjautuminen epäonnistui.";
   };
@@ -30,7 +35,7 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error(error);
       alert(getErrorMessage(error));

@@ -1,6 +1,8 @@
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
 export const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN);
@@ -21,9 +23,9 @@ export const isTokenExpired = (token) => {
   try {
     const decoded = jwtDecode(token);
     const now = Date.now() / 1000;
-    return decoded.exp < now;
+    return decoded.exp <= now;
   } catch (error) {
-    console.error(error);
+    console.error("Failed to decode token:", error);
     return true;
   }
 };
@@ -33,11 +35,19 @@ export const refreshAccessToken = async () => {
 
   if (!refresh) {
     clearTokens();
-    throw new Error("No refresh token found");
+    throw new Error("No refresh token found.");
   }
 
   try {
-    const res = await api.post("/api/token/refresh/", { refresh });
+    const res = await axios.post(
+      `${API_BASE_URL}/token/refresh/`,
+      { refresh },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
     if (res.status === 200 && res.data.access) {
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
@@ -45,7 +55,7 @@ export const refreshAccessToken = async () => {
     }
 
     clearTokens();
-    throw new Error("Failed to refresh access token");
+    throw new Error("Failed to refresh access token.");
   } catch (error) {
     clearTokens();
     throw error;
@@ -56,7 +66,7 @@ export const getValidAccessToken = async () => {
   const access = getAccessToken();
 
   if (!access) {
-    throw new Error("No access token found");
+    throw new Error("No access token found.");
   }
 
   if (!isTokenExpired(access)) {
@@ -71,7 +81,7 @@ export const isAuthenticated = async () => {
     await getValidAccessToken();
     return true;
   } catch (error) {
-    console.error(error);
+    console.error("Authentication check failed:", error);
     return false;
   }
 };
