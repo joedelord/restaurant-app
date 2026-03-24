@@ -7,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
 from .models import RestaurantTable, Reservation, Category, MenuItem, Order
-from .permissions import IsStaffOrAdmin, IsOwnerOrStaffOrAdmin
+from .permissions import IsAdmin, IsStaffOrAdmin, IsOwnerOrStaffOrAdmin
 from .serializers import (
     UserSerializer,
     UserRegisterSerializer,
@@ -176,3 +176,15 @@ class LogoutView(APIView):
                 {"detail": "Invalid or expired refresh token."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        
+        
+class AdminCategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all().order_by("display_order", "name")
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdmin]
+
+
+class AdminCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdmin]

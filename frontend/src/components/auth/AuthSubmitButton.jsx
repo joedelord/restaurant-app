@@ -1,12 +1,15 @@
-const AuthSubmitButton = ({ loading, idleText, loadingText }) => {
+import Button from "../ui/Button";
+
+const AuthSubmitButton = ({
+  loading,
+  idleText = "Submit",
+  loadingText = "Loading...",
+  ...props
+}) => {
   return (
-    <button
-      type="submit"
-      disabled={loading}
-      className="box-border rounded-base border border-transparent bg-black px-4 py-2.5 text-sm font-medium leading-5 text-white shadow-xs focus:outline-none focus:ring-4 focus:ring-brand-medium hover:bg-brand-strong disabled:opacity-50"
-    >
+    <Button type="submit" variant="primary" disabled={loading} {...props}>
       {loading ? loadingText : idleText}
-    </button>
+    </Button>
   );
 };
 
