@@ -13,6 +13,8 @@ urlpatterns = [
 
     # MENU
     path("categories/", views.CategoryListView.as_view(), name="category-list"),
+    path("admin/categories/", views.AdminCategoryListCreateView.as_view(), name="admin-category-list-create"),
+    path("admin/categories/<int:pk>/", views.AdminCategoryDetailView.as_view(), name="admin-category-detail"),
     path("menu-items/", views.MenuItemListView.as_view(), name="menu-item-list"),
 
     # RESERVATIONS

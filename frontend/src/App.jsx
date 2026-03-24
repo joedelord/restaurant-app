@@ -9,6 +9,7 @@ import PublicRoute from "./routes/PublicRoute";
 import RoleRoute from "./routes/RoleRoute";
 import MainLayout from "./layouts/MainLayout";
 import UserProfile from "./pages/UserProfile";
+import AdminCategories from "./pages/Admin/AdminCategories";
 
 function App() {
   return (
@@ -53,6 +54,14 @@ function App() {
           element={
             <RoleRoute allowedRoles={["admin"]}>
               <AdminDashboard />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/admin/categories"
+          element={
+            <RoleRoute allowedRoles={["admin"]}>
+              <AdminCategories />
             </RoleRoute>
           }
         />
