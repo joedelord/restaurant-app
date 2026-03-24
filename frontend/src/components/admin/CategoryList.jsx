@@ -1,22 +1,24 @@
+import Button from "../ui/Button";
+
 const CategoryList = ({ items, onEdit, onDelete }) => {
   if (!items.length) {
     return (
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-        <p className="text-gray-500">Kategorioita ei löytynyt.</p>
+      <div className="mx-auto w-full rounded-md border-2 border-black p-5">
+        <p className="text-sm text-body">No categories found.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="mx-auto w-full rounded-md border-2 border-black p-5">
       <div className="overflow-x-auto">
-        <table className="min-w-full text-left">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr className="text-sm text-gray-600">
-              <th className="px-4 py-3 font-medium">Nimi</th>
-              <th className="px-4 py-3 font-medium">Kuvaus</th>
-              <th className="px-4 py-3 font-medium">Järjestys</th>
-              <th className="px-4 py-3 font-medium">Toiminnot</th>
+        <table className="min-w-full text-left text-sm">
+          <thead className="border-b border-default-medium">
+            <tr className="text-heading">
+              <th className="px-3 py-3 font-medium">Name</th>
+              <th className="px-3 py-3 font-medium">Description</th>
+              <th className="px-3 py-3 font-medium">Order</th>
+              <th className="px-3 py-3 font-medium">Actions</th>
             </tr>
           </thead>
 
@@ -24,35 +26,35 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
             {items.map((item) => (
               <tr
                 key={item.id}
-                className="border-b border-gray-100 last:border-b-0"
+                className="border-b border-default-medium last:border-b-0"
               >
-                <td className="px-4 py-4 font-medium text-gray-900">
+                <td className="px-3 py-4 font-medium text-heading">
                   {item.name}
                 </td>
 
-                <td className="px-4 py-4 text-gray-700">
+                <td className="px-3 py-4 text-body">
                   {item.description || "-"}
                 </td>
 
-                <td className="px-4 py-4 text-gray-700">
-                  {item.display_order}
-                </td>
+                <td className="px-3 py-4 text-body">{item.display_order}</td>
 
-                <td className="px-4 py-4">
-                  <div className="flex gap-2">
-                    <button
+                <td className="px-3 py-4">
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant="secondary"
                       onClick={() => onEdit(item)}
-                      className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
                     >
-                      Muokkaa
-                    </button>
+                      Edit
+                    </Button>
 
-                    <button
+                    <Button
+                      type="button"
+                      variant="danger"
                       onClick={() => onDelete(item)}
-                      className="rounded-lg border border-red-300 px-3 py-1.5 text-sm text-red-700 hover:bg-red-50"
                     >
-                      Poista
-                    </button>
+                      Delete
+                    </Button>
                   </div>
                 </td>
               </tr>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import AuthSubmitButton from "../auth/AuthSubmitButton";
+import Button from "../ui/Button";
 
 const getFormValues = (initialData) => ({
   name: initialData?.name ?? "",
@@ -9,27 +11,30 @@ const getFormValues = (initialData) => ({
 const CategoryForm = ({
   onSubmit,
   initialData = null,
-  submitText = "Tallenna",
+  submitText = "Save",
   onCancel,
 }) => {
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "display_order" ? value : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setError("");
 
     if (!formData.name.trim()) {
-      setError("Kategorian nimi on pakollinen.");
+      setError("Category name is required.");
       return;
     }
 
@@ -40,6 +45,7 @@ const CategoryForm = ({
     };
 
     try {
+      setLoading(true);
       await onSubmit(payload);
 
       if (!initialData) {
@@ -47,80 +53,99 @@ const CategoryForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError("Tallennus epäonnistui.");
+      setError("Failed to save category.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Kategorian nimi
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Esim. Alkuruoat"
-            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Kuvaus
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows="4"
-            placeholder="Kirjoita kategorian kuvaus"
-            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Järjestys
-          </label>
-          <input
-            type="number"
-            name="display_order"
-            value={formData.display_order}
-            onChange={handleChange}
-            min="0"
-            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
-          />
-        </div>
-
-        <div className="flex gap-3">
-          <button
-            type="submit"
-            className="rounded-xl bg-orange-500 px-5 py-2.5 text-white font-medium hover:bg-orange-600"
-          >
-            {submitText}
-          </button>
-
-          {onCancel && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="rounded-xl border border-gray-300 px-5 py-2.5 text-gray-700 hover:bg-gray-50"
-            >
-              Peruuta
-            </button>
+    <div className="mx-auto w-full rounded-md border-2 border-black p-5">
+      <div className="mx-auto max-w-sm">
+        <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="mb-5 rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </div>
           )}
-        </div>
-      </form>
+
+          <div className="mb-5">
+            <label
+              htmlFor="name"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Category name
+            </label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              disabled={loading}
+              placeholder="e.g. Starters"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="description"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              disabled={loading}
+              rows="4"
+              placeholder="Write a short description"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="display_order"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Display order
+            </label>
+            <input
+              id="display_order"
+              type="number"
+              name="display_order"
+              value={formData.display_order}
+              onChange={handleChange}
+              disabled={loading}
+              min="0"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="flex gap-3">
+            <AuthSubmitButton
+              loading={loading}
+              idleText={submitText}
+              loadingText={initialData ? "Updating..." : "Creating..."}
+            />
+
+            {onCancel && (
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={onCancel}
+                disabled={loading}
+              >
+                Cancel
+              </Button>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
