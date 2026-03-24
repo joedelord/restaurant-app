@@ -37,8 +37,6 @@ const refreshAccessToken = async () => {
     throw new Error("No refresh token available.");
   }
 
-  // Käytetään tavallista axiosia, ei api-instanssia,
-  // jotta interceptor ei aiheuta looppeja refresh-kutsussa.
   const response = await axios.post(
     `${API_BASE_URL}/token/refresh/`,
     { refresh },
