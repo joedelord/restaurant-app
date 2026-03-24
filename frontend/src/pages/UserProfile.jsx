@@ -1,6 +1,6 @@
 const UserProfile = () => {
   return (
-    <div className="p-6">
+    <div className="p-6 text-center">
       <h1 className="text-3xl font-bold">User Profile</h1>
       <p className="mt-4">Tämä sivu näkyy käyttäjille.</p>
     </div>

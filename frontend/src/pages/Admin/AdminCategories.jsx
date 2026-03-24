@@ -22,7 +22,7 @@ const AdminCategories = () => {
       setCategories(data);
     } catch (err) {
       console.error(err);
-      setError("Kategorioiden haku epäonnistui.");
+      setError("Failed to fetch categories.");
     } finally {
       setLoading(false);
     }
@@ -42,7 +42,7 @@ const AdminCategories = () => {
       ),
     );
 
-    setMessage("Kategoria lisättiin onnistuneesti.");
+    setMessage("Category created successfully.");
     setError("");
     setEditingCategory(null);
   };
@@ -61,14 +61,14 @@ const AdminCategories = () => {
         ),
     );
 
-    setMessage("Kategoria päivitettiin onnistuneesti.");
+    setMessage("Category updated successfully.");
     setError("");
     setEditingCategory(null);
   };
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      `Haluatko varmasti poistaa kategorian "${item.name}"?`,
+      `Are you sure you want to delete category "${item.name}"?`,
     );
 
     if (!confirmed) return;
@@ -81,11 +81,11 @@ const AdminCategories = () => {
         setEditingCategory(null);
       }
 
-      setMessage("Kategoria poistettiin onnistuneesti.");
+      setMessage("Category deleted successfully.");
       setError("");
     } catch (err) {
       console.error(err);
-      setError("Kategorian poistaminen epäonnistui.");
+      setError("Failed to delete category.");
     }
   };
 
@@ -93,9 +93,9 @@ const AdminCategories = () => {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Kategorioiden hallinta</h1>
+          <h1 className="text-2xl font-bold">Category Management</h1>
           <p className="text-gray-500 mt-1">
-            Lisää, muokkaa ja poista ruokalistan kategorioita.
+            Add, edit and delete menu categories.
           </p>
         </div>
       </div>
@@ -115,15 +115,13 @@ const AdminCategories = () => {
       <section className="grid gap-6 xl:grid-cols-2">
         <div>
           <h2 className="text-lg font-semibold mb-3">
-            {editingCategory ? "Muokkaa kategoriaa" : "Lisää uusi kategoria"}
+            {editingCategory ? "Edit Category" : "Add New Category"}
           </h2>
 
           <CategoryForm
             key={editingCategory?.id ?? "new"}
             initialData={editingCategory}
-            submitText={
-              editingCategory ? "Päivitä kategoria" : "Lisää kategoria"
-            }
+            submitText={editingCategory ? "Update Category" : "Add Category"}
             onSubmit={editingCategory ? handleUpdate : handleCreate}
             onCancel={
               editingCategory ? () => setEditingCategory(null) : undefined
@@ -133,12 +131,12 @@ const AdminCategories = () => {
 
         <div>
           <h2 className="text-lg font-semibold mb-3">
-            Kategoriat ({categories.length})
+            Categories ({categories.length})
           </h2>
 
           {loading ? (
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-              <p className="text-gray-500">Ladataan kategorioita...</p>
+              <p className="text-gray-500">Loading categories...</p>
             </div>
           ) : (
             <CategoryList
