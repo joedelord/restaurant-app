@@ -9,9 +9,9 @@ const AuthCard = ({
 }) => {
   return (
     <div className="px-4 py-0">
-      <h1 className="m-10 text-center text-2xl">{title}</h1>
+      <h1 className="text-3xl font-bold text-center p-6">{title}</h1>
 
-      <div className="mx-auto w-full max-w-xl rounded-md border-2 border-black p-5">
+      <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
         <div className="mx-auto max-w-sm">
           {children}
 

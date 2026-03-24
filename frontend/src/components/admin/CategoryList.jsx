@@ -3,14 +3,14 @@ import Button from "../ui/Button";
 const CategoryList = ({ items, onEdit, onDelete }) => {
   if (!items.length) {
     return (
-      <div className="mx-auto w-full rounded-md border-2 border-black p-5">
+      <div className="mx-auto w-full rounded-md border border-black p-5">
         <p className="text-sm text-body">No categories found.</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full rounded-md border-2 border-black p-5">
+    <div className="mx-auto w-full rounded-md border border-black p-5">
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-default-medium">
