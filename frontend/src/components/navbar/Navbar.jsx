@@ -27,6 +27,7 @@ const Navbar = () => {
             <NavbarSection>
               {isAuthorized ? (
                 <>
+                  <NavbarItem href="/">Home</NavbarItem>
                   <NavbarItem href="/user">User Profile</NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
@@ -65,6 +66,9 @@ const Navbar = () => {
             <NavbarSection>
               {isAuthorized ? (
                 <>
+                  <NavbarItem href="/" onClick={closeMenu}>
+                    Home
+                  </NavbarItem>
                   <NavbarItem href="/user" onClick={closeMenu}>
                     User Profile
                   </NavbarItem>

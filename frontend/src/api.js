@@ -1,9 +1,7 @@
 import axios from "axios";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-const ACCESS_TOKEN_KEY = "access";
-const REFRESH_TOKEN_KEY = "refresh";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -12,16 +10,16 @@ const api = axios.create({
   },
 });
 
-const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN_KEY);
-const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY);
+const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
+const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN);
 
 const setAccessToken = (token) => {
-  localStorage.setItem(ACCESS_TOKEN_KEY, token);
+  localStorage.setItem(ACCESS_TOKEN, token);
 };
 
 const clearTokens = () => {
-  localStorage.removeItem(ACCESS_TOKEN_KEY);
-  localStorage.removeItem(REFRESH_TOKEN_KEY);
+  localStorage.removeItem(ACCESS_TOKEN);
+  localStorage.removeItem(REFRESH_TOKEN);
 };
 
 const redirectToLogin = () => {
