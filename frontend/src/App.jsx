@@ -8,19 +8,13 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import RoleRoute from "./routes/RoleRoute";
 import MainLayout from "./layouts/MainLayout";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route
           path="/login"
           element={
@@ -37,6 +31,15 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+        s
         <Route
           path="/staff"
           element={

@@ -27,8 +27,7 @@ const Navbar = () => {
             <NavbarSection>
               {isAuthorized ? (
                 <>
-                  <NavbarItem href="/">Home</NavbarItem>
-                  <NavbarItem href="/reservations">My Reservations</NavbarItem>
+                  <NavbarItem href="/user">User Profile</NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
                     <NavbarItem href="/staff">Staff</NavbarItem>
@@ -40,6 +39,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                  <NavbarItem href="/">Home</NavbarItem>
                   <NavbarItem href="/login">Login</NavbarItem>
                   <NavbarItem href="/register">Register</NavbarItem>
                 </>
@@ -65,11 +65,8 @@ const Navbar = () => {
             <NavbarSection>
               {isAuthorized ? (
                 <>
-                  <NavbarItem href="/" onClick={closeMenu}>
-                    Home
-                  </NavbarItem>
-                  <NavbarItem href="/reservations" onClick={closeMenu}>
-                    My Reservations
+                  <NavbarItem href="/user" onClick={closeMenu}>
+                    User Profile
                   </NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
@@ -86,6 +83,9 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                  <NavbarItem href="/" onClick={closeMenu}>
+                    Home
+                  </NavbarItem>
                   <NavbarItem href="/login" onClick={closeMenu}>
                     Login
                   </NavbarItem>

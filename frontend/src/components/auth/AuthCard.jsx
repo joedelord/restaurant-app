@@ -8,7 +8,7 @@ const AuthCard = ({
   footerLinkTo,
 }) => {
   return (
-    <div className="px-4 py-10">
+    <div className="px-4 py-0">
       <h1 className="m-10 text-center text-2xl">{title}</h1>
 
       <div className="mx-auto w-full max-w-xl rounded-md border-2 border-black p-5">
