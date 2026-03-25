@@ -110,10 +110,30 @@ npm run dev
 
 Example (.env):
 
-SECRET_KEY=your_secret_key
-DEBUG=True
-DATABASE_URL=your_database_url
-JWT_SECRET=your_jwt_secret
+# Django
+
+DEBUG=False
+SECRET_KEY=
+
+# Hosts
+
+ALLOWED_HOSTS=
+
+# CORS (frontend URL)
+
+CORS_ALLOWED_ORIGINS=
+
+# Database (PostgreSQL)
+
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+
+# JWT
+
+JWT_SECRET=
 
 ---
 
