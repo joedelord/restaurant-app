@@ -110,20 +110,20 @@ npm run dev
 
 Example (.env):
 
-# Django
+### Django
 
 DEBUG=False
 SECRET_KEY=
 
-# Hosts
+### Hosts
 
 ALLOWED_HOSTS=
 
-# CORS (frontend URL)
+### CORS (frontend URL)
 
 CORS_ALLOWED_ORIGINS=
 
-# Database (PostgreSQL)
+### Database (PostgreSQL)
 
 DB_NAME=
 DB_USER=
@@ -131,7 +131,7 @@ DB_PASSWORD=
 DB_HOST=
 DB_PORT=
 
-# JWT
+### JWT
 
 JWT_SECRET=
 
