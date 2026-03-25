@@ -112,7 +112,7 @@ Example (.env):
 
 ### Django
 
-DEBUG=False
+DEBUG=
 SECRET_KEY=
 
 ### Hosts
