@@ -101,7 +101,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
+    category_name = serializers.CharField(source="category.name", read_only=True)
 
     class Meta:
         model = MenuItem
@@ -112,6 +112,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
             "price",
             "image_url",
             "category",
+            "category_name",
             "is_available",
         ]
 

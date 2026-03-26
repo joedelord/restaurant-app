@@ -55,22 +55,6 @@ class RestaurantTableListView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
 
-class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all().order_by("display_order", "name")
-    serializer_class = CategorySerializer
-    permission_classes = [AllowAny]
-
-
-class MenuItemListView(generics.ListAPIView):
-    queryset = (
-        MenuItem.objects.filter(is_available=True)
-        .select_related("category")
-        .order_by("category__display_order", "name")
-    )
-    serializer_class = MenuItemSerializer
-    permission_classes = [AllowAny]
-
-
 class ReservationListCreateView(generics.ListCreateAPIView):
     serializer_class = ReservationSerializer
     permission_classes = [IsAuthenticated]
@@ -176,7 +160,14 @@ class LogoutView(APIView):
                 {"detail": "Invalid or expired refresh token."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        
+
+
+# CATEGORY VIEWS
+
+class CategoryListView(generics.ListAPIView):
+    queryset = Category.objects.all().order_by("display_order", "name")
+    serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
         
 class AdminCategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all().order_by("display_order", "name")
@@ -187,4 +178,30 @@ class AdminCategoryListCreateView(generics.ListCreateAPIView):
 class AdminCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdmin]
+
+
+# MENU-ITEM VIEWS
+
+class MenuItemListView(generics.ListAPIView):
+    queryset = (
+        MenuItem.objects.filter(is_available=True)
+        .select_related("category")
+        .order_by("category__display_order", "name")
+    )
+    serializer_class = MenuItemSerializer
+    permission_classes = [AllowAny]
+
+
+class AdminMenuItemListCreateView(generics.ListCreateAPIView):
+    queryset = MenuItem.objects.select_related("category").all().order_by(
+        "category__display_order", "category__name", "name"
+    )
+    serializer_class = MenuItemSerializer
+    permission_classes = [IsAdmin]
+
+
+class AdminMenuItemDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
     permission_classes = [IsAdmin]

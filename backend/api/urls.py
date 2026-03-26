@@ -11,11 +11,15 @@ urlpatterns = [
     # TABLES
     path("tables/", views.RestaurantTableListView.as_view(), name="table-list"),
 
-    # MENU
+    # CATEGORIES
     path("categories/", views.CategoryListView.as_view(), name="category-list"),
     path("admin/categories/", views.AdminCategoryListCreateView.as_view(), name="admin-category-list-create"),
     path("admin/categories/<int:pk>/", views.AdminCategoryDetailView.as_view(), name="admin-category-detail"),
+
+    # MENU ITEMS
     path("menu-items/", views.MenuItemListView.as_view(), name="menu-item-list"),
+    path("admin/menu-items/", views.AdminMenuItemListCreateView.as_view(), name="admin-menu-item-list-create"),
+    path("admin/menu-items/<int:pk>/", views.AdminMenuItemDetailView.as_view(), name="admin-menu-item-list-detail"),
 
     # RESERVATIONS
     path("reservations/", views.ReservationListCreateView.as_view(), name="reservation-list-create"),
