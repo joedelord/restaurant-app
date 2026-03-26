@@ -35,10 +35,10 @@ const AdminMenuItems = () => {
 
   return (
     <div className="px-4 py-0">
-      <h1 className="m-10 text-center text-2xl">Menu Item Management</h1>
+      <h1 className="text-3xl font-bold text-center">Menu Item Management</h1>
 
       <div className="mx-auto w-full max-w-4xl space-y-6">
-        <p className="text-center text-sm text-body">
+        <p className="text-gray-500 mt-2 text-center">
           Add, edit and delete menu items.
         </p>
 
@@ -56,7 +56,7 @@ const AdminMenuItems = () => {
 
         <section className="space-y-6">
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-heading">
+            <h2 className="mb-3 text-lg font-semibold text-heading text-center">
               {editingMenuItem ? "Edit Menu Item" : "Add New Menu Item"}
             </h2>
 
@@ -73,7 +73,7 @@ const AdminMenuItems = () => {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-heading">
+            <h2 className="mb-3 text-lg font-semibold text-heading text-center">
               Menu Items ({menuItems.length})
             </h2>
 
