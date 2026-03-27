@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import MenuSection from "../components/menu/MenuSection";
 import { getCategories, getMenuItems } from "../services/menuService";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "../components/LanguageToggle";
 
 const Menu = () => {
   const [categories, setCategories] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchMenuData = async () => {
@@ -78,10 +81,18 @@ const Menu = () => {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="mb-10 text-center">
-        <h1 className="mt-3 text-4xl font-bold text-gray-900">Our Menu</h1>
-        <p className="mx-auto mt-3 max-w-2xl text-gray-600">
-          Explore our dishes by category. Available items are shown below.
+      <header className="mb-10">
+        <div className="grid grid-cols-3 items-center">
+          <div></div>
+          <h1 className="mt-3 text-4xl font-bold text-gray-900 justify-self-center">
+            {t("menu.title")}
+          </h1>
+          <div className="justify-self-end">
+            <LanguageToggle />
+          </div>
+        </div>
+        <p className="mx-auto mt-3 max-w-2xl text-gray-600 text-center">
+          {t("menu.subtitle")}
         </p>
       </header>
 
