@@ -1,5 +1,12 @@
 const baseClasses =
-  "inline-flex items-center justify-center rounded-base px-4 py-2.5 text-sm font-medium shadow-xs transition-all duration-200 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex items-center justify-center rounded-base font-medium shadow-xs transition-all duration-200 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50";
+
+const sizes = {
+  xs: "px-2 py-0.5 text-xs",
+  sm: "px-2 py-1 text-xs",
+  md: "px-4 py-2.5 text-sm",
+  lg: "px-5 py-3 text-base",
+};
 
 const variants = {
   primary:
@@ -16,15 +23,17 @@ const Button = ({
   children,
   type = "button",
   variant = "primary",
+  size = "md", // 👈 uusi
   className = "",
   ...props
 }) => {
   const variantClasses = variants[variant] || variants.primary;
+  const sizeClasses = sizes[size] || sizes.md;
 
   return (
     <button
       type={type}
-      className={`${baseClasses} ${variantClasses} ${className}`}
+      className={`${baseClasses} ${sizeClasses} ${variantClasses} ${className}`}
       {...props}
     >
       {children}

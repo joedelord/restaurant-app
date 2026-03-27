@@ -42,6 +42,7 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
                   <div className="flex flex-wrap gap-2">
                     <Button
                       type="button"
+                      size="sm"
                       variant="secondary"
                       onClick={() => onEdit(item)}
                     >
@@ -50,6 +51,7 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
 
                     <Button
                       type="button"
+                      size="sm"
                       variant="danger"
                       onClick={() => onDelete(item)}
                     >
