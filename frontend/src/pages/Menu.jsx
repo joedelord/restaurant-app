@@ -1,49 +1,94 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import MenuSection from "../components/menu/MenuSection";
+import { getCategories, getMenuItems } from "../services/menuService";
 
 const Menu = () => {
-  const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const [categoriesData, menuItemsData] = await Promise.all([
+          getCategories(),
+          getMenuItems(),
+        ]);
+
+        const sortedCategories = [...categoriesData].sort(
+          (a, b) =>
+            a.display_order - b.display_order || a.name.localeCompare(b.name),
+        );
+
+        setCategories(sortedCategories);
+        setMenuItems(menuItemsData);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load menu.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenuData();
+  }, []);
+
+  const groupedMenu = useMemo(() => {
+    return categories.map((category) => {
+      const items = menuItems.filter((item) => {
+        if (!item.is_available) return false;
+
+        if (typeof item.category === "object" && item.category !== null) {
+          return item.category.id === category.id;
+        }
+
+        return item.category === category.id;
+      });
+
+      return {
+        category,
+        items,
+      };
+    });
+  }, [categories, menuItems]);
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <p className="text-gray-500">Loading menu...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
+          {error}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {/* Navbar */}
-      <div className="flex items-center justify-between bg-slate-900 text-white text-xl p-4">
-        <div className="font-bold">Logo</div>
+    <div className="mx-auto max-w-6xl px-4 py-10">
+      <header className="mb-10 text-center">
+        <h1 className="mt-3 text-4xl font-bold text-gray-900">Our Menu</h1>
+        <p className="mx-auto mt-3 max-w-2xl text-gray-600">
+          Explore our dishes by category. Available items are shown below.
+        </p>
+      </header>
 
-        {/* Desktop Navbar */}
-        <div className="hidden sm:flex gap-2">
-          <span>Home</span>
-          <span>About</span>
-          <span>Contact</span>
-        </div>
-
-        <button
-          className="text-xl cursor-pointer sm:hidden"
-          onClick={() => setOpen(!open)}
-        >
-          ☰
-        </button>
-      </div>
-
-      {/* Mobile Navbar */}
-      {open && (
-        <div className="flex flex-col items-center gap-2 bg-slate-900 text-white p-4 sm:hidden">
-          <span>Home</span>
-          <span>About</span>
-          <span>Contact</span>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 text-white p-6 gap-6 text-center fotn-semibold text-xl">
-        <div className="bg-slate-500 p-4 rounded hover:bg-slate-600 hover:scale-105 transition-all duration-200">
-          Feature One
-        </div>
-        <div className="bg-slate-500 p-4 rounded hover:bg-slate-600 hover:scale-105">
-          Feature Two
-        </div>
-        <div className="bg-slate-500 p-4 rounded">Feature Three</div>
-        <div className="bg-slate-500 p-4 rounded">Feature Four</div>
-        <div className="bg-slate-500 p-4 rounded">Feature Five</div>
-        <div className="bg-slate-500 p-4 rounded">Feature Six</div>
+      <div className="space-y-10">
+        {groupedMenu.map(({ category, items }) => (
+          <MenuSection key={category.id} category={category} items={items} />
+        ))}
       </div>
     </div>
   );
