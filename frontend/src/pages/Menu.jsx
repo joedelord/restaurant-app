@@ -63,7 +63,7 @@ const Menu = () => {
     return (
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-gray-500">Loading menu...</p>
+          <p className="text-gray-500">{t("menu.load")}</p>
         </div>
       </div>
     );
