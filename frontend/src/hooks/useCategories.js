@@ -8,7 +8,9 @@ import {
 
 const sortCategories = (items) =>
   [...items].sort(
-    (a, b) => a.display_order - b.display_order || a.name.localeCompare(b.name),
+    (a, b) =>
+      a.display_order - b.display_order ||
+      (a.name_en || "").localeCompare(b.name_en || ""),
   );
 
 const useCategories = () => {
@@ -62,7 +64,7 @@ const useCategories = () => {
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete category "${item.name}"?`,
+      `Are you sure you want to delete category "${item.name_en} / ${item.name_fi}"?`,
     );
 
     if (!confirmed) return;

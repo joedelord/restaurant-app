@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.utils.translation import get_language
 from decimal import Decimal
 
 
@@ -105,19 +106,34 @@ class Reservation(models.Model):
 
 # MENU
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True)
-    display_order = models.PositiveIntegerField(default=0)
+    name_en = models.CharField(max_length=100, unique=True)
+    name_fi = models.CharField(max_length=100, unique=True)
+
+    description_en = models.TextField(blank=True)
+    description_fi = models.TextField(blank=True)
+
+    display_order = models.PositiveIntegerField(unique=True)
+
+    class Meta:
+        ordering = ["display_order", "name_en"]
 
     def __str__(self):
-        return self.name
+        lang = get_language()
+
+        if lang == "fi":
+            return self.name_fi or self.name_en
+
+        return self.name_en or self.name_fi
 
 
 class MenuItem(models.Model):
-    name = models.CharField(max_length=150)
-    description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    name_en = models.CharField(max_length=150, unique=True)
+    name_fi = models.CharField(max_length=150, unique=True)
 
+    description_en = models.TextField(blank=True)
+    description_fi = models.TextField(blank=True)
+
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image_url = models.URLField(blank=True)
 
     category = models.ForeignKey(
@@ -128,8 +144,16 @@ class MenuItem(models.Model):
 
     is_available = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["category__display_order", "name_en"]
+
     def __str__(self):
-        return self.name
+        lang = get_language()
+
+        if lang == "fi":
+            return self.name_fi or self.name_en
+
+        return self.name_en or self.name_fi
 
 
 # ORDERS
@@ -160,7 +184,11 @@ class Order(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
 
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal("0.00"))
+    total_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=Decimal("0.00"),
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -180,8 +208,17 @@ class OrderItem(models.Model):
         on_delete=models.PROTECT,
     )
 
+    # snapshot tilaushetkeltä
+    name_en = models.CharField(max_length=150)
+    name_fi = models.CharField(max_length=150, blank=True)
+
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.menu_item.name} x {self.quantity}"
+        lang = get_language()
+
+        if lang == "fi":
+            return f"{self.name_fi or self.name_en} x {self.quantity}"
+
+        return f"{self.name_en or self.name_fi} x {self.quantity}"

@@ -3,8 +3,10 @@ import AuthSubmitButton from "../auth/AuthSubmitButton";
 import Button from "../ui/Button";
 
 const getFormValues = (initialData) => ({
-  name: initialData?.name ?? "",
-  description: initialData?.description ?? "",
+  name_en: initialData?.name_en ?? "",
+  name_fi: initialData?.name_fi ?? "",
+  description_en: initialData?.description_en ?? "",
+  description_fi: initialData?.description_fi ?? "",
   price: initialData?.price ?? "",
   image_url: initialData?.image_url ?? "",
   category: initialData?.category ?? "",
@@ -37,8 +39,13 @@ const MenuItemForm = ({
 
     setError("");
 
-    if (!formData.name.trim()) {
-      setError("Menu item name is required.");
+    if (!formData.name_en.trim()) {
+      setError("English menu item name is required.");
+      return;
+    }
+
+    if (!formData.name_fi.trim()) {
+      setError("Finnish menu item name is required.");
       return;
     }
 
@@ -53,8 +60,10 @@ const MenuItemForm = ({
     }
 
     const payload = {
-      name: formData.name.trim(),
-      description: formData.description.trim(),
+      name_en: formData.name_en.trim(),
+      name_fi: formData.name_fi.trim(),
+      description_en: formData.description_en.trim(),
+      description_fi: formData.description_fi.trim(),
       price: formData.price,
       image_url: formData.image_url.trim(),
       category: Number(formData.category),
@@ -88,16 +97,16 @@ const MenuItemForm = ({
 
           <div className="mb-5">
             <label
-              htmlFor="name"
+              htmlFor="name_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Item name
+              Item name (EN)
             </label>
             <input
-              id="name"
+              id="name_en"
               type="text"
-              name="name"
-              value={formData.name}
+              name="name_en"
+              value={formData.name_en}
               onChange={handleChange}
               disabled={loading}
               placeholder="e.g. Margherita Pizza"
@@ -107,19 +116,57 @@ const MenuItemForm = ({
 
           <div className="mb-5">
             <label
-              htmlFor="description"
+              htmlFor="name_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Description
+              Item name (FI)
+            </label>
+            <input
+              id="name_fi"
+              type="text"
+              name="name_fi"
+              value={formData.name_fi}
+              onChange={handleChange}
+              disabled={loading}
+              placeholder="esim. Margarita Pizza"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="description_en"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Description (EN)
             </label>
             <textarea
-              id="description"
-              name="description"
-              value={formData.description}
+              id="description_en"
+              name="description_en"
+              value={formData.description_en}
               onChange={handleChange}
               disabled={loading}
               rows="4"
               placeholder="Write a short description"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="description_fi"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Description (FI)
+            </label>
+            <textarea
+              id="description_fi"
+              name="description_fi"
+              value={formData.description_fi}
+              onChange={handleChange}
+              disabled={loading}
+              rows="4"
+              placeholder="Kirjoita lyhyt kuvaus"
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -182,7 +229,7 @@ const MenuItemForm = ({
               <option value="">Select category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
-                  {category.name}
+                  {category.name_en} / {category.name_fi}
                 </option>
               ))}
             </select>

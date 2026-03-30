@@ -3,9 +3,11 @@ import AuthSubmitButton from "../auth/AuthSubmitButton";
 import Button from "../ui/Button";
 
 const getFormValues = (initialData) => ({
-  name: initialData?.name ?? "",
-  description: initialData?.description ?? "",
-  display_order: initialData?.display_order ?? 0,
+  name_en: initialData?.name_en ?? "",
+  name_fi: initialData?.name_fi ?? "",
+  description_en: initialData?.description_en ?? "",
+  description_fi: initialData?.description_fi ?? "",
+  display_order: initialData?.display_order ?? "",
 });
 
 const CategoryForm = ({
@@ -33,15 +35,27 @@ const CategoryForm = ({
 
     setError("");
 
-    if (!formData.name.trim()) {
-      setError("Category name is required.");
+    if (!formData.name_en.trim()) {
+      setError("English category name is required.");
+      return;
+    }
+
+    if (!formData.name_fi.trim()) {
+      setError("Finnish category name is required.");
+      return;
+    }
+
+    if (formData.display_order === "" || Number(formData.display_order) < 0) {
+      setError("Display order must be 0 or greater.");
       return;
     }
 
     const payload = {
-      name: formData.name.trim(),
-      description: formData.description.trim(),
-      display_order: Number(formData.display_order) || 0,
+      name_en: formData.name_en.trim(),
+      name_fi: formData.name_fi.trim(),
+      description_en: formData.description_en.trim(),
+      description_fi: formData.description_fi.trim(),
+      display_order: Number(formData.display_order),
     };
 
     try {
@@ -71,16 +85,16 @@ const CategoryForm = ({
 
           <div className="mb-5">
             <label
-              htmlFor="name"
+              htmlFor="name_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Category name
+              Category name (EN)
             </label>
             <input
-              id="name"
+              id="name_en"
               type="text"
-              name="name"
-              value={formData.name}
+              name="name_en"
+              value={formData.name_en}
               onChange={handleChange}
               disabled={loading}
               placeholder="e.g. Starters"
@@ -90,19 +104,57 @@ const CategoryForm = ({
 
           <div className="mb-5">
             <label
-              htmlFor="description"
+              htmlFor="name_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Description
+              Category name (FI)
+            </label>
+            <input
+              id="name_fi"
+              type="text"
+              name="name_fi"
+              value={formData.name_fi}
+              onChange={handleChange}
+              disabled={loading}
+              placeholder="esim. Alkuruoat"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="description_en"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Description (EN)
             </label>
             <textarea
-              id="description"
-              name="description"
-              value={formData.description}
+              id="description_en"
+              name="description_en"
+              value={formData.description_en}
               onChange={handleChange}
               disabled={loading}
               rows="4"
               placeholder="Write a short description"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="description_fi"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              Description (FI)
+            </label>
+            <textarea
+              id="description_fi"
+              name="description_fi"
+              value={formData.description_fi}
+              onChange={handleChange}
+              disabled={loading}
+              rows="4"
+              placeholder="Kirjoita lyhyt kuvaus"
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -122,7 +174,7 @@ const CategoryForm = ({
               onChange={handleChange}
               disabled={loading}
               min="0"
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 

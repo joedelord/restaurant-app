@@ -13,10 +13,13 @@ i18n.use(initReactI18next).init({
   resources,
   lng: localStorage.getItem("language") || "fi",
   fallbackLng: "en",
-
   interpolation: {
     escapeValue: false,
   },
+});
+
+i18n.on("languageChanged", (lng) => {
+  localStorage.setItem("language", lng);
 });
 
 export default i18n;

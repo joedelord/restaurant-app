@@ -17,6 +17,7 @@ from .serializers import (
     ReservationStatusUpdateSerializer,
     CategorySerializer,
     MenuItemSerializer,
+    AdminMenuItemSerializer,
     OrderSerializer,
     OrderCreateSerializer,
     OrderStatusUpdateSerializer,
@@ -165,12 +166,12 @@ class LogoutView(APIView):
 # CATEGORY VIEWS
 
 class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all().order_by("display_order", "name")
+    queryset = Category.objects.all().order_by("display_order", "name_en")
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
         
 class AdminCategoryListCreateView(generics.ListCreateAPIView):
-    queryset = Category.objects.all().order_by("display_order", "name")
+    queryset = Category.objects.all().order_by("display_order", "name_en")
     serializer_class = CategorySerializer
     permission_classes = [IsAdmin]
 
@@ -187,7 +188,7 @@ class MenuItemListView(generics.ListAPIView):
     queryset = (
         MenuItem.objects.filter(is_available=True)
         .select_related("category")
-        .order_by("category__display_order", "name")
+        .order_by("category__display_order", "name_en")
     )
     serializer_class = MenuItemSerializer
     permission_classes = [AllowAny]
@@ -195,13 +196,13 @@ class MenuItemListView(generics.ListAPIView):
 
 class AdminMenuItemListCreateView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.select_related("category").all().order_by(
-        "category__display_order", "category__name", "name"
+        "category__display_order", "category__name_en", "name_en"
     )
-    serializer_class = MenuItemSerializer
+    serializer_class = AdminMenuItemSerializer
     permission_classes = [IsAdmin]
 
 
 class AdminMenuItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
-    serializer_class = MenuItemSerializer
+    serializer_class = AdminMenuItemSerializer
     permission_classes = [IsAdmin]

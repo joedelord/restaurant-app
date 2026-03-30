@@ -1,17 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
-import MenuSection from "../components/menu/MenuSection";
-import { getCategories, getMenuItems } from "../services/menuService";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import MenuSection from "../components/menu/MenuSection";
 import LanguageToggle from "../components/LanguageToggle";
+import { getCategories, getMenuItems } from "../services/menuService";
 
 const Menu = () => {
   const [categories, setCategories] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { t } = useTranslation();
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
+    const getLocalizedCategoryName = (category) => {
+      if (i18n.language === "fi") {
+        return category.name_fi || category.name_en || "";
+      }
+      return category.name_en || category.name_fi || "";
+    };
+
     const fetchMenuData = async () => {
       try {
         setLoading(true);
@@ -24,40 +32,55 @@ const Menu = () => {
 
         const sortedCategories = [...categoriesData].sort(
           (a, b) =>
-            a.display_order - b.display_order || a.name.localeCompare(b.name),
+            a.display_order - b.display_order ||
+            getLocalizedCategoryName(a).localeCompare(
+              getLocalizedCategoryName(b),
+            ),
         );
 
         setCategories(sortedCategories);
         setMenuItems(menuItemsData);
       } catch (err) {
         console.error(err);
-        setError("Failed to load menu.");
+        setError(t("menu.loadError"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchMenuData();
-  }, []);
+  }, [i18n.language, t]);
 
-  const groupedMenu = useMemo(() => {
-    return categories.map((category) => {
-      const items = menuItems.filter((item) => {
-        if (!item.is_available) return false;
+  const groupedMenu = categories.map((category) => {
+    const localizedName =
+      i18n.language === "fi"
+        ? category.name_fi || category.name_en || ""
+        : category.name_en || category.name_fi || "";
 
-        if (typeof item.category === "object" && item.category !== null) {
-          return item.category.id === category.id;
-        }
+    const localizedDescription =
+      i18n.language === "fi"
+        ? category.description_fi || category.description_en || ""
+        : category.description_en || category.description_fi || "";
 
-        return item.category === category.id;
-      });
+    const items = menuItems.filter((item) => {
+      if (!item.is_available) return false;
 
-      return {
-        category,
-        items,
-      };
+      if (typeof item.category === "object" && item.category !== null) {
+        return item.category.id === category.id;
+      }
+
+      return item.category === category.id;
     });
-  }, [categories, menuItems]);
+
+    return {
+      category: {
+        ...category,
+        localizedName,
+        localizedDescription,
+      },
+      items,
+    };
+  });
 
   if (loading) {
     return (
@@ -83,15 +106,16 @@ const Menu = () => {
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-10">
         <div className="grid grid-cols-3 items-center">
-          <div></div>
-          <h1 className="mt-3 text-4xl font-bold text-gray-900 justify-self-center">
+          <div />
+          <h1 className="mt-3 justify-self-center text-4xl font-bold text-gray-900">
             {t("menu.title")}
           </h1>
           <div className="justify-self-end">
             <LanguageToggle />
           </div>
         </div>
-        <p className="mx-auto mt-3 max-w-2xl text-gray-600 text-center">
+
+        <p className="mx-auto mt-3 max-w-2xl text-center text-gray-600">
           {t("menu.subtitle")}
         </p>
       </header>
