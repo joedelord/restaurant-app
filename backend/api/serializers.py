@@ -117,47 +117,24 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category_name = serializers.SerializerMethodField()
-    name = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
+    category_name_en = serializers.CharField(source="category.name_en", read_only=True)
+    category_name_fi = serializers.CharField(source="category.name_fi", read_only=True)
 
     class Meta:
         model = MenuItem
         fields = [
             "id",
-            "name",
-            "description",
+            "name_en",
+            "name_fi",
+            "description_en",
+            "description_fi",
             "price",
             "image_url",
             "category",
-            "category_name",
+            "category_name_en",
+            "category_name_fi",
             "is_available",
         ]
-
-
-    def get_category_name(self, obj):
-        lang = get_request_language(self.context)
-
-        if "fi" in lang:
-            return obj.category.name_fi
-
-        return obj.category.name_en
-
-    def get_name(self, obj):
-        lang = get_request_language(self.context)
-
-        if "fi" in lang:
-            return obj.name_fi
-
-        return obj.name_en
-
-    def get_description(self, obj):
-        lang = get_request_language(self.context)
-
-        if "fi" in lang:
-            return obj.description_fi
-
-        return obj.description_en
 
 
 # =========================

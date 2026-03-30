@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MenuSection from "../components/menu/MenuSection";
 import LanguageToggle from "../components/LanguageToggle";
@@ -13,13 +13,6 @@ const Menu = () => {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    const getLocalizedCategoryName = (category) => {
-      if (i18n.language === "fi") {
-        return category.name_fi || category.name_en || "";
-      }
-      return category.name_en || category.name_fi || "";
-    };
-
     const fetchMenuData = async () => {
       try {
         setLoading(true);
@@ -30,57 +23,59 @@ const Menu = () => {
           getMenuItems(),
         ]);
 
-        const sortedCategories = [...categoriesData].sort(
-          (a, b) =>
-            a.display_order - b.display_order ||
-            getLocalizedCategoryName(a).localeCompare(
-              getLocalizedCategoryName(b),
-            ),
-        );
-
-        setCategories(sortedCategories);
+        setCategories(categoriesData);
         setMenuItems(menuItemsData);
       } catch (err) {
         console.error(err);
-        setError(t("menu.loadError"));
+        setError("menu.loadError");
       } finally {
         setLoading(false);
       }
     };
 
     fetchMenuData();
-  }, [i18n.language, t]);
+  }, []);
 
-  const groupedMenu = categories.map((category) => {
-    const localizedName =
-      i18n.language === "fi"
+  const groupedMenu = useMemo(() => {
+    const getLocalizedCategoryName = (category) => {
+      return i18n.language === "fi"
         ? category.name_fi || category.name_en || ""
         : category.name_en || category.name_fi || "";
+    };
 
-    const localizedDescription =
-      i18n.language === "fi"
+    const getLocalizedCategoryDescription = (category) => {
+      return i18n.language === "fi"
         ? category.description_fi || category.description_en || ""
         : category.description_en || category.description_fi || "";
-
-    const items = menuItems.filter((item) => {
-      if (!item.is_available) return false;
-
-      if (typeof item.category === "object" && item.category !== null) {
-        return item.category.id === category.id;
-      }
-
-      return item.category === category.id;
-    });
-
-    return {
-      category: {
-        ...category,
-        localizedName,
-        localizedDescription,
-      },
-      items,
     };
-  });
+
+    const sortedCategories = [...categories].sort(
+      (a, b) =>
+        a.display_order - b.display_order ||
+        getLocalizedCategoryName(a).localeCompare(getLocalizedCategoryName(b)),
+    );
+
+    return sortedCategories.map((category) => {
+      const items = menuItems.filter((item) => {
+        if (!item.is_available) return false;
+
+        if (typeof item.category === "object" && item.category !== null) {
+          return item.category.id === category.id;
+        }
+
+        return item.category === category.id;
+      });
+
+      return {
+        category: {
+          ...category,
+          localizedName: getLocalizedCategoryName(category),
+          localizedDescription: getLocalizedCategoryDescription(category),
+        },
+        items,
+      };
+    });
+  }, [categories, menuItems, i18n.language]);
 
   if (loading) {
     return (
@@ -96,7 +91,7 @@ const Menu = () => {
     return (
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
-          {error}
+          {t(error)}
         </div>
       </div>
     );
