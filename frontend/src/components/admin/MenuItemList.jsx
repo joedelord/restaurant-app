@@ -90,7 +90,9 @@ const MenuItemList = ({ items, onEdit, onDelete }) => {
                   <div className="font-medium text-heading">
                     {item.name_en || "-"}
                   </div>
-                  <div className="text-sm text-body">{item.name_fi || "-"}</div>
+                  <div className="font-medium text-heading">
+                    {item.name_fi || "-"}
+                  </div>
                   <div className="mt-2 text-sm text-body">
                     {item.description_en || "-"}
                   </div>
