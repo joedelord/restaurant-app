@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
 import LogoutButton from "../LogoutButton";
 import NavbarSection from "./NavbarSection";
 import NavbarItem from "./NavbarItem";
+import LanguageToggle from "../LanguageToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { isAuthorized, user } = useAuth();
+  const { t } = useTranslation();
 
   const closeMenu = () => setOpen(false);
 
@@ -16,99 +19,120 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-xl font-bold" onClick={closeMenu}>
+    <nav className="border-b border-white/10 bg-gray-900 text-white">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="flex h-16 items-center justify-between gap-4">
+          <Link
+            to="/"
+            className="text-xl font-bold tracking-tight"
+            onClick={closeMenu}
+          >
             Restaurant
           </Link>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden items-center gap-6 md:flex">
             <NavbarSection>
               {isAuthorized ? (
                 <>
-                  <NavbarItem href="/">Home</NavbarItem>
-                  <NavbarItem href="/menu">Menu</NavbarItem>
-                  <NavbarItem href="/user">User</NavbarItem>
+                  <NavbarItem href="/">{t("navbar.home")}</NavbarItem>
+                  <NavbarItem href="/menu">{t("navbar.menu")}</NavbarItem>
+                  <NavbarItem href="/user">{t("navbar.user")}</NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
-                    <NavbarItem href="/staff">Staff</NavbarItem>
+                    <NavbarItem href="/staff">{t("navbar.staff")}</NavbarItem>
                   )}
 
                   {user?.role === "admin" && (
-                    <NavbarItem href="/admin">Admin</NavbarItem>
+                    <NavbarItem href="/admin">{t("navbar.admin")}</NavbarItem>
                   )}
                 </>
               ) : (
                 <>
-                  <NavbarItem href="/">Home</NavbarItem>
-                  <NavbarItem href="/menu">Menu</NavbarItem>
-                  <NavbarItem href="/login">Login</NavbarItem>
-                  <NavbarItem href="/register">Register</NavbarItem>
+                  <NavbarItem href="/">{t("navbar.home")}</NavbarItem>
+                  <NavbarItem href="/menu">{t("navbar.menu")}</NavbarItem>
+                  <NavbarItem href="/login">{t("navbar.login")}</NavbarItem>
+                  <NavbarItem href="/register">
+                    {t("navbar.register")}
+                  </NavbarItem>
                 </>
               )}
             </NavbarSection>
 
-            {isAuthorized && <LogoutButton />}
+            <div className="flex items-center gap-3">
+              <LanguageToggle />
+              {isAuthorized && <LogoutButton variant="link" />}
+            </div>
           </div>
 
-          <button
-            type="button"
-            className="md:hidden"
-            onClick={() => setOpen((prev) => !prev)}
-            aria-label="Toggle navigation menu"
-            aria-expanded={open}
-          >
-            {open ? "✕" : "☰"}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageToggle />
+
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-xl text-white transition hover:bg-white/10"
+              onClick={() => setOpen((prev) => !prev)}
+              aria-label={t("navbar.toggleMenu")}
+              aria-expanded={open}
+            >
+              <span
+                className={`transition-transform duration-200 ${
+                  open ? "rotate-90" : "rotate-0"
+                }`}
+              >
+                {open ? "✕" : "☰"}
+              </span>
+            </button>
+          </div>
         </div>
 
         {open && (
-          <div className="md:hidden flex flex-col space-y-2 pb-4">
+          <div className="space-y-3 border-t border-white/10 pb-4 pt-4 md:hidden">
             <NavbarSection>
               {isAuthorized ? (
                 <>
                   <NavbarItem href="/" onClick={closeMenu}>
-                    Home
+                    {t("navbar.home")}
                   </NavbarItem>
                   <NavbarItem href="/menu" onClick={closeMenu}>
-                    Menu
+                    {t("navbar.menu")}
                   </NavbarItem>
                   <NavbarItem href="/user" onClick={closeMenu}>
-                    User
+                    {t("navbar.user")}
                   </NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
                     <NavbarItem href="/staff" onClick={closeMenu}>
-                      Staff
+                      {t("navbar.staff")}
                     </NavbarItem>
                   )}
 
                   {user?.role === "admin" && (
                     <NavbarItem href="/admin" onClick={closeMenu}>
-                      Admin
+                      {t("navbar.admin")}
                     </NavbarItem>
                   )}
                 </>
               ) : (
                 <>
                   <NavbarItem href="/" onClick={closeMenu}>
-                    Home
+                    {t("navbar.home")}
                   </NavbarItem>
                   <NavbarItem href="/menu" onClick={closeMenu}>
-                    Menu
+                    {t("navbar.menu")}
                   </NavbarItem>
                   <NavbarItem href="/login" onClick={closeMenu}>
-                    Login
+                    {t("navbar.login")}
                   </NavbarItem>
                   <NavbarItem href="/register" onClick={closeMenu}>
-                    Register
+                    {t("navbar.register")}
                   </NavbarItem>
                 </>
               )}
             </NavbarSection>
 
-            {isAuthorized && <LogoutButton className="w-full justify-center" />}
+            {isAuthorized && (
+              <LogoutButton variant="link" className="w-full justify-center" />
+            )}
           </div>
         )}
       </div>

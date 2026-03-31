@@ -12,6 +12,7 @@ import MainLayout from "./layouts/MainLayout";
 import UserProfile from "./pages/UserProfile";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
             </RoleRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

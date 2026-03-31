@@ -1,7 +1,9 @@
 const Footer = () => {
   return (
     <>
-      <footer className="footer">Tämä on footer</footer>
+      <footer className="text-center bg-black p-2 text-white text-sm">
+        © 2026 JS
+      </footer>
     </>
   );
 };
