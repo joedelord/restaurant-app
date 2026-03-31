@@ -15,8 +15,8 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-default-medium">
             <tr className="text-heading">
-              <th className="px-3 py-3 font-medium">Name</th>
-              <th className="px-3 py-3 font-medium">Description</th>
+              <th className="px-3 py-3 font-medium">Name (EN / FI)</th>
+              <th className="px-3 py-3 font-medium">Description (EN / FI)</th>
               <th className="px-3 py-3 font-medium">Order</th>
               <th className="px-3 py-3 font-medium">Actions</th>
             </tr>
@@ -29,11 +29,13 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
                 className="border-b border-default-medium last:border-b-0"
               >
                 <td className="px-3 py-4 font-medium text-heading">
-                  {item.name}
+                  <div>{item.name_en || "-"}</div>
+                  <div className="text-sm text-body">{item.name_fi || "-"}</div>
                 </td>
 
                 <td className="px-3 py-4 text-body">
-                  {item.description || "-"}
+                  <div>{item.description_en || "-"}</div>
+                  <div className="text-sm">{item.description_fi || "-"}</div>
                 </td>
 
                 <td className="px-3 py-4 text-body">{item.display_order}</td>
@@ -42,6 +44,7 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
                   <div className="flex flex-wrap gap-2">
                     <Button
                       type="button"
+                      size="sm"
                       variant="secondary"
                       onClick={() => onEdit(item)}
                     >
@@ -50,6 +53,7 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
 
                     <Button
                       type="button"
+                      size="sm"
                       variant="danger"
                       onClick={() => onDelete(item)}
                     >

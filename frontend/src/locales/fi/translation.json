@@ -1,0 +1,10 @@
+{
+  "menu": {
+        "title": "Ruokalista",
+        "subtitle": "Tutustu valikoimaamme",
+        "noItems": "Ruokalistaa ei ole saatavilla",
+        "load": "Lataa ruokalistaa...",
+        "loadError": "Ruokalistan lataaminen epäonnistui."
+  }
+}
+  

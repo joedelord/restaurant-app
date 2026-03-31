@@ -1,0 +1,9 @@
+{
+  "menu": {
+        "title": "Menu",
+        "subtitle": "Discover our selection",
+        "noItems": "No menu available",
+        "load": "Loading menu...",
+        "loadError": "Failed to load menu."
+  }
+}

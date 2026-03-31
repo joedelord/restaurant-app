@@ -28,7 +28,8 @@ const Navbar = () => {
               {isAuthorized ? (
                 <>
                   <NavbarItem href="/">Home</NavbarItem>
-                  <NavbarItem href="/user">User Profile</NavbarItem>
+                  <NavbarItem href="/menu">Menu</NavbarItem>
+                  <NavbarItem href="/user">User</NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
                     <NavbarItem href="/staff">Staff</NavbarItem>
@@ -41,6 +42,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <NavbarItem href="/">Home</NavbarItem>
+                  <NavbarItem href="/menu">Menu</NavbarItem>
                   <NavbarItem href="/login">Login</NavbarItem>
                   <NavbarItem href="/register">Register</NavbarItem>
                 </>
@@ -69,8 +71,11 @@ const Navbar = () => {
                   <NavbarItem href="/" onClick={closeMenu}>
                     Home
                   </NavbarItem>
+                  <NavbarItem href="/menu" onClick={closeMenu}>
+                    Menu
+                  </NavbarItem>
                   <NavbarItem href="/user" onClick={closeMenu}>
-                    User Profile
+                    User
                   </NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
@@ -89,6 +94,9 @@ const Navbar = () => {
                 <>
                   <NavbarItem href="/" onClick={closeMenu}>
                     Home
+                  </NavbarItem>
+                  <NavbarItem href="/menu" onClick={closeMenu}>
+                    Menu
                   </NavbarItem>
                   <NavbarItem href="/login" onClick={closeMenu}>
                     Login

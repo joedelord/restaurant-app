@@ -10,7 +10,7 @@ const sortMenuItems = (items) =>
   [...items].sort(
     (a, b) =>
       (a.category_name || "").localeCompare(b.category_name || "") ||
-      (a.name || "").localeCompare(b.name || ""),
+      (a.name_en || "").localeCompare(b.name_en || ""),
   );
 
 const useMenuItems = () => {
@@ -64,7 +64,7 @@ const useMenuItems = () => {
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete menu item "${item.name}"?`,
+      `Are you sure you want to delete menu item "${item.name_en} / ${item.name_fi}"?`,
     );
 
     if (!confirmed) return;

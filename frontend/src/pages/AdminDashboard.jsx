@@ -31,7 +31,10 @@ const AdminDashboard = () => {
       title: "Reservations",
       description: "Manage table reservations",
       icon: ClipboardDocumentListIcon,
-      actions: [{ label: "All reservations", path: "/admin/reservations" }],
+      actions: [
+        { label: "All reservations", path: "/admin/reservations" },
+        { label: "Edit reservations", path: "/admin/edit-reservations" },
+      ],
     },
   ];
 

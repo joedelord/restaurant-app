@@ -1,4 +1,5 @@
 import axios from "axios";
+import i18n from "./i18n";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -12,6 +13,11 @@ const api = axios.create({
 
 const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
 const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN);
+
+const getCurrentLanguage = () => {
+  const lang = i18n.language || localStorage.getItem("language") || "fi";
+  return lang.toLowerCase().includes("fi") ? "fi" : "en";
+};
 
 const setAccessToken = (token) => {
   localStorage.setItem(ACCESS_TOKEN, token);
@@ -41,6 +47,7 @@ const refreshAccessToken = async () => {
     {
       headers: {
         "Content-Type": "application/json",
+        "Accept-Language": getCurrentLanguage(),
       },
     },
   );
@@ -55,10 +62,13 @@ const refreshAccessToken = async () => {
   return newAccessToken;
 };
 
-// Lisää access token kaikkiin pyyntöihin automaattisesti
+// Lisää access token ja kieli kaikkiin pyyntöihin automaattisesti
 api.interceptors.request.use(
   (config) => {
     const token = getAccessToken();
+
+    config.headers = config.headers || {};
+    config.headers["Accept-Language"] = getCurrentLanguage();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -75,7 +85,6 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Jos ei responsea, kyse voi olla verkko-ongelmasta
     if (!error.response) {
       return Promise.reject(error);
     }
@@ -93,6 +102,7 @@ api.interceptors.response.use(
         originalRequest.headers = {
           ...originalRequest.headers,
           Authorization: `Bearer ${newAccessToken}`,
+          "Accept-Language": getCurrentLanguage(),
         };
 
         return api(originalRequest);
@@ -103,7 +113,6 @@ api.interceptors.response.use(
       }
     }
 
-    // Jos refresh itse epäonnistui tai retrykin epäonnistui
     if (isUnauthorized) {
       clearTokens();
       redirectToLogin();

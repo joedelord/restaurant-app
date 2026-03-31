@@ -19,6 +19,15 @@ from .models import (
 
 User = get_user_model()
 
+def get_request_language(context):
+        request = context.get("request")
+        if not request:
+            return "en"
+
+        lang = request.headers.get("Accept-Language", "en").lower()
+
+        return "fi" if "fi" in lang else "en"
+
 # =========================
 # USER SERIALIZERS
 # =========================
@@ -97,22 +106,33 @@ class RestaurantTableSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "name", "description", "display_order"]
+        fields = [
+            "id",
+            "name_en",
+            "name_fi",
+            "description_en",
+            "description_fi",
+            "display_order",
+        ]
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source="category.name", read_only=True)
+    category_name_en = serializers.CharField(source="category.name_en", read_only=True)
+    category_name_fi = serializers.CharField(source="category.name_fi", read_only=True)
 
     class Meta:
         model = MenuItem
         fields = [
             "id",
-            "name",
-            "description",
+            "name_en",
+            "name_fi",
+            "description_en",
+            "description_fi",
             "price",
             "image_url",
             "category",
-            "category_name",
+            "category_name_en",
+            "category_name_fi",
             "is_available",
         ]
 
@@ -288,7 +308,14 @@ class OrderItemReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ["id", "menu_item", "quantity", "price"]
+        fields = [
+            "id",
+            "menu_item",
+            "name_en",
+            "name_fi",
+            "quantity",
+            "price",
+        ]
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -428,6 +455,8 @@ class OrderCreateSerializer(serializers.ModelSerializer):
                 OrderItem(
                     order=order,
                     menu_item=menu_item,
+                    name_en=menu_item.name_en,
+                    name_fi=menu_item.name_fi,
                     quantity=quantity,
                     price=item_price,
                 )
@@ -459,3 +488,25 @@ class OrderStatusUpdateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Invalid order status.")
 
         return value
+    
+
+class AdminMenuItemSerializer(serializers.ModelSerializer):
+    category_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MenuItem
+        fields = [
+            "id",
+            "name_en",
+            "name_fi",
+            "description_en",
+            "description_fi",
+            "price",
+            "image_url",
+            "category",
+            "category_name",
+            "is_available",
+        ]
+
+    def get_category_name(self, obj):
+        return f"{obj.category.name_en} / {obj.category.name_fi}"

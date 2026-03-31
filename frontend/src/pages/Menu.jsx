@@ -1,49 +1,124 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import MenuSection from "../components/menu/MenuSection";
+import LanguageToggle from "../components/LanguageToggle";
+import { getCategories, getMenuItems } from "../services/menuService";
 
 const Menu = () => {
-  const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const [categoriesData, menuItemsData] = await Promise.all([
+          getCategories(),
+          getMenuItems(),
+        ]);
+
+        setCategories(categoriesData);
+        setMenuItems(menuItemsData);
+      } catch (err) {
+        console.error(err);
+        setError("menu.loadError");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenuData();
+  }, []);
+
+  const groupedMenu = useMemo(() => {
+    const getLocalizedCategoryName = (category) => {
+      return i18n.language === "fi"
+        ? category.name_fi || category.name_en || ""
+        : category.name_en || category.name_fi || "";
+    };
+
+    const getLocalizedCategoryDescription = (category) => {
+      return i18n.language === "fi"
+        ? category.description_fi || category.description_en || ""
+        : category.description_en || category.description_fi || "";
+    };
+
+    const sortedCategories = [...categories].sort(
+      (a, b) =>
+        a.display_order - b.display_order ||
+        getLocalizedCategoryName(a).localeCompare(getLocalizedCategoryName(b)),
+    );
+
+    return sortedCategories.map((category) => {
+      const items = menuItems.filter((item) => {
+        if (!item.is_available) return false;
+
+        if (typeof item.category === "object" && item.category !== null) {
+          return item.category.id === category.id;
+        }
+
+        return item.category === category.id;
+      });
+
+      return {
+        category: {
+          ...category,
+          localizedName: getLocalizedCategoryName(category),
+          localizedDescription: getLocalizedCategoryDescription(category),
+        },
+        items,
+      };
+    });
+  }, [categories, menuItems, i18n.language]);
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <p className="text-gray-500">{t("menu.load")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
+          {t(error)}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {/* Navbar */}
-      <div className="flex items-center justify-between bg-slate-900 text-white text-xl p-4">
-        <div className="font-bold">Logo</div>
-
-        {/* Desktop Navbar */}
-        <div className="hidden sm:flex gap-2">
-          <span>Home</span>
-          <span>About</span>
-          <span>Contact</span>
+    <div className="mx-auto max-w-6xl px-4 py-10">
+      <header className="mb-10">
+        <div className="grid grid-cols-3 items-center">
+          <div />
+          <h1 className="mt-3 justify-self-center text-4xl font-bold text-gray-900">
+            {t("menu.title")}
+          </h1>
+          <div className="justify-self-end">
+            <LanguageToggle />
+          </div>
         </div>
 
-        <button
-          className="text-xl cursor-pointer sm:hidden"
-          onClick={() => setOpen(!open)}
-        >
-          ☰
-        </button>
-      </div>
+        <p className="mx-auto mt-3 max-w-2xl text-center text-gray-600">
+          {t("menu.subtitle")}
+        </p>
+      </header>
 
-      {/* Mobile Navbar */}
-      {open && (
-        <div className="flex flex-col items-center gap-2 bg-slate-900 text-white p-4 sm:hidden">
-          <span>Home</span>
-          <span>About</span>
-          <span>Contact</span>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 text-white p-6 gap-6 text-center fotn-semibold text-xl">
-        <div className="bg-slate-500 p-4 rounded hover:bg-slate-600 hover:scale-105 transition-all duration-200">
-          Feature One
-        </div>
-        <div className="bg-slate-500 p-4 rounded hover:bg-slate-600 hover:scale-105">
-          Feature Two
-        </div>
-        <div className="bg-slate-500 p-4 rounded">Feature Three</div>
-        <div className="bg-slate-500 p-4 rounded">Feature Four</div>
-        <div className="bg-slate-500 p-4 rounded">Feature Five</div>
-        <div className="bg-slate-500 p-4 rounded">Feature Six</div>
+      <div className="space-y-10">
+        {groupedMenu.map(({ category, items }) => (
+          <MenuSection key={category.id} category={category} items={items} />
+        ))}
       </div>
     </div>
   );
