@@ -51,17 +51,6 @@
     "loadError": "Ruokalistan lataaminen epäonnistui."
   },
 
-  "admin": {
-    "categories": {
-      "title": "Kategoriat",
-      "add": "Lisää kategoria",
-      "edit": "Muokkaa kategoriaa",
-      "delete": "Poista",
-      "name": "Nimi",
-      "description": "Kuvaus",
-      "order": "Järjestys"
-    }
-  },
   "navbar": {
     "home": "Etusivu",
     "menu": "Ruokalista",
@@ -71,5 +60,39 @@
     "login": "Kirjaudu",
     "register": "Rekisteröidy",
     "toggleMenu": "Avaa navigaatiovalikko"
+  },
+
+  "notFound": {
+    "title": "Sivua ei löytynyt",
+    "description": "Hakemaasi sivua ei ole olemassa tai se on siirretty toiseen osoitteeseen.",
+    "backHome": "Palaa etusivulle"
+  },
+
+  "admin": {
+    "dashboard": {
+      "title": "Ylläpitopaneeli",
+      "subtitle": "Hallitse ravintolan järjestelmää ja dataa",
+
+      "users": {
+        "title": "Käyttäjät",
+        "description": "Hallitse käyttäjiä, rooleja ja oikeuksia",
+        "view": "Näytä käyttäjät",
+        "roles": "Muokkaa rooleja"
+      },
+
+      "menu": {
+        "title": "Menu",
+        "description": "Hallitse kategorioita ja ruokia",
+        "categories": "Kategoriat",
+        "items": "Ruokalajit"
+      },
+
+      "reservations": {
+        "title": "Varaukset",
+        "description": "Hallitse pöytävarauksia",
+        "all": "Kaikki varaukset",
+        "edit": "Muokkaa varauksia"
+      }
+    }
   }
 }

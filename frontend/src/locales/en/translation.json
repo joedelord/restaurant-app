@@ -51,17 +51,6 @@
     "loadError": "Failed to load menu."
   },
 
-  "admin": {
-    "categories": {
-      "title": "Categories",
-      "add": "Add category",
-      "edit": "Edit category",
-      "delete": "Delete",
-      "name": "Name",
-      "description": "Description",
-      "order": "Order"
-    }
-  },
   "navbar": {
     "home": "Home",
     "menu": "Menu",
@@ -71,5 +60,39 @@
     "login": "Sign in",
     "register": "Register",
     "toggleMenu": "Toggle navigation menu"
+  },
+
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  },
+
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Manage restaurant system and data",
+
+      "users": {
+        "title": "Users",
+        "description": "Manage users, roles and permissions",
+        "view": "View users",
+        "roles": "Edit roles"
+      },
+
+      "menu": {
+        "title": "Menu",
+        "description": "Manage categories and menu items",
+        "categories": "Categories",
+        "items": "Menu items"
+      },
+
+      "reservations": {
+        "title": "Reservations",
+        "description": "Manage table reservations",
+        "all": "All reservations",
+        "edit": "Edit reservations"
+      }
+    }
   }
 }
