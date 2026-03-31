@@ -4,36 +4,56 @@ import {
   BookOpenIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const cards = [
     {
-      title: "Users",
-      description: "Manage users, roles and permissions",
+      title: t("admin.dashboard.users.title"),
+      description: t("admin.dashboard.users.description"),
       icon: UsersIcon,
       actions: [
-        { label: "View users", path: "/admin/users" },
-        { label: "Edit roles", path: "/admin/roles" },
+        {
+          label: t("admin.dashboard.users.view"),
+          path: "/admin/users",
+        },
+        {
+          label: t("admin.dashboard.users.roles"),
+          path: "/admin/roles",
+        },
       ],
     },
     {
-      title: "Menu",
-      description: "Manage categories and menu items",
+      title: t("admin.dashboard.menu.title"),
+      description: t("admin.dashboard.menu.description"),
       icon: BookOpenIcon,
       actions: [
-        { label: "Categories", path: "/admin/categories" },
-        { label: "Menu items", path: "/admin/menu" },
+        {
+          label: t("admin.dashboard.menu.categories"),
+          path: "/admin/categories",
+        },
+        {
+          label: t("admin.dashboard.menu.items"),
+          path: "/admin/menu",
+        },
       ],
     },
     {
-      title: "Reservations",
-      description: "Manage table reservations",
+      title: t("admin.dashboard.reservations.title"),
+      description: t("admin.dashboard.reservations.description"),
       icon: ClipboardDocumentListIcon,
       actions: [
-        { label: "All reservations", path: "/admin/reservations" },
-        { label: "Edit reservations", path: "/admin/edit-reservations" },
+        {
+          label: t("admin.dashboard.reservations.all"),
+          path: "/admin/reservations",
+        },
+        {
+          label: t("admin.dashboard.reservations.edit"),
+          path: "/admin/edit-reservations",
+        },
       ],
     },
   ];
@@ -43,10 +63,10 @@ const AdminDashboard = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
-          Admin Dashboard
+          {t("admin.dashboard.title")}
         </h1>
         <p className="text-gray-500 mt-2 text-center">
-          Manage restaurant system and data
+          {t("admin.dashboard.subtitle")}
         </p>
       </div>
 
@@ -60,7 +80,6 @@ const AdminDashboard = () => {
               key={index}
               className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 p-6 flex flex-col"
             >
-              {/* Icon + Title */}
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
                   <Icon className="h-6 w-6 text-gray-700 dark:text-gray-300" />
@@ -70,10 +89,8 @@ const AdminDashboard = () => {
                 </h2>
               </div>
 
-              {/* Description */}
               <p className="text-gray-500 mb-6 text-sm">{card.description}</p>
 
-              {/* Actions */}
               <div className="mt-auto flex flex-col gap-2">
                 {card.actions.map((action, i) => (
                   <button

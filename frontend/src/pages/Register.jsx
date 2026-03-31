@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import api from "../api";
 import AuthCard from "../components/auth/AuthCard";
 import AuthField from "../components/auth/AuthField";
 import AuthSubmitButton from "../components/auth/AuthSubmitButton";
 
 const Register = () => {
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -20,24 +23,25 @@ const Register = () => {
   const getErrorMessage = (error) => {
     const data = error?.response?.data;
 
-    if (!data) return "Rekisteröityminen epäonnistui.";
+    if (!data) return t("auth.register.errors.default");
     if (typeof data.detail === "string") return data.detail;
     if (data.email?.[0]) return data.email[0];
     if (data.password?.[0]) return data.password[0];
     if (data.first_name?.[0]) return data.first_name[0];
     if (data.last_name?.[0]) return data.last_name[0];
     if (data.phone_number?.[0]) return data.phone_number[0];
-    if (typeof data.non_field_errors?.[0] === "string")
+    if (typeof data.non_field_errors?.[0] === "string") {
       return data.non_field_errors[0];
+    }
 
-    return "Rekisteröityminen epäonnistui.";
+    return t("auth.register.errors.default");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Salasanat eivät täsmää.");
+      alert(t("auth.register.errors.passwordMismatch"));
       return;
     }
 
@@ -53,7 +57,7 @@ const Register = () => {
         marketing_consent: marketingConsent,
       });
 
-      alert("Rekisteröityminen onnistui. Voit nyt kirjautua sisään.");
+      alert(t("auth.register.success"));
       navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
@@ -65,15 +69,15 @@ const Register = () => {
 
   return (
     <AuthCard
-      title="Rekisteröidy"
-      footerText="Onko sinulla jo tili?"
-      footerLinkText="Kirjaudu sisään"
+      title={t("auth.register.title")}
+      footerText={t("auth.register.footerText")}
+      footerLinkText={t("auth.register.footerLinkText")}
       footerLinkTo="/login"
     >
       <form onSubmit={handleSubmit}>
         <AuthField
           id="email"
-          label="Sähköposti"
+          label={t("auth.register.email")}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -84,27 +88,27 @@ const Register = () => {
 
         <AuthField
           id="firstName"
-          label="Etunimi"
+          label={t("auth.register.firstName")}
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          placeholder="Etunimi"
+          placeholder={t("auth.register.firstName")}
           autoComplete="given-name"
           required
         />
 
         <AuthField
           id="lastName"
-          label="Sukunimi"
+          label={t("auth.register.lastName")}
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          placeholder="Sukunimi"
+          placeholder={t("auth.register.lastName")}
           autoComplete="family-name"
           required
         />
 
         <AuthField
           id="phoneNumber"
-          label="Puhelinnumero"
+          label={t("auth.register.phone")}
           type="tel"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
@@ -114,22 +118,22 @@ const Register = () => {
 
         <AuthField
           id="password"
-          label="Salasana"
+          label={t("auth.register.password")}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Vähintään 8 merkkiä"
+          placeholder={t("auth.register.passwordPlaceholder")}
           autoComplete="new-password"
           required
         />
 
         <AuthField
           id="confirmPassword"
-          label="Vahvista salasana"
+          label={t("auth.register.confirmPassword")}
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Kirjoita salasana uudelleen"
+          placeholder={t("auth.register.confirmPassword")}
           autoComplete="new-password"
           required
         />
@@ -143,14 +147,14 @@ const Register = () => {
             className="h-4 w-4 rounded-xs border border-default-medium bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
           />
           <p className="ms-2 select-none text-sm font-medium text-heading">
-            Haluan vastaanottaa markkinointiviestintää
+            {t("auth.register.marketing")}
           </p>
         </label>
 
         <AuthSubmitButton
           loading={loading}
-          idleText="Rekisteröidy"
-          loadingText="Luodaan tiliä..."
+          idleText={t("auth.register.submit")}
+          loadingText={t("auth.register.submitting")}
         />
       </form>
     </AuthCard>

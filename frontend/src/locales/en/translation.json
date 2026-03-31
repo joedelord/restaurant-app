@@ -1,9 +1,98 @@
 {
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong"
+  },
+
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "footerText": "Don't have an account yet?",
+      "footerLinkText": "Register",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "errors": {
+        "default": "Login failed."
+      }
+    },
+    "register": {
+      "title": "Register",
+      "footerText": "Already have an account?",
+      "footerLinkText": "Sign in",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phone": "Phone number",
+      "password": "Password",
+      "passwordPlaceholder": "At least 8 characters",
+      "confirmPassword": "Confirm password",
+      "marketing": "I want to receive marketing communications",
+      "submit": "Register",
+      "submitting": "Creating account...",
+      "success": "Registration successful. You can now sign in.",
+      "errors": {
+        "default": "Registration failed.",
+        "passwordMismatch": "Passwords do not match."
+      }
+    },
+    "logout": {
+      "label": "Logout",
+      "loading": "Logging out..."
+    }
+  },
+
   "menu": {
+    "title": "Menu",
+    "subtitle": "Browse our selection",
+    "noItems": "No menu available",
+    "loading": "Loading menu...",
+    "loadError": "Failed to load menu."
+  },
+
+  "navbar": {
+    "home": "Home",
+    "menu": "Menu",
+    "user": "User",
+    "staff": "Staff",
+    "admin": "Admin",
+    "login": "Sign in",
+    "register": "Register",
+    "toggleMenu": "Toggle navigation menu"
+  },
+
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  },
+
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Manage restaurant system and data",
+
+      "users": {
+        "title": "Users",
+        "description": "Manage users, roles and permissions",
+        "view": "View users",
+        "roles": "Edit roles"
+      },
+
+      "menu": {
         "title": "Menu",
-        "subtitle": "Discover our selection",
-        "noItems": "No menu available",
-        "load": "Loading menu...",
-        "loadError": "Failed to load menu."
+        "description": "Manage categories and menu items",
+        "categories": "Categories",
+        "items": "Menu items"
+      },
+
+      "reservations": {
+        "title": "Reservations",
+        "description": "Manage table reservations",
+        "all": "All reservations",
+        "edit": "Edit reservations"
+      }
+    }
   }
 }

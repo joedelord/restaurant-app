@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useAuth from "../hooks/useAuth";
 import AuthCard from "../components/auth/AuthCard";
 import AuthField from "../components/auth/AuthField";
@@ -10,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,14 +21,15 @@ const Login = () => {
   const getErrorMessage = (error) => {
     const data = error?.response?.data;
 
-    if (!data) return "Kirjautuminen epäonnistui.";
+    if (!data) return t("auth.login.errors.default");
     if (typeof data.detail === "string") return data.detail;
     if (data.email?.[0]) return data.email[0];
     if (data.password?.[0]) return data.password[0];
-    if (typeof data.non_field_errors?.[0] === "string")
+    if (typeof data.non_field_errors?.[0] === "string") {
       return data.non_field_errors[0];
+    }
 
-    return "Kirjautuminen epäonnistui.";
+    return t("auth.login.errors.default");
   };
 
   const handleSubmit = async (e) => {
@@ -46,15 +49,15 @@ const Login = () => {
 
   return (
     <AuthCard
-      title="Kirjaudu"
-      footerText="Eikö sinulla ole vielä tiliä?"
-      footerLinkText="Rekisteröidy"
+      title={t("auth.login.title")}
+      footerText={t("auth.login.footerText")}
+      footerLinkText={t("auth.login.footerLinkText")}
       footerLinkTo="/register"
     >
       <form onSubmit={handleSubmit}>
         <AuthField
           id="email"
-          label="Sähköposti"
+          label={t("auth.login.emailLabel")}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +68,7 @@ const Login = () => {
 
         <AuthField
           id="password"
-          label="Salasana"
+          label={t("auth.login.passwordLabel")}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -76,8 +79,8 @@ const Login = () => {
 
         <AuthSubmitButton
           loading={loading}
-          idleText="Kirjaudu"
-          loadingText="Kirjaudutaan..."
+          idleText={t("auth.login.submit")}
+          loadingText={t("auth.login.submitting")}
         />
       </form>
     </AuthCard>

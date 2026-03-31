@@ -1,26 +1,26 @@
 import { useTranslation } from "react-i18next";
 
-const LanguageToggle = () => {
+const LanguageToggle = ({ className = "" }) => {
   const { i18n } = useTranslation();
 
   const currentLanguage = i18n.language?.startsWith("fi") ? "fi" : "en";
 
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
-    localStorage.setItem("language", language);
   };
 
   return (
-    <div className="inline-flex items-center rounded-full border border-default-medium bg-white p-1 shadow-xs">
+    <div
+      className={`flex items-center rounded-full border border-white/10 bg-white/5 p-0.5 ${className}`}
+    >
       <button
         type="button"
         onClick={() => changeLanguage("fi")}
-        className={`rounded-full px-2 py-0.5 text-xs font-medium transition-all duration-200 sm:text-sm ${
+        className={`px-2 py-0.5 text-xs font-medium transition-all ${
           currentLanguage === "fi"
-            ? "bg-black text-white shadow-sm"
-            : "text-heading hover:bg-neutral-secondary-medium"
+            ? "rounded-full bg-white text-gray-900"
+            : "text-white/70 hover:text-white"
         }`}
-        aria-pressed={currentLanguage === "fi"}
       >
         FI
       </button>
@@ -28,12 +28,11 @@ const LanguageToggle = () => {
       <button
         type="button"
         onClick={() => changeLanguage("en")}
-        className={`rounded-full px-2 py-0.5 text-xs font-medium transition-all duration-200 sm:text-sm ${
+        className={`px-2 py-0.5 text-xs font-medium transition-all ${
           currentLanguage === "en"
-            ? "bg-black text-white shadow-sm"
-            : "text-heading hover:bg-neutral-secondary-medium"
+            ? "rounded-full bg-white text-gray-900"
+            : "text-white/70 hover:text-white"
         }`}
-        aria-pressed={currentLanguage === "en"}
       >
         EN
       </button>

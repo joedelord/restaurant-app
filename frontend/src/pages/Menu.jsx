@@ -105,9 +105,6 @@ const Menu = () => {
           <h1 className="mt-3 justify-self-center text-4xl font-bold text-gray-900">
             {t("menu.title")}
           </h1>
-          <div className="justify-self-end">
-            <LanguageToggle />
-          </div>
         </div>
 
         <p className="mx-auto mt-3 max-w-2xl text-center text-gray-600">
