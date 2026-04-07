@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
 import Button from "../ui/Button";
 
@@ -19,6 +20,8 @@ const UserForm = ({
   submitText = "Save",
   onCancel,
 }) => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,17 +42,17 @@ const UserForm = ({
     setError("");
 
     if (!formData.email.trim()) {
-      setError("Email is required.");
+      setError(t("admin.users.validation.emailRequired"));
       return;
     }
 
     if (!formData.first_name.trim()) {
-      setError("First name is required.");
+      setError(t("admin.users.validation.firstNameRequired"));
       return;
     }
 
     if (!formData.last_name.trim()) {
-      setError("Last name is required.");
+      setError(t("admin.users.validation.lastNameRequired"));
       return;
     }
 
@@ -76,7 +79,7 @@ const UserForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError("Failed to save user.");
+      setError(t("admin.users.messages.saveError"));
     } finally {
       setLoading(false);
     }
@@ -93,91 +96,117 @@ const UserForm = ({
           )}
 
           <div className="mb-5">
-            <label className="mb-2.5 block text-sm font-medium text-heading">
-              Email
+            <label
+              htmlFor="email"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.users.fields.email")}
             </label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 
           <div className="mb-5">
-            <label className="mb-2.5 block text-sm font-medium text-heading">
-              First name
+            <label
+              htmlFor="first_name"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.users.fields.firstName")}
             </label>
             <input
+              id="first_name"
               type="text"
               name="first_name"
               value={formData.first_name}
               onChange={handleChange}
               disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 
           <div className="mb-5">
-            <label className="mb-2.5 block text-sm font-medium text-heading">
-              Last name
+            <label
+              htmlFor="last_name"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.users.fields.lastName")}
             </label>
             <input
+              id="last_name"
               type="text"
               name="last_name"
               value={formData.last_name}
               onChange={handleChange}
               disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 
           <div className="mb-5">
-            <label className="mb-2.5 block text-sm font-medium text-heading">
-              Phone number
+            <label
+              htmlFor="phone_number"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.users.fields.phone")}
             </label>
             <input
+              id="phone_number"
               type="text"
               name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
               disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 
           {!initialData && (
             <div className="mb-5">
-              <label className="mb-2.5 block text-sm font-medium text-heading">
-                Password
+              <label
+                htmlFor="password"
+                className="mb-2.5 block text-sm font-medium text-heading"
+              >
+                {t("admin.users.fields.password")}
               </label>
               <input
+                id="password"
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 disabled={loading}
-                className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+                className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
               />
             </div>
           )}
 
           <div className="mb-5">
-            <label className="mb-2.5 block text-sm font-medium text-heading">
-              Role
+            <label
+              htmlFor="role"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.users.fields.role")}
             </label>
             <select
+              id="role"
               name="role"
               value={formData.role}
               onChange={handleChange}
               disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
             >
-              <option value="customer">Customer</option>
-              <option value="staff">Staff</option>
-              <option value="admin">Admin</option>
+              <option value="customer">
+                {t("admin.users.roles.customer")}
+              </option>
+              <option value="staff">{t("admin.users.roles.staff")}</option>
+              <option value="admin">{t("admin.users.roles.admin")}</option>
             </select>
           </div>
 
@@ -190,7 +219,7 @@ const UserForm = ({
                 onChange={handleChange}
                 disabled={loading}
               />
-              Marketing consent
+              {t("admin.users.fields.marketing")}
             </label>
 
             <label className="flex items-center gap-2 text-sm text-heading">
@@ -201,7 +230,7 @@ const UserForm = ({
                 onChange={handleChange}
                 disabled={loading}
               />
-              Active user
+              {t("admin.users.fields.active")}
             </label>
           </div>
 
@@ -209,7 +238,7 @@ const UserForm = ({
             <AuthSubmitButton
               loading={loading}
               idleText={submitText}
-              loadingText={initialData ? "Updating..." : "Creating..."}
+              loadingText={submitText}
             />
 
             {onCancel && (
@@ -219,7 +248,7 @@ const UserForm = ({
                 onClick={onCancel}
                 disabled={loading}
               >
-                Cancel
+                {t("admin.users.actions.cancel")}
               </Button>
             )}
           </div>

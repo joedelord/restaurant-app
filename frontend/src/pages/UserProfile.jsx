@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../components/auth/AuthSubmitButton";
 import { getMyProfile, updateMyProfile } from "../services/userProfileService";
 
 const UserProfile = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     email: "",
     first_name: "",
@@ -22,6 +25,7 @@ const UserProfile = () => {
       try {
         setError("");
         const data = await getMyProfile();
+
         setFormData({
           email: data.email || "",
           first_name: data.first_name || "",
@@ -32,14 +36,14 @@ const UserProfile = () => {
         });
       } catch (err) {
         console.error(err);
-        setError("Failed to load profile.");
+        setError(t("profile.messages.loadError"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, []);
+  }, [t]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -76,10 +80,10 @@ const UserProfile = () => {
         marketing_consent: updated.marketing_consent || false,
       }));
 
-      setMessage("Profile updated successfully.");
+      setMessage(t("profile.messages.success"));
     } catch (err) {
       console.error(err);
-      setError("Failed to update profile.");
+      setError(t("profile.messages.saveError"));
     } finally {
       setSaving(false);
     }
@@ -89,7 +93,7 @@ const UserProfile = () => {
     return (
       <div className="mx-auto w-full max-w-3xl px-4 py-0">
         <div className="rounded-md border border-black p-5">
-          <p className="text-sm text-body">Loading profile...</p>
+          <p className="text-sm text-body">{t("profile.loading")}</p>
         </div>
       </div>
     );
@@ -97,12 +101,10 @@ const UserProfile = () => {
 
   return (
     <div className="px-4 py-0">
-      <h1 className="text-center text-3xl font-bold">My Profile</h1>
+      <h1 className="text-center text-3xl font-bold">{t("profile.title")}</h1>
 
       <div className="mx-auto mt-6 w-full max-w-3xl space-y-6">
-        <p className="text-center text-gray-500">
-          View and update your personal information.
-        </p>
+        <p className="text-center text-gray-500">{t("profile.subtitle")}</p>
 
         {message && (
           <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
@@ -120,10 +122,14 @@ const UserProfile = () => {
           <div className="mx-auto max-w-sm">
             <form onSubmit={handleSubmit}>
               <div className="mb-5">
-                <label className="mb-2.5 block text-sm font-medium text-heading">
-                  Email
+                <label
+                  htmlFor="email"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("profile.fields.email")}
                 </label>
                 <input
+                  id="email"
                   type="email"
                   value={formData.email}
                   disabled
@@ -132,53 +138,71 @@ const UserProfile = () => {
               </div>
 
               <div className="mb-5">
-                <label className="mb-2.5 block text-sm font-medium text-heading">
-                  First name
+                <label
+                  htmlFor="first_name"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("profile.fields.firstName")}
                 </label>
                 <input
+                  id="first_name"
                   type="text"
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
-                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
                 />
               </div>
 
               <div className="mb-5">
-                <label className="mb-2.5 block text-sm font-medium text-heading">
-                  Last name
+                <label
+                  htmlFor="last_name"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("profile.fields.lastName")}
                 </label>
                 <input
+                  id="last_name"
                   type="text"
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
-                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
                 />
               </div>
 
               <div className="mb-5">
-                <label className="mb-2.5 block text-sm font-medium text-heading">
-                  Phone number
+                <label
+                  htmlFor="phone_number"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("profile.fields.phone")}
                 </label>
                 <input
+                  id="phone_number"
                   type="text"
                   name="phone_number"
                   value={formData.phone_number}
                   onChange={handleChange}
-                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs"
+                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
                 />
               </div>
 
               <div className="mb-5">
-                <label className="mb-2.5 block text-sm font-medium text-heading">
-                  Role
+                <label
+                  htmlFor="role"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("profile.fields.role")}
                 </label>
                 <input
+                  id="role"
                   type="text"
-                  value={formData.role}
+                  value={
+                    formData.role ? t(`profile.roles.${formData.role}`) : ""
+                  }
                   disabled
-                  className="block w-full rounded-base border border-default-medium bg-gray-100 px-3 py-2.5 text-sm text-heading shadow-xs capitalize"
+                  className="block w-full rounded-base border border-default-medium bg-gray-100 px-3 py-2.5 text-sm text-heading shadow-xs"
                 />
               </div>
 
@@ -190,14 +214,14 @@ const UserProfile = () => {
                     checked={formData.marketing_consent}
                     onChange={handleChange}
                   />
-                  Marketing consent
+                  {t("profile.fields.marketing")}
                 </label>
               </div>
 
               <AuthSubmitButton
                 loading={saving}
-                idleText="Save changes"
-                loadingText="Saving..."
+                idleText={t("profile.buttons.save")}
+                loadingText={t("profile.buttons.saving")}
               />
             </form>
           </div>

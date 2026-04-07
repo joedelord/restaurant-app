@@ -1,10 +1,13 @@
+import { useTranslation } from "react-i18next";
 import Button from "../ui/Button";
 
 const UserList = ({ items, onEdit, onDelete }) => {
+  const { t } = useTranslation();
+
   if (!items.length) {
     return (
       <div className="mx-auto w-full rounded-md border border-black p-5">
-        <p className="text-sm text-body">No users found.</p>
+        <p className="text-sm text-body">{t("admin.users.empty")}</p>
       </div>
     );
   }
@@ -15,12 +18,24 @@ const UserList = ({ items, onEdit, onDelete }) => {
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-default-medium">
             <tr className="text-heading">
-              <th className="px-3 py-3 font-medium">Name</th>
-              <th className="px-3 py-3 font-medium">Email</th>
-              <th className="px-3 py-3 font-medium">Phone</th>
-              <th className="px-3 py-3 font-medium">Role</th>
-              <th className="px-3 py-3 font-medium">Active</th>
-              <th className="px-3 py-3 font-medium">Actions</th>
+              <th className="px-3 py-3 font-medium">
+                {t("admin.users.fields.name")}
+              </th>
+              <th className="px-3 py-3 font-medium">
+                {t("admin.users.fields.email")}
+              </th>
+              <th className="px-3 py-3 font-medium">
+                {t("admin.users.fields.phone")}
+              </th>
+              <th className="px-3 py-3 font-medium">
+                {t("admin.users.fields.role")}
+              </th>
+              <th className="px-3 py-3 font-medium">
+                {t("admin.users.fields.active")}
+              </th>
+              <th className="px-3 py-3 font-medium">
+                {t("admin.users.fields.actions")}
+              </th>
             </tr>
           </thead>
 
@@ -33,14 +48,23 @@ const UserList = ({ items, onEdit, onDelete }) => {
                 <td className="px-3 py-4 font-medium text-heading">
                   {item.first_name} {item.last_name}
                 </td>
+
                 <td className="px-3 py-4 text-body">{item.email}</td>
+
                 <td className="px-3 py-4 text-body">
                   {item.phone_number || "-"}
                 </td>
-                <td className="px-3 py-4 text-body capitalize">{item.role}</td>
+
                 <td className="px-3 py-4 text-body">
-                  {item.is_active ? "Yes" : "No"}
+                  {t(`admin.users.roles.${item.role}`)}
                 </td>
+
+                <td className="px-3 py-4 text-body">
+                  {item.is_active
+                    ? t("admin.users.values.yes")
+                    : t("admin.users.values.no")}
+                </td>
+
                 <td className="px-3 py-4">
                   <div className="flex flex-wrap gap-2">
                     <Button
@@ -49,7 +73,7 @@ const UserList = ({ items, onEdit, onDelete }) => {
                       variant="secondary"
                       onClick={() => onEdit(item)}
                     >
-                      Edit
+                      {t("admin.users.actions.edit")}
                     </Button>
 
                     <Button
@@ -58,7 +82,7 @@ const UserList = ({ items, onEdit, onDelete }) => {
                       variant="danger"
                       onClick={() => onDelete(item)}
                     >
-                      Delete
+                      {t("admin.users.actions.delete")}
                     </Button>
                   </div>
                 </td>

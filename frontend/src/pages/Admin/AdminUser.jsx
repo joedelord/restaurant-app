@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
 import UserForm from "../../components/admin/UserForm";
 import UserList from "../../components/admin/UserList";
 import useUsers from "../../hooks/useUsers";
 
 const AdminUsers = () => {
+  const { t } = useTranslation();
+
   const {
     users,
     editingUser,
@@ -18,11 +21,13 @@ const AdminUsers = () => {
 
   return (
     <div className="px-4 py-0">
-      <h1 className="text-3xl font-bold text-center">User Management</h1>
+      <h1 className="text-3xl font-bold text-center">
+        {t("admin.users.title")}
+      </h1>
 
       <div className="mx-auto w-full max-w-4xl space-y-6">
         <p className="mt-2 text-center text-gray-500">
-          Add, edit and manage system users.
+          {t("admin.users.subtitle")}
         </p>
 
         {message && (
@@ -40,13 +45,19 @@ const AdminUsers = () => {
         <section className="space-y-6">
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingUser ? "Edit User" : "Add New User"}
+              {editingUser
+                ? t("admin.users.editTitle")
+                : t("admin.users.addTitle")}
             </h2>
 
             <UserForm
               key={editingUser?.id ?? "new"}
               initialData={editingUser}
-              submitText={editingUser ? "Update User" : "Add User"}
+              submitText={
+                editingUser
+                  ? t("admin.users.actions.update")
+                  : t("admin.users.actions.add")
+              }
               onSubmit={editingUser ? handleUpdate : handleCreate}
               onCancel={editingUser ? cancelEditing : undefined}
             />
@@ -54,12 +65,12 @@ const AdminUsers = () => {
 
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              Users ({users.length})
+              {t("admin.users.listTitle", { count: users.length })}
             </h2>
 
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
-                <p className="text-sm text-body">Loading users...</p>
+                <p className="text-sm text-body">{t("admin.users.loading")}</p>
               </div>
             ) : (
               <UserList

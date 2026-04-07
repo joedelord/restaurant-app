@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   createUser,
   deleteUser,
@@ -17,6 +18,8 @@ const sortUsers = (items) =>
   });
 
 const useUsers = () => {
+  const { t } = useTranslation();
+
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,19 +34,20 @@ const useUsers = () => {
         setUsers(sortUsers(data));
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch users.");
+        setError(t("admin.users.messages.fetchError"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchUsers();
-  }, []);
+  }, [t]);
 
   const handleCreate = async (payload) => {
     const created = await createUser(payload);
+
     setUsers((prev) => sortUsers([...prev, created]));
-    setMessage("User created successfully.");
+    setMessage(t("admin.users.messages.created"));
     setError("");
     setEditingUser(null);
   };
@@ -59,31 +63,32 @@ const useUsers = () => {
       ),
     );
 
-    setMessage("User updated successfully.");
+    setMessage(t("admin.users.messages.updated"));
     setError("");
     setEditingUser(null);
   };
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete user "${item.email}"?`,
+      t("admin.users.messages.confirmDelete", { email: item.email }),
     );
 
     if (!confirmed) return;
 
     try {
       await deleteUser(item.id);
+
       setUsers((prev) => prev.filter((user) => user.id !== item.id));
 
       if (editingUser?.id === item.id) {
         setEditingUser(null);
       }
 
-      setMessage("User deleted successfully.");
+      setMessage(t("admin.users.messages.deleted"));
       setError("");
     } catch (err) {
       console.error(err);
-      setError("Failed to delete user.");
+      setError(t("admin.users.messages.deleteError"));
     }
   };
 
