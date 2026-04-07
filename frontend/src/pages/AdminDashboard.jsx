@@ -62,7 +62,7 @@ const AdminDashboard = () => {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
+        <h1 className="text-3xl font-bold text-gray-900 text-center">
           {t("admin.dashboard.title")}
         </h1>
         <p className="text-gray-500 mt-2 text-center">
@@ -78,13 +78,13 @@ const AdminDashboard = () => {
           return (
             <div
               key={index}
-              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 p-6 flex flex-col"
+              className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 p-6 flex flex-col"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                  <Icon className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+                <div className="p-2 bg-gray-100 rounded-lg">
+                  <Icon className="h-6 w-6 text-gray-700" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-semibold text-gray-900">
                   {card.title}
                 </h2>
               </div>
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
                   <button
                     key={i}
                     onClick={() => navigate(action.path)}
-                    className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition text-sm font-medium"
+                    className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition text-sm font-medium"
                   >
                     {action.label}
                   </button>

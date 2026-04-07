@@ -94,5 +94,17 @@
         "edit": "Edit reservations"
       }
     }
+  },
+  
+  "home": {
+    "story": {
+      "kicker": "Welcome",
+      "title": "Flavors, moments, and a warm atmosphere around one table",
+      "text1": "Our restaurant was created from a simple idea: to build a place that feels easy to walk into and memorable to return to. For us, good food means carefully selected ingredients, balanced flavors, and moments shared together.",
+      "text2": "Whether you are joining us for a relaxed dinner, celebrating something special, or enjoying a casual lunch, we want to offer you a warm welcome and an experience worth coming back for.",
+      "primaryButton": "View Menu",
+      "secondaryButton": "Book a Table",
+      "imageAlt": "Cozy restaurant interior"
+    }
   }
 }

@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/ui/Button";
 import { useTranslation } from "react-i18next";
 
 const NotFound = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <section className="flex min-h-[70vh] items-center justify-center px-4 py-12">
@@ -19,12 +21,14 @@ const NotFound = () => {
           {t("notFound.description")}
         </p>
 
-        <Link
-          to="/"
-          className="inline-flex items-center rounded-base border border-transparent bg-black px-5 py-2.5 text-sm font-medium text-white shadow-xs transition hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium"
+        <Button
+          type="button"
+          size="xl"
+          variant="primary"
+          onClick={() => navigate("/")}
         >
           {t("notFound.backHome")}
-        </Link>
+        </Button>
       </div>
     </section>
   );
