@@ -2,11 +2,15 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # AUTH / USERS
+    # AUTH
     path("users/register/", views.CreateUserView.as_view(), name="user-register"),
     path("users/login/", views.LoginView.as_view(), name="user-login"),
     path("users/me/", views.MeView.as_view(), name="user-me"),
     path("users/logout/", views.LogoutView.as_view(), name="user-logout"),
+
+    # USERS
+    path("admin/users/", views.AdminUserListCreateView.as_view(), name="admin-user-list-create"),
+    path("admin/users/<int:pk>/", views.AdminUserDetailView.as_view(), name="admin-user-detail"),
 
     # TABLES
     path("tables/", views.RestaurantTableListView.as_view(), name="table-list"),
