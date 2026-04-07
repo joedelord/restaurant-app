@@ -94,5 +94,17 @@
         "edit": "Muokkaa varauksia"
       }
     }
+  },
+  
+  "home": {
+    "story": {
+      "kicker": "Tervetuloa",
+      "title": "Makuja, hetkiä ja lämmin tunnelma saman pöydän äärellä",
+      "text1": "Ravintolamme syntyi ajatuksesta luoda paikka, johon on helppo tulla ja jossa jokainen vierailu tuntuu hieman erityiseltä. Meille hyvä ruoka tarkoittaa huolella valittuja raaka-aineita, tasapainoisia makuja ja yhdessä vietettyä aikaa.",
+      "text2": "Olitpa saapumassa kiireettömälle illalliselle, juhlistamaan tärkeää hetkeä tai nauttimaan rennosta lounaasta, haluamme tarjota sinulle lämpimän vastaanoton ja kokemuksen, jonka pariin tekee mieli palata uudelleen.",
+      "primaryButton": "Tutustu ruokalistaan",
+      "secondaryButton": "Varaa pöytä",
+      "imageAlt": "Ravintolan tunnelmallinen sisätila"
+    }
   }
 }

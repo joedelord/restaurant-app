@@ -23,7 +23,7 @@ const Button = ({
   children,
   type = "button",
   variant = "primary",
-  size = "md", // 👈 uusi
+  size = "md",
   className = "",
   ...props
 }) => {
