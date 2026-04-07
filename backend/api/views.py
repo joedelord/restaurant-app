@@ -9,7 +9,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from .models import RestaurantTable, Reservation, Category, MenuItem, Order
 from .permissions import IsAdmin, IsStaffOrAdmin, IsOwnerOrStaffOrAdmin
 from .serializers import (
-    UserSerializer,
+    UserProfileSerializer,
     UserRegisterSerializer,
     LoginSerializer,
     RestaurantTableSerializer,
@@ -43,8 +43,8 @@ class LoginView(generics.GenericAPIView):
         return Response(serializer.validated_data)
 
 
-class MeView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+class MeView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
