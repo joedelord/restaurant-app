@@ -36,6 +36,9 @@ const Navbar = () => {
                 <>
                   <NavbarItem href="/">{t("navbar.home")}</NavbarItem>
                   <NavbarItem href="/menu">{t("navbar.menu")}</NavbarItem>
+                  <NavbarItem href="/reservations">
+                    {t("navbar.reservations")}
+                  </NavbarItem>
                   <NavbarItem href="/user">{t("navbar.user")}</NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
@@ -50,6 +53,9 @@ const Navbar = () => {
                 <>
                   <NavbarItem href="/">{t("navbar.home")}</NavbarItem>
                   <NavbarItem href="/menu">{t("navbar.menu")}</NavbarItem>
+                  <NavbarItem href="/reservations">
+                    {t("navbar.reservations")}
+                  </NavbarItem>
                   <NavbarItem href="/login">{t("navbar.login")}</NavbarItem>
                   <NavbarItem href="/register">
                     {t("navbar.register")}
@@ -96,6 +102,9 @@ const Navbar = () => {
                   <NavbarItem href="/menu" onClick={closeMenu}>
                     {t("navbar.menu")}
                   </NavbarItem>
+                  <NavbarItem href="/reservations" onClick={closeMenu}>
+                    {t("navbar.reservations")}
+                  </NavbarItem>
                   <NavbarItem href="/user" onClick={closeMenu}>
                     {t("navbar.user")}
                   </NavbarItem>
@@ -119,6 +128,9 @@ const Navbar = () => {
                   </NavbarItem>
                   <NavbarItem href="/menu" onClick={closeMenu}>
                     {t("navbar.menu")}
+                  </NavbarItem>
+                  <NavbarItem href="/reservations" onClick={closeMenu}>
+                    {t("navbar.reservations")}
                   </NavbarItem>
                   <NavbarItem href="/login" onClick={closeMenu}>
                     {t("navbar.login")}

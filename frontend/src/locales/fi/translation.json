@@ -56,7 +56,8 @@
     "admin": "Ylläpito",
     "login": "Kirjaudu",
     "register": "Rekisteröidy",
-    "toggleMenu": "Avaa navigaatiovalikko"
+    "toggleMenu": "Avaa navigaatiovalikko",
+    "reservations": "Varaa pöytä"
   },
   "notFound": {
     "title": "Sivua ei löytynyt",

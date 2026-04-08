@@ -7,7 +7,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-10 px-4">
+    <section className="py-10 px-4 text-center">
       <div className="">
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-4xl">
           {t("home.story.title")}
