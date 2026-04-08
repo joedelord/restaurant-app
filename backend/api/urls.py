@@ -14,6 +14,11 @@ urlpatterns = [
 
     # TABLES
     path("tables/", views.RestaurantTableListView.as_view(), name="table-list"),
+    path(
+    "reservations/availability/",
+    views.ReservationAvailabilityView.as_view(),
+    name="reservation-availability",
+    ),
 
     # CATEGORIES
     path("categories/", views.CategoryListView.as_view(), name="category-list"),
