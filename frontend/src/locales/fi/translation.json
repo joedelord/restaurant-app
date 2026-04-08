@@ -3,7 +3,6 @@
     "loading": "Ladataan...",
     "error": "Jokin meni pieleen"
   },
-
   "auth": {
     "login": {
       "title": "Kirjaudu",
@@ -42,7 +41,6 @@
       "loading": "Kirjaudutaan ulos..."
     }
   },
-
   "menu": {
     "title": "Ruokalista",
     "subtitle": "Tutustu valikoimaamme",
@@ -50,7 +48,6 @@
     "loading": "Ladataan ruokalistaa...",
     "loadError": "Ruokalistan lataaminen epäonnistui."
   },
-
   "navbar": {
     "home": "Etusivu",
     "menu": "Ruokalista",
@@ -61,41 +58,113 @@
     "register": "Rekisteröidy",
     "toggleMenu": "Avaa navigaatiovalikko"
   },
-
   "notFound": {
     "title": "Sivua ei löytynyt",
     "description": "Hakemaasi sivua ei ole olemassa tai se on siirretty toiseen osoitteeseen.",
     "backHome": "Palaa etusivulle"
   },
-
   "admin": {
     "dashboard": {
       "title": "Ylläpitopaneeli",
       "subtitle": "Hallitse ravintolan järjestelmää ja dataa",
-
       "users": {
         "title": "Käyttäjät",
         "description": "Hallitse käyttäjiä, rooleja ja oikeuksia",
         "view": "Näytä käyttäjät",
         "roles": "Muokkaa rooleja"
       },
-
       "menu": {
-        "title": "Menu",
+        "title": "Ruokalista",
         "description": "Hallitse kategorioita ja ruokia",
         "categories": "Kategoriat",
         "items": "Ruokalajit"
       },
-
       "reservations": {
         "title": "Varaukset",
         "description": "Hallitse pöytävarauksia",
         "all": "Kaikki varaukset",
         "edit": "Muokkaa varauksia"
       }
+    },
+    "users": {
+      "title": "Käyttäjähallinta",
+      "subtitle": "Lisää, muokkaa ja hallinnoi järjestelmän käyttäjiä.",
+      "addTitle": "Lisää uusi käyttäjä",
+      "editTitle": "Muokkaa käyttäjää",
+      "listTitle": "Käyttäjät ({{count}})",
+      "loading": "Ladataan käyttäjiä...",
+      "empty": "Käyttäjiä ei löytynyt.",
+      "fields": {
+        "name": "Nimi",
+        "email": "Sähköposti",
+        "firstName": "Etunimi",
+        "lastName": "Sukunimi",
+        "phone": "Puhelinnumero",
+        "role": "Rooli",
+        "active": "Aktiivinen",
+        "marketing": "Markkinointisuostumus",
+        "password": "Salasana",
+        "actions": "Toiminnot"
+      },
+      "roles": {
+        "customer": "Asiakas",
+        "staff": "Henkilökunta",
+        "admin": "Ylläpitäjä"
+      },
+      "actions": {
+        "add": "Lisää käyttäjä",
+        "update": "Päivitä käyttäjä",
+        "edit": "Muokkaa",
+        "delete": "Poista",
+        "cancel": "Peruuta"
+      },
+      "messages": {
+        "created": "Käyttäjä luotu onnistuneesti.",
+        "updated": "Käyttäjä päivitetty onnistuneesti.",
+        "deleted": "Käyttäjä poistettu onnistuneesti.",
+        "fetchError": "Käyttäjien haku epäonnistui.",
+        "saveError": "Käyttäjän tallentaminen epäonnistui.",
+        "deleteError": "Käyttäjän poistaminen epäonnistui.",
+        "confirmDelete": "Haluatko varmasti poistaa käyttäjän \"{{email}}\"?"
+      },
+      "validation": {
+        "emailRequired": "Sähköposti on pakollinen.",
+        "firstNameRequired": "Etunimi on pakollinen.",
+        "lastNameRequired": "Sukunimi on pakollinen."
+      },
+      "values": {
+        "yes": "Kyllä",
+        "no": "Ei"
+      }
     }
   },
-  
+  "profile": {
+    "title": "Omat tiedot",
+    "subtitle": "Tarkastele ja päivitä omia tietojasi.",
+    "loading": "Ladataan profiilia...",
+    "fields": {
+      "email": "Sähköposti",
+      "firstName": "Etunimi",
+      "lastName": "Sukunimi",
+      "phone": "Puhelinnumero",
+      "role": "Rooli",
+      "marketing": "Markkinointisuostumus"
+    },
+    "buttons": {
+      "save": "Tallenna muutokset",
+      "saving": "Tallennetaan..."
+    },
+    "messages": {
+      "success": "Tiedot päivitetty onnistuneesti.",
+      "loadError": "Profiilin lataus epäonnistui.",
+      "saveError": "Tietojen tallentaminen epäonnistui."
+    },
+    "roles": {
+      "customer": "Asiakas",
+      "staff": "Henkilökunta",
+      "admin": "Ylläpitäjä"
+    }
+  },
   "home": {
     "story": {
       "kicker": "Tervetuloa",

@@ -9,7 +9,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from .models import RestaurantTable, Reservation, Category, MenuItem, Order
 from .permissions import IsAdmin, IsStaffOrAdmin, IsOwnerOrStaffOrAdmin
 from .serializers import (
-    UserSerializer,
+    UserProfileSerializer,
     UserRegisterSerializer,
     LoginSerializer,
     RestaurantTableSerializer,
@@ -21,6 +21,7 @@ from .serializers import (
     OrderSerializer,
     OrderCreateSerializer,
     OrderStatusUpdateSerializer,
+    AdminUserSerializer
 )
 
 User = get_user_model()
@@ -42,8 +43,8 @@ class LoginView(generics.GenericAPIView):
         return Response(serializer.validated_data)
 
 
-class MeView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+class MeView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
@@ -205,4 +206,16 @@ class AdminMenuItemListCreateView(generics.ListCreateAPIView):
 class AdminMenuItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = AdminMenuItemSerializer
+    permission_classes = [IsAdmin]
+
+
+class AdminUserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all().order_by("last_name", "first_name", "email")
+    serializer_class = AdminUserSerializer
+    permission_classes = [IsAdmin]
+
+
+class AdminUserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = AdminUserSerializer
     permission_classes = [IsAdmin]

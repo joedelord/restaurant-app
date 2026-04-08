@@ -12,6 +12,7 @@ import MainLayout from "./layouts/MainLayout";
 import UserProfile from "./pages/UserProfile";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
+import AdminUsers from "./pages/Admin/AdminUser";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -74,6 +75,14 @@ function App() {
           element={
             <RoleRoute allowedRoles={["admin"]}>
               <AdminMenuItems />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <RoleRoute allowedRoles={["admin"]}>
+              <AdminUsers />
             </RoleRoute>
           }
         />
