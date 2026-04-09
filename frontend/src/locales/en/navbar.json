@@ -1,0 +1,11 @@
+{
+  "home": "Home",
+  "menu": "Menu",
+  "user": "User",
+  "staff": "Staff",
+  "admin": "Admin",
+  "login": "Sign In",
+  "register": "Register",
+  "toggleMenu": "Toggle navigation menu",
+  "reservations": "Book A Table"
+}

@@ -1,0 +1,87 @@
+{
+  "dashboard": {
+    "title": "Admin Dashboard",
+    "subtitle": "Manage restaurant system and data",
+    "users": {
+      "title": "Users",
+      "description": "Manage users, roles and permissions",
+      "view": "View users",
+      "roles": "Edit roles"
+    },
+    "menu": {
+      "title": "Menu",
+      "description": "Manage categories and menu items",
+      "categories": "Categories",
+      "items": "Menu items"
+    },
+    "reservations": {
+      "title": "Reservations",
+      "description": "Manage table reservations",
+      "all": "All reservations",
+      "edit": "Edit reservations"
+    },
+    "tables": {
+      "title": "Tables",
+      "description": "Manage restaurant tables and seating layout",
+      "view": "View tables",
+      "layout": "Edit layout"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "View sales performance and popular items",
+      "overview": "Sales overview",
+      "popular": "Popular items"
+    }
+  },
+  "users": {
+    "title": "User Management",
+    "subtitle": "Add, edit and manage system users.",
+    "addTitle": "Add New User",
+    "editTitle": "Edit User",
+    "listTitle": "Users ({{count}})",
+    "loading": "Loading users...",
+    "empty": "No users found.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phone": "Phone number",
+      "role": "Role",
+      "active": "Active",
+      "marketing": "Marketing consent",
+      "password": "Password",
+      "actions": "Actions"
+    },
+    "roles": {
+      "customer": "Customer",
+      "staff": "Staff",
+      "admin": "Admin"
+    },
+    "actions": {
+      "add": "Add User",
+      "update": "Update User",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "created": "User created successfully.",
+      "updated": "User updated successfully.",
+      "deleted": "User deleted successfully.",
+      "fetchError": "Failed to fetch users.",
+      "saveError": "Failed to save user.",
+      "deleteError": "Failed to delete user.",
+      "confirmDelete": "Are you sure you want to delete user \"{{email}}\"?"
+    },
+    "validation": {
+      "emailRequired": "Email is required.",
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required."
+    },
+    "values": {
+      "yes": "Yes",
+      "no": "No"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Ruokalista",
+  "subtitle": "Tutustu valikoimaamme",
+  "noItems": "Ruokalistaa ei ole saatavilla",
+  "loading": "Ladataan ruokalistaa...",
+  "loadError": "Ruokalistan lataaminen epäonnistui."
+}

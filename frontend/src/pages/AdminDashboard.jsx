@@ -2,6 +2,8 @@ import {
   UsersIcon,
   ClipboardDocumentListIcon,
   BookOpenIcon,
+  Squares2X2Icon,
+  ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -53,6 +55,36 @@ const AdminDashboard = () => {
         {
           label: t("admin.dashboard.reservations.edit"),
           path: "/admin/edit-reservations",
+        },
+      ],
+    },
+    {
+      title: t("admin.dashboard.tables.title"),
+      description: t("admin.dashboard.tables.description"),
+      icon: Squares2X2Icon,
+      actions: [
+        {
+          label: t("admin.dashboard.tables.view"),
+          path: "/admin/tables",
+        },
+        {
+          label: t("admin.dashboard.tables.layout"),
+          path: "/admin/tables/layout",
+        },
+      ],
+    },
+    {
+      title: t("admin.dashboard.analytics.title"),
+      description: t("admin.dashboard.analytics.description"),
+      icon: ChartBarIcon,
+      actions: [
+        {
+          label: t("admin.dashboard.analytics.overview"),
+          path: "/admin/analytics",
+        },
+        {
+          label: t("admin.dashboard.analytics.popular"),
+          path: "/admin/analytics/popular",
         },
       ],
     },
