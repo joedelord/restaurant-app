@@ -13,7 +13,8 @@ import MainLayout from "./layouts/MainLayout";
 import UserProfile from "./pages/UserProfile";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
-import AdminUsers from "./pages/Admin/AdminUser";
+import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminTables from "./pages/Admin/AdminTables";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -85,6 +86,14 @@ function App() {
           element={
             <RoleRoute allowedRoles={["admin"]}>
               <AdminUsers />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/admin/tables"
+          element={
+            <RoleRoute allowedRoles={["admin"]}>
+              <AdminTables />
             </RoleRoute>
           }
         />

@@ -302,3 +302,15 @@ class ReservationAvailabilityView(APIView):
             "party_size": party_size,
             "slots": slots,
         })
+    
+
+class AdminRestaurantTableListCreateView(generics.ListCreateAPIView):
+    queryset = RestaurantTable.objects.all().order_by("table_number")
+    serializer_class = RestaurantTableSerializer
+    permission_classes = [IsAdmin]
+
+
+class AdminRestaurantTableDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RestaurantTable.objects.all()
+    serializer_class = RestaurantTableSerializer
+    permission_classes = [IsAdmin]

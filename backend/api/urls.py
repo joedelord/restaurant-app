@@ -14,11 +14,8 @@ urlpatterns = [
 
     # TABLES
     path("tables/", views.RestaurantTableListView.as_view(), name="table-list"),
-    path(
-    "reservations/availability/",
-    views.ReservationAvailabilityView.as_view(),
-    name="reservation-availability",
-    ),
+    path("admin/tables/", views.AdminRestaurantTableListCreateView.as_view(), name="admin-table-list-create"),
+    path("admin/tables/<int:pk>/", views.AdminRestaurantTableDetailView.as_view(), name="admin-table-detail"),
 
     # CATEGORIES
     path("categories/", views.CategoryListView.as_view(), name="category-list"),
@@ -34,6 +31,7 @@ urlpatterns = [
     path("reservations/", views.ReservationListCreateView.as_view(), name="reservation-list-create"),
     path("reservations/<int:pk>/", views.ReservationDetailView.as_view(), name="reservation-detail"),
     path("reservations/<int:pk>/status/", views.ReservationStatusUpdateView.as_view(), name="reservation-status-update"),
+    path("reservations/availability/", views.ReservationAvailabilityView.as_view(),name="reservation-availability"),
 
     # ORDERS
     path("orders/", views.OrderListView.as_view(), name="order-list"),
