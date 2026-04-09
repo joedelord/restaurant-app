@@ -1,6 +1,7 @@
 import CategoryForm from "../../components/admin/CategoryForm";
 import CategoryList from "../../components/admin/CategoryList";
 import useCategories from "../../hooks/useCategories";
+import PageLoader from "../../components/ui/PageLoader";
 
 const AdminCategories = () => {
   const {
@@ -59,7 +60,7 @@ const AdminCategories = () => {
 
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
-                <p className="text-sm text-body">Loading categories...</p>
+                <PageLoader />
               </div>
             ) : (
               <CategoryList

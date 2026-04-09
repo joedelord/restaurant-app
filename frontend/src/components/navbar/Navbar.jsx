@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
-import LogoutButton from "../LogoutButton";
+import LogoutButton from "../ui/LogoutButton";
 import NavbarSection from "./NavbarSection";
 import NavbarItem from "./NavbarItem";
-import LanguageToggle from "../LanguageToggle";
+import LanguageToggle from "../ui/LanguageToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

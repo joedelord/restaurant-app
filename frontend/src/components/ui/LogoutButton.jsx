@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import api from "../api";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
-import useAuth from "../hooks/useAuth";
+import api from "../../api";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
+import useAuth from "../../hooks/useAuth";
 
 const LogoutButton = ({ variant = "link", className = "" }) => {
   const navigate = useNavigate();

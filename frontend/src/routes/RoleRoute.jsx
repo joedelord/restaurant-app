@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import PageLoader from "../components/PageLoader";
+import PageLoader from "../components/ui/PageLoader";
 
 const RoleRoute = ({ children, allowedRoles = [] }) => {
   const { isAuthorized, user } = useAuth();
