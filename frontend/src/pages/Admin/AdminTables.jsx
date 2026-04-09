@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
 import TableForm from "../../components/admin/TableForm";
 import TableList from "../../components/admin/TableList";
 import useTables from "../../hooks/useTables";
 
 const AdminTables = () => {
+  const { t } = useTranslation();
+
   const {
     tables,
     editingTable,
@@ -18,11 +21,13 @@ const AdminTables = () => {
 
   return (
     <div className="px-4 py-0">
-      <h1 className="text-center text-3xl font-bold">Table Management</h1>
+      <h1 className="text-center text-3xl font-bold">
+        {t("admin.tables.title")}
+      </h1>
 
       <div className="mx-auto w-full max-w-4xl space-y-6">
         <p className="mt-2 text-center text-gray-500">
-          Add, edit and manage restaurant tables.
+          {t("admin.tables.subtitle")}
         </p>
 
         {message && (
@@ -40,13 +45,19 @@ const AdminTables = () => {
         <section className="space-y-6">
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingTable ? "Edit Table" : "Add New Table"}
+              {editingTable
+                ? t("admin.tables.editTitle")
+                : t("admin.tables.addTitle")}
             </h2>
 
             <TableForm
               key={editingTable?.id ?? "new"}
               initialData={editingTable}
-              submitText={editingTable ? "Update Table" : "Add Table"}
+              submitText={
+                editingTable
+                  ? t("admin.tables.actions.update")
+                  : t("admin.tables.actions.add")
+              }
               onSubmit={editingTable ? handleUpdate : handleCreate}
               onCancel={editingTable ? cancelEditing : undefined}
             />
@@ -54,12 +65,12 @@ const AdminTables = () => {
 
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              Tables ({tables.length})
+              {t("admin.tables.listTitle", { count: tables.length })}
             </h2>
 
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
-                <p className="text-sm text-body">Loading tables...</p>
+                <p className="text-sm text-body">{t("admin.tables.loading")}</p>
               </div>
             ) : (
               <TableList

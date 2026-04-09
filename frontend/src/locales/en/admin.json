@@ -83,5 +83,45 @@
       "yes": "Yes",
       "no": "No"
     }
+  },
+  "tables": {
+    "title": "Table Management",
+    "subtitle": "Add, edit and manage restaurant tables.",
+    "addTitle": "Add New Table",
+    "editTitle": "Edit Table",
+    "listTitle": "Tables ({{count}})",
+    "loading": "Loading tables...",
+    "empty": "No tables found.",
+    "fields": {
+        "tableNumber": "Table number",
+        "seats": "Seats",
+        "active": "Active",
+        "status": "Status",
+        "actions": "Actions"
+    },
+    "actions": {
+        "add": "Add Table",
+        "update": "Update Table",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel"
+    },
+    "messages": {
+        "created": "Table created successfully.",
+        "updated": "Table updated successfully.",
+        "deleted": "Table deleted successfully.",
+        "fetchError": "Failed to fetch tables.",
+        "saveError": "Failed to save table.",
+        "deleteError": "Failed to delete table.",
+        "confirmDelete": "Are you sure you want to delete table {{tableNumber}}?"
+    },
+    "validation": {
+        "tableNumberRequired": "Table number must be greater than 0.",
+        "seatsRequired": "Seats must be greater than 0."
+    },
+    "values": {
+        "active": "Active",
+        "inactive": "Inactive"
+    }
   }
 }

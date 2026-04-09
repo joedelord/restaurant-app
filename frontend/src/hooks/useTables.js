@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   getTables,
   createTable,
@@ -10,6 +11,8 @@ const sortTables = (items) =>
   [...items].sort((a, b) => a.table_number - b.table_number);
 
 const useTables = () => {
+  const { t } = useTranslation();
+
   const [tables, setTables] = useState([]);
   const [editingTable, setEditingTable] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -24,20 +27,20 @@ const useTables = () => {
         setTables(sortTables(data));
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch tables.");
+        setError(t("admin.tables.messages.fetchError"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchTables();
-  }, []);
+  }, [t]);
 
   const handleCreate = async (payload) => {
     const created = await createTable(payload);
 
     setTables((prev) => sortTables([...prev, created]));
-    setMessage("Table created successfully.");
+    setMessage(t("admin.tables.messages.created"));
     setError("");
     setEditingTable(null);
   };
@@ -53,14 +56,16 @@ const useTables = () => {
       ),
     );
 
-    setMessage("Table updated successfully.");
+    setMessage(t("admin.tables.messages.updated"));
     setError("");
     setEditingTable(null);
   };
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete table ${item.table_number}?`,
+      t("admin.tables.messages.confirmDelete", {
+        tableNumber: item.table_number,
+      }),
     );
 
     if (!confirmed) return;
@@ -73,11 +78,11 @@ const useTables = () => {
         setEditingTable(null);
       }
 
-      setMessage("Table deleted successfully.");
+      setMessage(t("admin.tables.messages.deleted"));
       setError("");
     } catch (err) {
       console.error(err);
-      setError("Failed to delete table.");
+      setError(t("admin.tables.messages.deleteError"));
     }
   };
 

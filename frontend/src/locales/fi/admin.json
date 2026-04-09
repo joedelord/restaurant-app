@@ -83,5 +83,45 @@
       "yes": "Kyllä",
       "no": "Ei"
     }
+  },
+  "tables": {
+    "title": "Pöytien hallinta",
+    "subtitle": "Lisää, muokkaa ja hallitse ravintolan pöytiä.",
+    "addTitle": "Lisää uusi pöytä",
+    "editTitle": "Muokkaa pöytää",
+    "listTitle": "Pöydät ({{count}})",
+    "loading": "Ladataan pöytiä...",
+    "empty": "Pöytiä ei löytynyt.",
+    "fields": {
+        "tableNumber": "Pöytänumero",
+        "seats": "Paikkamäärä",
+        "active": "Aktiivinen",
+        "status": "Tila",
+        "actions": "Toiminnot"
+    },
+    "actions": {
+        "add": "Lisää pöytä",
+        "update": "Päivitä pöytä",
+        "edit": "Muokkaa",
+        "delete": "Poista",
+        "cancel": "Peruuta"
+    },
+    "messages": {
+        "created": "Pöytä luotu onnistuneesti.",
+        "updated": "Pöytä päivitetty onnistuneesti.",
+        "deleted": "Pöytä poistettu onnistuneesti.",
+        "fetchError": "Pöytien haku epäonnistui.",
+        "saveError": "Pöydän tallentaminen epäonnistui.",
+        "deleteError": "Pöydän poistaminen epäonnistui.",
+        "confirmDelete": "Haluatko varmasti poistaa pöydän {{tableNumber}}?"
+    },
+    "validation": {
+        "tableNumberRequired": "Pöytänumeron tulee olla suurempi kuin 0.",
+        "seatsRequired": "Paikkamäärän tulee olla suurempi kuin 0."
+    },
+    "values": {
+        "active": "Aktiivinen",
+        "inactive": "Ei aktiivinen"
+    }
   }
 }

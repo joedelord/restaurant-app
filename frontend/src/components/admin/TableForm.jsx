@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
 import Button from "../ui/Button";
 
@@ -8,12 +9,9 @@ const getFormValues = (initialData) => ({
   is_active: initialData?.is_active ?? true,
 });
 
-const TableForm = ({
-  onSubmit,
-  initialData = null,
-  submitText = "Save",
-  onCancel,
-}) => {
+const TableForm = ({ onSubmit, initialData = null, submitText, onCancel }) => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,12 +32,12 @@ const TableForm = ({
     setError("");
 
     if (formData.table_number === "" || Number(formData.table_number) <= 0) {
-      setError("Table number must be greater than 0.");
+      setError(t("admin.tables.validation.tableNumberRequired"));
       return;
     }
 
     if (formData.seats === "" || Number(formData.seats) <= 0) {
-      setError("Seats must be greater than 0.");
+      setError(t("admin.tables.validation.seatsRequired"));
       return;
     }
 
@@ -58,7 +56,7 @@ const TableForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError("Failed to save table.");
+      setError(t("admin.tables.messages.saveError"));
     } finally {
       setLoading(false);
     }
@@ -79,7 +77,7 @@ const TableForm = ({
               htmlFor="table_number"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Table number
+              {t("admin.tables.fields.tableNumber")}
             </label>
             <input
               id="table_number"
@@ -98,7 +96,7 @@ const TableForm = ({
               htmlFor="seats"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Seats
+              {t("admin.tables.fields.seats")}
             </label>
             <input
               id="seats"
@@ -126,7 +124,7 @@ const TableForm = ({
               htmlFor="is_active"
               className="text-sm font-medium text-heading"
             >
-              Active
+              {t("admin.tables.fields.active")}
             </label>
           </div>
 
@@ -134,7 +132,11 @@ const TableForm = ({
             <AuthSubmitButton
               loading={loading}
               idleText={submitText}
-              loadingText={initialData ? "Updating..." : "Creating..."}
+              loadingText={
+                initialData
+                  ? t("admin.tables.actions.update") + "..."
+                  : t("admin.tables.actions.add") + "..."
+              }
             />
 
             {onCancel && (
@@ -144,7 +146,7 @@ const TableForm = ({
                 onClick={onCancel}
                 disabled={loading}
               >
-                Cancel
+                {t("admin.tables.actions.cancel")}
               </Button>
             )}
           </div>
