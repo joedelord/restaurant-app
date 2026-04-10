@@ -123,5 +123,32 @@
         "active": "Aktiivinen",
         "inactive": "Ei aktiivinen"
     }
+  },
+  "menuItems": {
+    "fields": {
+      "name": "Nimi",
+      "price": "Hinta",
+      "category": "Kategoria"
+    },
+    "actions": {
+      "edit": "Muokkaa",
+      "delete": "Poista"
+    },
+    "empty": "Ei ruokalistan tuotteita."
+  },
+  "categories": {
+    "fields": {
+      "name": "Nimi",
+      "description": "Kuvaus",
+      "order": "Järjestys"
+    },
+    "actions": {
+      "edit": "Muokkaa",
+      "delete": "Poista"
+    },
+    "empty": "Ei kategorioita."
+  },
+  "List": {
+    "actions": "Toiminnot"
   }
 }

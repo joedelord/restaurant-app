@@ -123,5 +123,32 @@
         "active": "Active",
         "inactive": "Inactive"
     }
+  },
+  "menuItems": {
+    "fields": {
+      "name": "Name",
+      "price": "Price",
+      "category": "Category"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "empty": "No menu items found."
+  },
+  "categories": {
+    "fields": {
+      "name": "Name",
+      "description": "Description",
+      "order": "Order"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "empty": "No categories found."
+  },
+  "List": {
+    "actions": "Actions"
   }
 }
