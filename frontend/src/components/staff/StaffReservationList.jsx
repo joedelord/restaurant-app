@@ -55,11 +55,14 @@ const StaffReservationList = ({ items, onEdit, onDelete }) => {
                 className="border-b border-default-medium last:border-b-0"
               >
                 <td className="px-3 py-4 text-body">
-                  {item.user_name || item.user?.email || "-"}
+                  {item.user
+                    ? `${item.user.first_name || ""} ${item.user.last_name || ""}`.trim() ||
+                      item.user.email
+                    : "-"}
                 </td>
 
                 <td className="px-3 py-4 text-body">
-                  {item.table_number || item.table_id || "-"}
+                  {item.table?.table_number || "-"}
                 </td>
 
                 <td className="px-3 py-4 text-body">{item.party_size}</td>

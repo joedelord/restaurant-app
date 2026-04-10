@@ -21,7 +21,7 @@
         "active": "Active orders"
       }
     },
-        "reservations": {
+    "reservations": {
       "title": "Reservation Management",
       "subtitle": "View and update customer reservations.",
       "editTitle": "Edit Reservation",
@@ -59,6 +59,48 @@
         "deleteError": "Failed to delete reservation.",
         "saveError": "Failed to save reservation.",
         "confirmDelete": "Are you sure you want to delete reservation #{{id}}?"
+      }
+    },
+    "orders": {
+      "title": "Order Management",
+      "subtitle": "View and update restaurant orders.",
+      "editTitle": "Edit Order Status",
+      "listTitle": "Orders ({{count}})",
+      "empty": "No orders found.",
+      "fields": {
+        "orderId": "Order",
+        "table": "Table",
+        "items": "Items",
+        "total": "Total",
+        "status": "Status",
+        "createdAt": "Created",
+        "actions": "Actions"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "update": "Update order",
+        "cancel": "Cancel"
+      },
+      "statuses": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "preparing": "Preparing",
+        "ready": "Ready",
+        "served": "Served",
+        "paid": "Paid",
+        "cancelled": "Cancelled"
+      },
+      "messages": {
+        "fetchError": "Failed to fetch orders.",
+        "updated": "Order updated successfully.",
+        "deleted": "Order deleted successfully.",
+        "deleteError": "Failed to delete order.",
+        "saveError": "Failed to save order.",
+        "confirmDelete": "Are you sure you want to delete order #{{id}}?"
+      },
+      "values": {
+        "table": "Table"
       }
     }
 }
