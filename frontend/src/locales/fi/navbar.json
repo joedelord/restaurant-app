@@ -1,0 +1,11 @@
+{
+  "home": "Etusivu",
+  "menu": "Ruokalista",
+  "user": "Käyttäjä",
+  "staff": "Henkilökunta",
+  "admin": "Ylläpito",
+  "login": "Kirjaudu",
+  "register": "Rekisteröidy",
+  "toggleMenu": "Avaa navigaatiovalikko",
+  "reservations": "Varaa pöytä"
+}

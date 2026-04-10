@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
-import LogoutButton from "../LogoutButton";
+import LogoutButton from "../ui/LogoutButton";
 import NavbarSection from "./NavbarSection";
 import NavbarItem from "./NavbarItem";
-import LanguageToggle from "../LanguageToggle";
+import LanguageToggle from "../ui/LanguageToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -36,6 +36,9 @@ const Navbar = () => {
                 <>
                   <NavbarItem href="/">{t("navbar.home")}</NavbarItem>
                   <NavbarItem href="/menu">{t("navbar.menu")}</NavbarItem>
+                  <NavbarItem href="/reservations">
+                    {t("navbar.reservations")}
+                  </NavbarItem>
                   <NavbarItem href="/user">{t("navbar.user")}</NavbarItem>
 
                   {(user?.role === "staff" || user?.role === "admin") && (
@@ -50,6 +53,9 @@ const Navbar = () => {
                 <>
                   <NavbarItem href="/">{t("navbar.home")}</NavbarItem>
                   <NavbarItem href="/menu">{t("navbar.menu")}</NavbarItem>
+                  <NavbarItem href="/reservations">
+                    {t("navbar.reservations")}
+                  </NavbarItem>
                   <NavbarItem href="/login">{t("navbar.login")}</NavbarItem>
                   <NavbarItem href="/register">
                     {t("navbar.register")}
@@ -96,6 +102,9 @@ const Navbar = () => {
                   <NavbarItem href="/menu" onClick={closeMenu}>
                     {t("navbar.menu")}
                   </NavbarItem>
+                  <NavbarItem href="/reservations" onClick={closeMenu}>
+                    {t("navbar.reservations")}
+                  </NavbarItem>
                   <NavbarItem href="/user" onClick={closeMenu}>
                     {t("navbar.user")}
                   </NavbarItem>
@@ -119,6 +128,9 @@ const Navbar = () => {
                   </NavbarItem>
                   <NavbarItem href="/menu" onClick={closeMenu}>
                     {t("navbar.menu")}
+                  </NavbarItem>
+                  <NavbarItem href="/reservations" onClick={closeMenu}>
+                    {t("navbar.reservations")}
                   </NavbarItem>
                   <NavbarItem href="/login" onClick={closeMenu}>
                     {t("navbar.login")}

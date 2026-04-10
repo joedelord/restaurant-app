@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MenuSection from "../components/menu/MenuSection";
-import LanguageToggle from "../components/LanguageToggle";
 import { getCategories, getMenuItems } from "../services/menuService";
 
 const Menu = () => {

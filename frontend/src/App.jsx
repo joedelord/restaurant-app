@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Menu from "./pages/Menu";
+import Reservations from "./pages/Reservations";
 import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -12,7 +13,8 @@ import MainLayout from "./layouts/MainLayout";
 import UserProfile from "./pages/UserProfile";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
-import AdminUsers from "./pages/Admin/AdminUser";
+import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminTables from "./pages/Admin/AdminTables";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/reservations" element={<Reservations />} />
         <Route
           path="/login"
           element={
@@ -83,6 +86,14 @@ function App() {
           element={
             <RoleRoute allowedRoles={["admin"]}>
               <AdminUsers />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/admin/tables"
+          element={
+            <RoleRoute allowedRoles={["admin"]}>
+              <AdminTables />
             </RoleRoute>
           }
         />

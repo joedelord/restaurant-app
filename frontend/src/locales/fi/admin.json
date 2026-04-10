@@ -1,0 +1,154 @@
+{
+  "dashboard": {
+    "title": "Ylläpitopaneeli",
+    "subtitle": "Hallitse ravintolan järjestelmää ja dataa",
+    "users": {
+      "title": "Käyttäjät",
+      "description": "Hallitse käyttäjiä, rooleja ja oikeuksia",
+      "view": "Näytä käyttäjät",
+      "roles": "Muokkaa rooleja"
+    },
+    "menu": {
+      "title": "Ruokalista",
+      "description": "Hallitse kategorioita ja ruokia",
+      "categories": "Kategoriat",
+      "items": "Ruokalajit"
+    },
+    "reservations": {
+      "title": "Varaukset",
+      "description": "Hallitse pöytävarauksia",
+      "all": "Kaikki varaukset",
+      "edit": "Muokkaa varauksia"
+    },
+    "tables": {
+      "title": "Pöydät",
+      "description": "Hallitse ravintolan pöytiä ja istumajärjestystä",
+      "view": "Näytä pöydät",
+      "layout": "Muokkaa pöytäkarttaa"
+    },
+    "analytics": {
+      "title": "Myyntitilastot",
+      "description": "Tarkastele myyntiä ja suosituimpia tuotteita",
+      "overview": "Myynnin yleiskuva",
+      "popular": "Suosituimmat tuotteet"
+    }
+  },
+  "users": {
+    "title": "Käyttäjähallinta",
+    "subtitle": "Lisää, muokkaa ja hallinnoi järjestelmän käyttäjiä.",
+    "addTitle": "Lisää uusi käyttäjä",
+    "editTitle": "Muokkaa käyttäjää",
+    "listTitle": "Käyttäjät ({{count}})",
+    "loading": "Ladataan käyttäjiä...",
+    "empty": "Käyttäjiä ei löytynyt.",
+    "fields": {
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "firstName": "Etunimi",
+      "lastName": "Sukunimi",
+      "phone": "Puhelinnumero",
+      "role": "Rooli",
+      "active": "Aktiivinen",
+      "marketing": "Markkinointisuostumus",
+      "password": "Salasana",
+      "actions": "Toiminnot"
+    },
+    "roles": {
+      "customer": "Asiakas",
+      "staff": "Henkilökunta",
+      "admin": "Ylläpitäjä"
+    },
+    "actions": {
+      "add": "Lisää käyttäjä",
+      "update": "Päivitä käyttäjä",
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "cancel": "Peruuta"
+    },
+    "messages": {
+      "created": "Käyttäjä luotu onnistuneesti.",
+      "updated": "Käyttäjä päivitetty onnistuneesti.",
+      "deleted": "Käyttäjä poistettu onnistuneesti.",
+      "fetchError": "Käyttäjien haku epäonnistui.",
+      "saveError": "Käyttäjän tallentaminen epäonnistui.",
+      "deleteError": "Käyttäjän poistaminen epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa käyttäjän \"{{email}}\"?"
+    },
+    "validation": {
+      "emailRequired": "Sähköposti on pakollinen.",
+      "firstNameRequired": "Etunimi on pakollinen.",
+      "lastNameRequired": "Sukunimi on pakollinen."
+    },
+    "values": {
+      "yes": "Kyllä",
+      "no": "Ei"
+    }
+  },
+  "tables": {
+    "title": "Pöytien hallinta",
+    "subtitle": "Lisää, muokkaa ja hallitse ravintolan pöytiä.",
+    "addTitle": "Lisää uusi pöytä",
+    "editTitle": "Muokkaa pöytää",
+    "listTitle": "Pöydät ({{count}})",
+    "loading": "Ladataan pöytiä...",
+    "empty": "Pöytiä ei löytynyt.",
+    "fields": {
+        "tableNumber": "Pöytänumero",
+        "seats": "Paikkamäärä",
+        "active": "Aktiivinen",
+        "status": "Tila",
+        "actions": "Toiminnot"
+    },
+    "actions": {
+        "add": "Lisää pöytä",
+        "update": "Päivitä pöytä",
+        "edit": "Muokkaa",
+        "delete": "Poista",
+        "cancel": "Peruuta"
+    },
+    "messages": {
+        "created": "Pöytä luotu onnistuneesti.",
+        "updated": "Pöytä päivitetty onnistuneesti.",
+        "deleted": "Pöytä poistettu onnistuneesti.",
+        "fetchError": "Pöytien haku epäonnistui.",
+        "saveError": "Pöydän tallentaminen epäonnistui.",
+        "deleteError": "Pöydän poistaminen epäonnistui.",
+        "confirmDelete": "Haluatko varmasti poistaa pöydän {{tableNumber}}?"
+    },
+    "validation": {
+        "tableNumberRequired": "Pöytänumeron tulee olla suurempi kuin 0.",
+        "seatsRequired": "Paikkamäärän tulee olla suurempi kuin 0."
+    },
+    "values": {
+        "active": "Aktiivinen",
+        "inactive": "Ei aktiivinen"
+    }
+  },
+  "menuItems": {
+    "fields": {
+      "name": "Nimi",
+      "price": "Hinta",
+      "category": "Kategoria"
+    },
+    "actions": {
+      "edit": "Muokkaa",
+      "delete": "Poista"
+    },
+    "empty": "Ei ruokalistan tuotteita."
+  },
+  "categories": {
+    "fields": {
+      "name": "Nimi",
+      "description": "Kuvaus",
+      "order": "Järjestys"
+    },
+    "actions": {
+      "edit": "Muokkaa",
+      "delete": "Poista"
+    },
+    "empty": "Ei kategorioita."
+  },
+  "List": {
+    "actions": "Toiminnot"
+  }
+}

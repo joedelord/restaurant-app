@@ -1,0 +1,27 @@
+{
+  "title": "My Profile",
+  "subtitle": "View and update your personal information.",
+  "loading": "Loading profile...",
+  "fields": {
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone number",
+    "role": "Role",
+    "marketing": "Marketing consent"
+  },
+  "buttons": {
+    "save": "Save changes",
+    "saving": "Saving..."
+  },
+  "messages": {
+    "success": "Profile updated successfully.",
+    "loadError": "Failed to load profile.",
+    "saveError": "Failed to save profile."
+  },
+  "roles": {
+    "customer": "Customer",
+    "staff": "Staff",
+    "admin": "Admin"
+  }
+}

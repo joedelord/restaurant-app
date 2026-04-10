@@ -1,0 +1,27 @@
+{
+  "title": "Omat tiedot",
+  "subtitle": "Tarkastele ja päivitä omia tietojasi.",
+  "loading": "Ladataan profiilia...",
+  "fields": {
+    "email": "Sähköposti",
+    "firstName": "Etunimi",
+    "lastName": "Sukunimi",
+    "phone": "Puhelinnumero",
+    "role": "Rooli",
+    "marketing": "Markkinointisuostumus"
+  },
+  "buttons": {
+    "save": "Tallenna muutokset",
+    "saving": "Tallennetaan..."
+  },
+  "messages": {
+    "success": "Tiedot päivitetty onnistuneesti.",
+    "loadError": "Profiilin lataus epäonnistui.",
+    "saveError": "Tietojen tallentaminen epäonnistui."
+  },
+  "roles": {
+    "customer": "Asiakas",
+    "staff": "Henkilökunta",
+    "admin": "Ylläpitäjä"
+  }
+}
