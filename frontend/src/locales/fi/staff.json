@@ -1,0 +1,24 @@
+{
+    "dashboard": {
+      "title": "Henkilökunnan hallintapaneeli",
+      "subtitle": "Hallitse varauksia ja asiakkaiden tilauksia.",
+      "reservations": {
+        "title": "Varaukset",
+        "description": "Näe kaikki varaukset ja päivitä niiden tilaa.",
+        "viewAll": "Näytä varaukset",
+        "manage": "Hallitse varauksia"
+      },
+      "orders": {
+        "title": "Tilaukset",
+        "description": "Luo, tarkastele ja hallitse asiakastilauksia.",
+        "viewAll": "Näytä tilaukset",
+        "create": "Luo tilaus"
+      },
+      "walkIn": {
+        "title": "Walk-in-tilaukset",
+        "description": "Luo ja käsittele tilauksia ilman varausta.",
+        "create": "Uusi walk-in-tilaus",
+        "active": "Aktiiviset tilaukset"
+      }
+    }
+}

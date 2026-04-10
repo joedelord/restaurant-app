@@ -8,6 +8,7 @@ import enMenu from "./locales/en/menu.json";
 import enAdmin from "./locales/en/admin.json";
 import enProfile from "./locales/en/profile.json";
 import enHome from "./locales/en/home.json";
+import enStaff from "./locales/en/staff.json";
 
 import fiCommon from "./locales/fi/common.json";
 import fiAuth from "./locales/fi/auth.json";
@@ -16,6 +17,7 @@ import fiMenu from "./locales/fi/menu.json";
 import fiAdmin from "./locales/fi/admin.json";
 import fiProfile from "./locales/fi/profile.json";
 import fiHome from "./locales/fi/home.json";
+import fiStaff from "./locales/fi/staff.json";
 
 const resources = {
   en: {
@@ -27,6 +29,7 @@ const resources = {
       admin: enAdmin,
       profile: enProfile,
       home: enHome,
+      staff: enStaff,
     },
   },
   fi: {
@@ -38,6 +41,7 @@ const resources = {
       admin: fiAdmin,
       profile: fiProfile,
       home: fiHome,
+      staff: fiStaff,
     },
   },
 };

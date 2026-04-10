@@ -1,0 +1,24 @@
+{
+    "dashboard": {
+      "title": "Staff Dashboard",
+      "subtitle": "Manage reservations and customer orders.",
+      "reservations": {
+        "title": "Reservations",
+        "description": "View all reservations and update their status.",
+        "viewAll": "View reservations",
+        "manage": "Manage reservations"
+      },
+      "orders": {
+        "title": "Orders",
+        "description": "Create, view and manage customer orders.",
+        "viewAll": "View orders",
+        "create": "Create order"
+      },
+      "walkIn": {
+        "title": "Walk-in Orders",
+        "description": "Create and handle orders without a reservation.",
+        "create": "New walk-in order",
+        "active": "Active orders"
+      }
+    }
+}
