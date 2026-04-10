@@ -20,5 +20,45 @@
         "create": "New walk-in order",
         "active": "Active orders"
       }
+    },
+        "reservations": {
+      "title": "Reservation Management",
+      "subtitle": "View and update customer reservations.",
+      "editTitle": "Edit Reservation",
+      "listTitle": "Reservations ({{count}})",
+      "empty": "No reservations found.",
+      "fields": {
+        "customer": "Customer",
+        "table": "Table",
+        "partySize": "Party size",
+        "time": "Reservation time",
+        "status": "Status",
+        "notes": "Special requests",
+        "actions": "Actions"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "update": "Update reservation",
+        "cancel": "Cancel"
+      },
+      "statuses": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "cancelled": "Cancelled",
+        "completed": "Completed"
+      },
+      "validation": {
+        "timeRequired": "Reservation time is required.",
+        "partySizeRequired": "Party size must be at least 1."
+      },
+      "messages": {
+        "fetchError": "Failed to fetch reservations.",
+        "updated": "Reservation updated successfully.",
+        "deleted": "Reservation deleted successfully.",
+        "deleteError": "Failed to delete reservation.",
+        "saveError": "Failed to save reservation.",
+        "confirmDelete": "Are you sure you want to delete reservation #{{id}}?"
+      }
     }
 }

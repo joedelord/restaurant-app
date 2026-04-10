@@ -20,5 +20,45 @@
         "create": "Uusi walk-in-tilaus",
         "active": "Aktiiviset tilaukset"
       }
+    },
+    "reservations": {
+      "title": "Varausten hallinta",
+      "subtitle": "Tarkastele ja päivitä asiakkaiden varauksia.",
+      "editTitle": "Muokkaa varausta",
+      "listTitle": "Varaukset ({{count}})",
+      "empty": "Varauksia ei löytynyt.",
+      "fields": {
+        "customer": "Asiakas",
+        "table": "Pöytä",
+        "partySize": "Henkilömäärä",
+        "time": "Varausaika",
+        "status": "Tila",
+        "notes": "Lisätiedot",
+        "actions": "Toiminnot"
+      },
+      "actions": {
+        "edit": "Muokkaa",
+        "delete": "Poista",
+        "update": "Päivitä varaus",
+        "cancel": "Peruuta"
+      },
+      "statuses": {
+        "pending": "Odottaa",
+        "confirmed": "Vahvistettu",
+        "cancelled": "Peruttu",
+        "completed": "Valmis"
+      },
+      "validation": {
+        "timeRequired": "Varausaika on pakollinen.",
+        "partySizeRequired": "Henkilömäärän tulee olla vähintään 1."
+      },
+      "messages": {
+        "fetchError": "Varausten hakeminen epäonnistui.",
+        "updated": "Varaus päivitettiin onnistuneesti.",
+        "deleted": "Varaus poistettiin onnistuneesti.",
+        "deleteError": "Varauksen poistaminen epäonnistui.",
+        "saveError": "Varauksen tallennus epäonnistui.",
+        "confirmDelete": "Haluatko varmasti poistaa varauksen #{{id}}?"
+      }
     }
 }
