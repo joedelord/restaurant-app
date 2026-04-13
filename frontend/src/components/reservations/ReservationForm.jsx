@@ -1,114 +1,217 @@
 import { useEffect, useMemo, useState } from "react";
-import TablePicker from "./TablePicker";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   createReservation,
+  getReservationAvailability,
   getTables,
 } from "../../services/reservationService";
+import useAuth from "../../hooks/useAuth";
+import TimeSlotPicker from "./TimeSlotPicker";
+import TablePicker from "./TablePicker";
+import ReservationConfirmModal from "./ReservationConfirmModal";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
 
-const getLocalDateTimeValue = () => {
+const STORAGE_KEY = "pendingReservation";
+
+const getLocalDateValue = () => {
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  return now.toISOString().slice(0, 16);
+  return now.toISOString().split("T")[0];
 };
 
 const ReservationForm = () => {
-  const [tables, setTables] = useState([]);
-  const [loadingTables, setLoadingTables] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { isAuthorized } = useAuth();
 
-  const [formData, setFormData] = useState({
-    reservation_time: "",
-    party_size: 2,
-    table_id: null,
-    special_requests: "",
-  });
+  const [date, setDate] = useState("");
+  const [partySize, setPartySize] = useState(2);
+  const [slots, setSlots] = useState([]);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [tables, setTables] = useState([]);
+  const [selectedTableId, setSelectedTableId] = useState(null);
+  const [specialRequests, setSpecialRequests] = useState("");
+
+  const [loadingTables, setLoadingTables] = useState(true);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [pendingReservation, setPendingReservation] = useState(null);
 
   useEffect(() => {
     const fetchTables = async () => {
       try {
         setLoadingTables(true);
+        setError("");
         const data = await getTables();
         setTables(data);
       } catch (err) {
         console.error(err);
-        setError("Pöytien hakeminen epäonnistui.");
+        setError(t("reservation.messages.tablesFetchError"));
       } finally {
         setLoadingTables(false);
       }
     };
 
     fetchTables();
-  }, []);
+  }, [t]);
 
-  const availableSizeTables = useMemo(() => {
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      if (!date || !partySize || Number(partySize) <= 0) {
+        setSlots([]);
+        setSelectedSlot(null);
+        setSelectedTableId(null);
+        return;
+      }
+
+      try {
+        setLoadingSlots(true);
+        setError("");
+        setSelectedSlot(null);
+        setSelectedTableId(null);
+
+        const data = await getReservationAvailability({
+          date,
+          partySize: Number(partySize),
+        });
+
+        setSlots(data?.slots || []);
+      } catch (err) {
+        console.error(err);
+        setSlots([]);
+        setError(t("reservation.messages.slotsFetchError"));
+      } finally {
+        setLoadingSlots(false);
+      }
+    };
+
+    fetchAvailability();
+  }, [date, partySize, t]);
+
+  useEffect(() => {
+    const savedReservation = sessionStorage.getItem(STORAGE_KEY);
+
+    if (!isAuthorized || !savedReservation) return;
+
+    try {
+      const parsed = JSON.parse(savedReservation);
+
+      setDate(parsed.date || "");
+      setPartySize(parsed.party_size || 2);
+      setSpecialRequests(parsed.special_requests || "");
+      setSelectedTableId(parsed.table_id || null);
+      setPendingReservation(parsed);
+
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch (err) {
+      console.error("Failed to restore pending reservation:", err);
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+  }, [isAuthorized]);
+
+  useEffect(() => {
+    if (!pendingReservation?.time || !slots.length) return;
+
+    const matchedSlot = slots.find(
+      (slot) => slot.time === pendingReservation.time,
+    );
+
+    if (matchedSlot?.available) {
+      setSelectedSlot(matchedSlot);
+      setShowConfirmModal(true);
+    }
+  }, [slots, pendingReservation]);
+
+  const availableTablesForSelectedSlot = useMemo(() => {
+    if (!selectedSlot) return [];
+
     return tables.filter(
       (table) =>
-        Number(formData.party_size) > 0 &&
-        table.seats >= Number(formData.party_size),
+        selectedSlot.available_tables.includes(table.id) &&
+        table.seats >= Number(partySize),
     );
-  }, [tables, formData.party_size]);
+  }, [selectedSlot, tables, partySize]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "party_size" ? Number(value) : value,
-    }));
-
+  const clearFeedback = () => {
     setMessage("");
     setError("");
   };
 
-  const handleTableSelect = (tableId) => {
-    setFormData((prev) => ({
-      ...prev,
-      table_id: tableId,
-    }));
-    setMessage("");
-    setError("");
+  const resetForm = () => {
+    setDate("");
+    setPartySize(2);
+    setSlots([]);
+    setSelectedSlot(null);
+    setSelectedTableId(null);
+    setSpecialRequests("");
+    setPendingReservation(null);
+    setShowConfirmModal(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.reservation_time) {
-      setError("Valitse varausaika.");
+    if (!date || !selectedSlot || !selectedTableId) {
+      setError(t("reservation.validation.selectionRequired"));
       return;
     }
 
-    if (!formData.party_size || Number(formData.party_size) <= 0) {
-      setError("Henkilömäärän täytyy olla vähintään 1.");
-      return;
+    const selectedTable = tables.find((table) => table.id === selectedTableId);
+
+    const reservationDraft = {
+      reservation_time: `${date}T${selectedSlot.time}:00`,
+      date,
+      time: selectedSlot.time,
+      party_size: Number(partySize),
+      table_id: selectedTableId,
+      table_number: selectedTable?.table_number ?? null,
+      special_requests: specialRequests.trim(),
+    };
+
+    clearFeedback();
+    setPendingReservation(reservationDraft);
+    setShowConfirmModal(true);
+  };
+
+  const handleLoginRedirect = () => {
+    if (pendingReservation) {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(pendingReservation));
     }
 
-    if (!formData.table_id) {
-      setError("Valitse pöytä.");
+    navigate("/login", {
+      state: {
+        redirectTo: "/reservations",
+      },
+    });
+  };
+
+  const handleFinalConfirm = async () => {
+    if (!pendingReservation) return;
+
+    if (!isAuthorized) {
+      handleLoginRedirect();
       return;
     }
 
     try {
-      setLoading(true);
-      setError("");
-      setMessage("");
+      setLoadingSubmit(true);
+      clearFeedback();
 
       await createReservation({
-        reservation_time: formData.reservation_time,
-        party_size: Number(formData.party_size),
-        table_id: formData.table_id,
-        special_requests: formData.special_requests.trim(),
+        reservation_time: pendingReservation.reservation_time,
+        party_size: pendingReservation.party_size,
+        table_id: pendingReservation.table_id,
+        special_requests: pendingReservation.special_requests,
       });
 
-      setMessage("Varaus lähetetty onnistuneesti.");
-      setFormData({
-        reservation_time: "",
-        party_size: 2,
-        table_id: null,
-        special_requests: "",
-      });
+      setMessage(t("reservation.messages.created"));
+      resetForm();
     } catch (err) {
       console.error(err);
 
@@ -123,98 +226,147 @@ const ReservationForm = () => {
       } else if (data?.detail) {
         setError(data.detail);
       } else {
-        setError("Varauksen tekeminen epäonnistui.");
+        setError(t("reservation.messages.createError"));
       }
+
+      setShowConfirmModal(false);
     } finally {
-      setLoading(false);
+      setLoadingSubmit(false);
     }
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-      {message && (
-        <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-          {message}
-        </div>
-      )}
-
-      {error && (
-        <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <div>
-            <label className="mb-2 block text-sm font-medium text-gray-900">
-              Varausaika
-            </label>
-            <input
-              type="datetime-local"
-              name="reservation_time"
-              value={formData.reservation_time}
-              min={getLocalDateTimeValue()}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
-            />
+    <>
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+        {message && (
+          <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            {message}
           </div>
+        )}
 
-          <div>
-            <label className="mb-2 block text-sm font-medium text-gray-900">
-              Henkilömäärä
-            </label>
-            <input
-              type="number"
-              name="party_size"
-              min="1"
-              value={formData.party_size}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
-            />
+        {error && (
+          <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
           </div>
-        </div>
+        )}
 
-        <div>
-          <label className="mb-3 block text-sm font-medium text-gray-900">
-            Valitse pöytä
-          </label>
-
-          {loadingTables ? (
-            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-500">
-              Ladataan pöytiä...
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-900">
+                {t("reservation.fields.date")}
+              </label>
+              <input
+                type="date"
+                value={date}
+                min={getLocalDateValue()}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                  clearFeedback();
+                }}
+                className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
+              />
             </div>
-          ) : (
-            <TablePicker
-              tables={availableSizeTables}
-              selectedTableId={formData.table_id}
-              onSelect={handleTableSelect}
-              partySize={formData.party_size}
-            />
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-900">
+                {t("reservation.fields.partySize")}
+              </label>
+              <input
+                type="number"
+                min="1"
+                value={partySize}
+                onChange={(e) => {
+                  setPartySize(Number(e.target.value));
+                  clearFeedback();
+                }}
+                className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <section>
+            <h2 className="mb-3 text-lg font-semibold text-gray-900">
+              {t("reservation.sections.availableTimes")}
+            </h2>
+
+            {loadingSlots ? (
+              <div className="rounded-2xl border border-gray-200 bg-white p-4 text-sm text-gray-500">
+                {t("reservation.loading.slots")}
+              </div>
+            ) : (
+              <TimeSlotPicker
+                slots={slots}
+                selectedTime={selectedSlot?.time || null}
+                onSelect={(slot) => {
+                  setSelectedSlot(slot);
+                  setSelectedTableId(null);
+                  clearFeedback();
+                }}
+              />
+            )}
+          </section>
+
+          {selectedSlot && (
+            <section>
+              <h2 className="mb-3 text-lg font-semibold text-gray-900">
+                {t("reservation.sections.availableTablesForTime", {
+                  time: selectedSlot.time,
+                })}
+              </h2>
+
+              {loadingTables ? (
+                <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-500">
+                  {t("reservation.loading.tables")}
+                </div>
+              ) : (
+                <TablePicker
+                  tables={availableTablesForSelectedSlot}
+                  selectedTableId={selectedTableId}
+                  onSelect={(tableId) => {
+                    setSelectedTableId(tableId);
+                    clearFeedback();
+                  }}
+                  partySize={partySize}
+                />
+              )}
+            </section>
           )}
-        </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-900">
-            Lisätiedot
-          </label>
-          <textarea
-            name="special_requests"
-            rows="4"
-            value={formData.special_requests}
-            onChange={handleChange}
-            placeholder="Esim. lastenistuin, allergiat tai toive rauhallisesta pöydästä"
-            className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
+          <section>
+            <label className="mb-2 block text-sm font-medium text-gray-900">
+              {t("reservation.fields.specialRequests")}
+            </label>
+            <textarea
+              rows="4"
+              value={specialRequests}
+              onChange={(e) => {
+                setSpecialRequests(e.target.value);
+                clearFeedback();
+              }}
+              placeholder={t("reservation.fields.specialRequestsPlaceholder")}
+              className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
+            />
+          </section>
+
+          <AuthSubmitButton
+            loading={loadingSubmit}
+            idleText={t("reservation.actions.review")}
+            loadingText={t("reservation.actions.saving")}
           />
-        </div>
+        </form>
+      </div>
 
-        <AuthSubmitButton
-          loading={loading}
-          idleText="Vahvista varaus"
-          loadingText="Lähetetään..."
-        />
-      </form>
-    </div>
+      <ReservationConfirmModal
+        open={showConfirmModal}
+        reservation={pendingReservation}
+        isAuthorized={isAuthorized}
+        loading={loadingSubmit}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={handleFinalConfirm}
+        onLogin={handleLoginRedirect}
+      />
+    </>
   );
 };
 

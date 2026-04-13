@@ -1,8 +1,12 @@
+import { useTranslation } from "react-i18next";
+
 const TablePicker = ({ tables, selectedTableId, onSelect, partySize }) => {
+  const { t } = useTranslation();
+
   if (!tables.length) {
     return (
       <div className="rounded-2xl border border-gray-200 bg-white p-4 text-sm text-gray-500">
-        Ei pöytiä saatavilla.
+        {t("reservation.tablePicker.noTables")}
       </div>
     );
   }
@@ -29,15 +33,23 @@ const TablePicker = ({ tables, selectedTableId, onSelect, partySize }) => {
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">
-                Pöytä {table.table_number}
+                {t("reservation.tablePicker.table", {
+                  number: table.table_number,
+                })}
               </h3>
-              <span className="text-sm">👥 {table.seats}</span>
+
+              <span className="text-sm">
+                👥{" "}
+                {t("reservation.tablePicker.seats", {
+                  count: table.seats,
+                })}
+              </span>
             </div>
 
             <p className="mt-2 text-sm opacity-80">
               {tooSmall
-                ? "Liian pieni valitulle henkilömäärälle"
-                : "Sopiva valinta varaukselle"}
+                ? t("reservation.tablePicker.tooSmall")
+                : t("reservation.tablePicker.available")}
             </p>
           </button>
         );
