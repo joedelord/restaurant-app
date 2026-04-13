@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { formatDate } from "../../utils/date";
 import Button from "../ui/Button";
 
 const ReservationConfirmModal = ({
@@ -33,7 +34,7 @@ const ReservationConfirmModal = ({
               {t("reservation.confirm.date")}
             </span>
             <span className="font-medium text-gray-900">
-              {reservation.date}
+              {formatDate(reservation.date)}
             </span>
           </div>
 
