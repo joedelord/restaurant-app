@@ -6,6 +6,14 @@ const NotFound = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const handleGoBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <section className="flex min-h-[70vh] items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-8 text-center shadow-sm backdrop-blur-sm">
@@ -21,14 +29,25 @@ const NotFound = () => {
           {t("notFound.description")}
         </p>
 
-        <Button
-          type="button"
-          size="xl"
-          variant="primary"
-          onClick={() => navigate("/")}
-        >
-          {t("notFound.backHome")}
-        </Button>
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <Button
+            type="button"
+            size="xl"
+            variant="primary"
+            onClick={handleGoBack}
+          >
+            {t("notFound.goBack")}
+          </Button>
+
+          <Button
+            type="button"
+            size="xl"
+            variant="secondary"
+            onClick={() => navigate("/")}
+          >
+            {t("notFound.backHome")}
+          </Button>
+        </div>
       </div>
     </section>
   );

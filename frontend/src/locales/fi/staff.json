@@ -1,0 +1,106 @@
+{
+    "dashboard": {
+      "title": "Henkilökunnan hallintapaneeli",
+      "subtitle": "Hallitse varauksia ja asiakkaiden tilauksia.",
+      "reservations": {
+        "title": "Varaukset",
+        "description": "Näe kaikki varaukset ja päivitä niiden tilaa.",
+        "viewAll": "Näytä varaukset",
+        "manage": "Hallitse varauksia"
+      },
+      "orders": {
+        "title": "Tilaukset",
+        "description": "Luo, tarkastele ja hallitse asiakastilauksia.",
+        "viewAll": "Näytä tilaukset",
+        "create": "Luo tilaus"
+      },
+      "walkIn": {
+        "title": "Walk-in-tilaukset",
+        "description": "Luo ja käsittele tilauksia ilman varausta.",
+        "create": "Uusi walk-in-tilaus",
+        "active": "Aktiiviset tilaukset"
+      }
+    },
+    "reservations": {
+      "title": "Varausten hallinta",
+      "subtitle": "Tarkastele ja päivitä asiakkaiden varauksia.",
+      "editTitle": "Muokkaa varausta",
+      "listTitle": "Varaukset ({{count}})",
+      "empty": "Varauksia ei löytynyt.",
+      "fields": {
+        "customer": "Asiakas",
+        "table": "Pöytä",
+        "partySize": "Henkilömäärä",
+        "time": "Varausaika",
+        "status": "Tila",
+        "notes": "Lisätiedot",
+        "actions": "Toiminnot"
+      },
+      "actions": {
+        "edit": "Muokkaa",
+        "delete": "Poista",
+        "update": "Päivitä varaus",
+        "cancel": "Peruuta"
+      },
+      "statuses": {
+        "pending": "Odottaa",
+        "confirmed": "Vahvistettu",
+        "cancelled": "Peruttu",
+        "completed": "Valmis"
+      },
+      "validation": {
+        "timeRequired": "Varausaika on pakollinen.",
+        "partySizeRequired": "Henkilömäärän tulee olla vähintään 1."
+      },
+      "messages": {
+        "fetchError": "Varausten hakeminen epäonnistui.",
+        "updated": "Varaus päivitettiin onnistuneesti.",
+        "deleted": "Varaus poistettiin onnistuneesti.",
+        "deleteError": "Varauksen poistaminen epäonnistui.",
+        "saveError": "Varauksen tallennus epäonnistui.",
+        "confirmDelete": "Haluatko varmasti poistaa varauksen #{{id}}?"
+      }
+    },
+    "orders": {
+      "title": "Tilausten hallinta",
+      "subtitle": "Tarkastele ja päivitä ravintolan tilauksia.",
+      "editTitle": "Muokkaa tilauksen tilaa",
+      "listTitle": "Tilaukset ({{count}})",
+      "empty": "Tilauksia ei löytynyt.",
+      "fields": {
+        "orderId": "Tilaus",
+        "table": "Pöytä",
+        "items": "Rivejä",
+        "total": "Yhteensä",
+        "status": "Tila",
+        "createdAt": "Luotu",
+        "actions": "Toiminnot"
+      },
+      "actions": {
+        "edit": "Muokkaa",
+        "delete": "Poista",
+        "update": "Päivitä tilaus",
+        "cancel": "Peruuta"
+      },
+      "statuses": {
+        "pending": "Odottaa",
+        "confirmed": "Vahvistettu",
+        "preparing": "Valmistuksessa",
+        "ready": "Valmis",
+        "served": "Tarjoiltu",
+        "paid": "Maksettu",
+        "cancelled": "Peruttu"
+      },
+      "messages": {
+        "fetchError": "Tilausten hakeminen epäonnistui.",
+        "updated": "Tilaus päivitettiin onnistuneesti.",
+        "deleted": "Tilaus poistettiin onnistuneesti.",
+        "deleteError": "Tilauksen poistaminen epäonnistui.",
+        "saveError": "Tilauksen tallennus epäonnistui.",
+        "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?"
+      },
+      "values": {
+        "table": "Pöytä"
+      }
+    }
+  }

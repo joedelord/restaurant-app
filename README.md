@@ -1,176 +1,230 @@
 # 🍽️ Restaurant Reservation & Management System
 
-A full-stack web application for managing restaurant reservations, tables, menu, and orders.
-
-Built with **Django (REST API)** and **React (Vite + Tailwind CSS)**.
+A full-stack restaurant management application that allows customers to browse menus and make reservations, while staff and administrators manage tables, menu items, users, and orders.
 
 ---
 
-## 📌 Features
-
-### 👤 User Management
-
-- Register and login with email
-- JWT authentication
-- Role-based access (customer, staff, admin)
-
-### 📅 Reservations
-
-- Create and manage table reservations
-- Select table from visual layout (planned)
-- Reservation statuses: pending, confirmed, cancelled, completed
-
-### 🍔 Menu
-
-- Browse menu by categories
-- View item details (name, description, price, availability)
-- Admin can manage menu items and categories
-
-### 🧾 Orders
-
-- Create orders linked to reservations
-- Support for walk-in customers
-- Multiple items per order
-- Order status tracking
-
-### 📊 Analytics (planned)
-
-- Sales statistics
-- Most popular dishes
-- Daily / weekly reports
-
----
-
-## 🏗️ Architecture
-
-- Frontend: React + Tailwind CSS
-- Backend: Django REST Framework
-- Database: PostgreSQL
-
----
-
-## 🛠️ Tech Stack
-
-### Backend
-
-- Python
-- Django
-- Django REST Framework
-- JWT Authentication
-- PostgreSQL
+## 🚀 Tech Stack
 
 ### Frontend
 
 - React (Vite)
+- Tailwind CSS
 - React Router
 - Axios
-- Tailwind CSS
+- i18next (multi-language support)
+
+### Backend
+
+- Django
+- Django REST Framework
+- PostgreSQL
+- JWT Authentication (SimpleJWT)
 
 ---
 
-## 📂 Project Structure
+## ✨ Features
 
-backend/
-├── api/
-├── config/
-├── manage.py
-├── requirements.txt
+### 👤 Authentication
 
-frontend/
-├── src/
-├── public/
-├── package.json
-├── vite.config.js
+- User registration & login
+- JWT-based authentication (access + refresh tokens)
+- Role-based access (customer / staff / admin)
+
+### 🍽️ Menu
+
+- Browse menu items by category
+- Multi-language support (EN / FI)
+- Admin can manage categories and menu items
+
+### 📅 Reservations
+
+- Create table reservations
+- Select table based on party size
+- Prevent invalid bookings
+
+### 🪑 Tables
+
+- Manage restaurant tables (admin)
+- Table capacity filtering for reservations
+
+### 🛠️ Admin Dashboard
+
+- Manage users
+- Manage menu (categories & items)
+- Manage tables
+- View reservations
+
+### 📦 Orders (in progress)
+
+- Staff can create and manage orders
+- Link orders to tables/reservations
+
+---
+
+## 🧱 Project Structure
+
+```
+restaurant-app/
+│
+├── backend/
+│   ├── api/
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── permissions.py
+│   ├── config/
+│   ├── manage.py
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── context/
+│   │   ├── layouts/
+│   │   └── routes/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── .gitignore
+└── README.md
+```
 
 ---
 
 ## ⚙️ Setup Instructions
 
-### Backend
+### 1. Clone repository
 
-cd backend
-python -m venv .venv
-.venv\Scripts\activate (Windows)
-
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
+```
+git clone https://github.com/joedelord/restaurant-app.git
+cd restaurant-app
+```
 
 ---
 
-### Frontend
+### 2. Backend setup
 
+```
+cd backend
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create `.env` file:
+
+```
+SECRET_KEY=your_secret_key
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=your_database_url
+```
+
+Run migrations:
+
+```
+python manage.py migrate
+python manage.py runserver
+```
+
+---
+
+### 3. Frontend setup
+
+```
 cd frontend
 npm install
 npm run dev
+```
+
+Create `.env` file:
+
+```
+VITE_API_URL=http://127.0.0.1:8000/api
+```
 
 ---
 
-## 🔐 Environment Variables
+## 🔐 API Overview
 
-Example (.env):
+### Auth
 
-### Django
+- `POST /api/token/` → login
+- `POST /api/token/refresh/` → refresh token
 
-DEBUG=
-SECRET_KEY=
+### Users
 
-### Hosts
+- `POST /api/users/register/`
+- `GET /api/users/me/`
 
-ALLOWED_HOSTS=
+### Menu
 
-### CORS (frontend URL)
+- `GET /api/categories/`
+- `GET /api/menu-items/`
 
-CORS_ALLOWED_ORIGINS=
+### Reservations
 
-### Database (PostgreSQL)
+- `POST /api/reservations/`
+- `GET /api/reservations/`
 
-DB_NAME=
-DB_USER=
-DB_PASSWORD=
-DB_HOST=
-DB_PORT=
+### Tables
 
-### JWT
-
-JWT_SECRET=
+- `GET /api/tables/`
 
 ---
 
-## 🔒 Security
+## 🧪 Testing (optional)
 
-- JWT authentication
-- Password hashing
-- Role-based authorization
-- Input validation
-- CSRF & XSS protection
+Backend tests:
 
----
-
-## 🚀 Deployment (planned)
-
-- Frontend → Vercel
-- Backend → Render / Railway
-- Database → PostgreSQL
+```
+python manage.py test
+```
 
 ---
 
-## 🎯 Goals
+## 🗺️ Roadmap
 
-- Full-stack development
-- REST API design
-- Database modeling
-- Authentication & security
-- UI with Tailwind CSS
+### ✅ Implemented
+
+- Authentication (JWT)
+- Admin dashboard (users, tables, menu)
+- Reservation system
+- Table selection logic
+
+### 🚧 In Progress
+
+- Staff order management
+- Improved reservation time-slot UI
+
+### 🔮 Planned
+
+- Analytics dashboard
+- Table layout editor (visual)
+- Notifications (email)
 
 ---
 
-## 👤 Author
+## 💡 Future Improvements
 
-Jouni Seppänen
+- Full i18n coverage across all components
+- Reusable admin table & form components
+- Better error handling & toast notifications
+- Performance optimizations (loading states)
+
+---
+
+## 👨‍💻 Author
+
+Jouni Seppänen (joedelord)
 
 ---
 
 ## 📄 License
 
-Educational project
+This project is for educational and portfolio purposes.

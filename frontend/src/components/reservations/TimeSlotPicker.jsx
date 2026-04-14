@@ -1,35 +1,51 @@
-const TimeSlotPicker = ({ slots, selectedTime, onSelect }) => {
+import { useTranslation } from "react-i18next";
+
+const TimeSlotPicker = ({ slots, selectedSlot, onSelect }) => {
+  const { t } = useTranslation();
+
   if (!slots.length) {
     return (
-      <div className="rounded-2xl border border-gray-200 bg-white p-4 text-sm text-gray-500">
-        Ei aikoja saatavilla.
+      <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-500">
+        {t("reservation.timeSlot.noSlots")}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-      {slots.map((slot) => {
-        const isSelected = selectedTime === slot.time;
+    <div>
+      <h3 className="mb-3 text-sm font-medium text-gray-900">
+        {t("reservation.timeSlot.title")}
+      </h3>
 
-        return (
-          <button
-            key={slot.time}
-            type="button"
-            disabled={!slot.available}
-            onClick={() => slot.available && onSelect(slot)}
-            className={`rounded-xl px-4 py-3 text-sm font-medium transition ${
-              !slot.available
-                ? "cursor-not-allowed border border-red-200 bg-red-100 text-red-700"
-                : isSelected
-                  ? "border border-green-700 bg-green-700 text-white"
-                  : "border border-green-200 bg-green-100 text-green-800 hover:bg-green-200"
-            }`}
-          >
-            {slot.time}
-          </button>
-        );
-      })}
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
+        {slots.map((slot) => {
+          const isSelected = selectedSlot?.time === slot.time;
+
+          return (
+            <button
+              key={slot.time}
+              type="button"
+              onClick={() => slot.available && onSelect(slot)}
+              disabled={!slot.available}
+              className={`rounded-xl px-3 py-2 text-sm font-medium transition ${
+                isSelected
+                  ? "bg-black text-white"
+                  : slot.available
+                    ? "bg-green-100 text-green-700 hover:bg-green-200"
+                    : "cursor-not-allowed bg-red-100 text-red-500"
+              }`}
+            >
+              <div>{slot.time}</div>
+
+              <div className="text-xs">
+                {slot.available
+                  ? t("reservation.timeSlot.available")
+                  : t("reservation.timeSlot.reserved")}
+              </div>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };
