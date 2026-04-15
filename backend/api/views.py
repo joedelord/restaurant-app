@@ -160,6 +160,21 @@ class OrderStatusUpdateView(generics.UpdateAPIView):
             .all()
         )
 
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        refreshed_instance = (
+            Order.objects.select_related("reservation", "table")
+            .prefetch_related("items__menu_item")
+            .get(pk=instance.pk)
+        )
+
+        return Response(OrderSerializer(refreshed_instance).data)
+
 
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
