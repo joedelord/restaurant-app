@@ -23,7 +23,7 @@ const StaffCreateOrder = () => {
             onClick={() => setSelectedMode("reservation")}
             className={`rounded-xl border px-5 py-5 text-center shadow-sm transition ${
               selectedMode === "reservation"
-                ? "border-brand bg-gray-600 text-white"
+                ? "border-black bg-gray-900 text-white"
                 : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
             }`}
           >
@@ -46,7 +46,7 @@ const StaffCreateOrder = () => {
             onClick={() => setSelectedMode("walkIn")}
             className={`rounded-xl border px-5 py-5 text-center shadow-sm transition ${
               selectedMode === "walkIn"
-                ? "border-brand  bg-gray-600 text-white"
+                ? "border-black bg-gray-900 text-white"
                 : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
             }`}
           >

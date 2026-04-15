@@ -44,21 +44,6 @@ const AdminDashboard = () => {
       ],
     },
     {
-      title: t("admin.dashboard.reservations.title"),
-      description: t("admin.dashboard.reservations.description"),
-      icon: ClipboardDocumentListIcon,
-      actions: [
-        {
-          label: t("admin.dashboard.reservations.all"),
-          path: "/admin/reservations",
-        },
-        {
-          label: t("admin.dashboard.reservations.edit"),
-          path: "/admin/edit-reservations",
-        },
-      ],
-    },
-    {
       title: t("admin.dashboard.tables.title"),
       description: t("admin.dashboard.tables.description"),
       icon: Squares2X2Icon,
@@ -103,7 +88,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {cards.map((card, index) => {
           const Icon = card.icon;
 
