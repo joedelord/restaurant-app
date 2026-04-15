@@ -419,7 +419,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         if not items:
             raise serializers.ValidationError({"items": "Order must contain at least one item."})
 
-        # Jos statusia ei anneta create-vaiheessa, oletetaan pending
         if not attrs.get("status"):
             attrs["status"] = "pending"
 
@@ -432,6 +431,11 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             if reservation.status in ["cancelled", "completed"]:
                 raise serializers.ValidationError(
                     {"reservation_id": "Cannot create an order for this reservation."}
+                )
+
+            if Order.objects.filter(reservation=reservation).exists():
+                raise serializers.ValidationError(
+                    {"reservation_id": "An order already exists for this reservation."}
                 )
 
         return attrs
@@ -488,6 +492,98 @@ class OrderStatusUpdateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Invalid order status.")
 
         return value
+    
+
+class OrderUpdateSerializer(serializers.ModelSerializer):
+    items = OrderItemCreateSerializer(many=True, write_only=True, required=False)
+
+    class Meta:
+        model = Order
+        fields = [
+            "status",
+            "items",
+        ]
+
+    def validate_status(self, value):
+        request = self.context.get("request")
+        user = getattr(request, "user", None)
+
+        if not user or not user.is_authenticated or not is_staff_or_admin(user):
+            raise serializers.ValidationError("You are not allowed to update order status.")
+
+        if value not in ORDER_STAFF_ALLOWED_STATUSES:
+            raise serializers.ValidationError("Invalid order status.")
+
+        return value
+
+    def validate_items(self, value):
+        if not value:
+            raise serializers.ValidationError("Order must contain at least one item.")
+
+        seen_ids = set()
+        for item in value:
+            menu_item = item["menu_item"]
+
+            if menu_item.id in seen_ids:
+                raise serializers.ValidationError(
+                    "Duplicate menu items are not allowed. Combine quantities into one row."
+                )
+            seen_ids.add(menu_item.id)
+
+        return value
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        items_data = validated_data.pop("items", None)
+        new_status = validated_data.get("status", instance.status)
+
+        locked_statuses = ["paid", "cancelled"]
+        if instance.status in locked_statuses and items_data is not None:
+            raise serializers.ValidationError(
+                {"items": "Paid or cancelled orders cannot be edited."}
+            )
+
+        instance.status = new_status
+        instance.save(update_fields=["status"])
+
+        if items_data is not None:
+            instance.items.all().delete()
+
+            total_price = Decimal("0.00")
+            order_items = []
+
+            for item_data in items_data:
+                menu_item = item_data["menu_item"]
+                quantity = item_data["quantity"]
+                item_price = menu_item.price
+
+                total_price += item_price * quantity
+
+                order_items.append(
+                    OrderItem(
+                        order=instance,
+                        menu_item=menu_item,
+                        name_en=menu_item.name_en,
+                        name_fi=menu_item.name_fi,
+                        quantity=quantity,
+                        price=item_price,
+                    )
+                )
+
+            OrderItem.objects.bulk_create(order_items)
+
+            instance.total_price = total_price
+            instance.save(update_fields=["total_price"])
+
+        return instance
+
+    def to_representation(self, instance):
+        refreshed = (
+            Order.objects.select_related("reservation", "table")
+            .prefetch_related("items__menu_item")
+            .get(pk=instance.pk)
+        )
+        return OrderSerializer(refreshed).data
     
 
 class AdminMenuItemSerializer(serializers.ModelSerializer):

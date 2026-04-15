@@ -11,7 +11,7 @@ export const createOrder = async (payload) => {
 };
 
 export const updateOrder = async (id, payload) => {
-  const response = await api.patch(`/orders/${id}/status/`, payload);
+  const response = await api.patch(`/orders/${id}/`, payload);
   return response.data;
 };
 

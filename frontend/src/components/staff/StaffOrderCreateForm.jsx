@@ -49,16 +49,24 @@ const StaffOrderCreateForm = ({ onCreated }) => {
         setLoadingData(true);
         setError("");
 
-        const [reservationRes, tableRes, menuRes] = await Promise.all([
-          api.get("/reservations/"),
-          api.get("/tables/"),
-          api.get("/menu-items/"),
-        ]);
+        const [reservationRes, orderRes, tableRes, menuRes] = await Promise.all(
+          [
+            api.get("/reservations/"),
+            api.get("/orders/"),
+            api.get("/tables/"),
+            api.get("/menu-items/"),
+          ],
+        );
+
+        const reservationIdsWithOrder = new Set(
+          orderRes.data.map((order) => order.reservation?.id).filter(Boolean),
+        );
 
         const usableReservations = reservationRes.data.filter(
           (reservation) =>
             reservation.status !== "cancelled" &&
-            reservation.status !== "completed",
+            reservation.status !== "completed" &&
+            !reservationIdsWithOrder.has(reservation.id),
         );
 
         setReservations(usableReservations);

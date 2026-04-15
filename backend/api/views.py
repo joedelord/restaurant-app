@@ -24,6 +24,7 @@ from .serializers import (
     AdminMenuItemSerializer,
     OrderSerializer,
     OrderCreateSerializer,
+    OrderUpdateSerializer,
     OrderStatusUpdateSerializer,
     AdminUserSerializer
 )
@@ -117,8 +118,7 @@ class OrderCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
 
-class OrderDetailView(generics.RetrieveDestroyAPIView):
-    serializer_class = OrderSerializer
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
     def get_queryset(self):
@@ -128,6 +128,11 @@ class OrderDetailView(generics.RetrieveDestroyAPIView):
             .all()
         )
 
+    def get_serializer_class(self):
+        if self.request.method in ["PUT", "PATCH"]:
+            return OrderUpdateSerializer
+        return OrderSerializer
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
 
@@ -135,9 +140,7 @@ class OrderDetailView(generics.RetrieveDestroyAPIView):
 
         if instance.status in locked_statuses:
             return Response(
-                {
-                    "detail": "Served or paid orders cannot be deleted."
-                },
+                {"detail": "Served or paid orders cannot be deleted."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
