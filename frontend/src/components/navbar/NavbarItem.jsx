@@ -1,3 +1,14 @@
+/**
+ * NavbarItem
+ *
+ * Reusable navigation link component.
+ *
+ * Responsibilities:
+ * - Wraps react-router NavLink
+ * - Applies active/inactive styling
+ * - Handles navigation clicks (desktop & mobile)
+ */
+
 import { NavLink } from "react-router-dom";
 
 const NavbarItem = ({ href, children, onClick }) => {

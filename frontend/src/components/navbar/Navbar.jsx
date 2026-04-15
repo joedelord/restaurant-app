@@ -1,3 +1,16 @@
+/**
+ * Navbar
+ *
+ * Main navigation component of the application.
+ *
+ * Responsibilities:
+ * - Displays primary navigation links (home, menu, reservations)
+ * - Handles authentication state (login icon vs profile dropdown)
+ * - Shows role-based navigation (staff, admin)
+ * - Controls mobile menu and profile dropdown state
+ * - Includes language switch functionality
+ */
+
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
