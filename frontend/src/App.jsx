@@ -11,6 +11,7 @@ import PublicRoute from "./routes/PublicRoute";
 import RoleRoute from "./routes/RoleRoute";
 import MainLayout from "./layouts/MainLayout";
 import UserDashboard from "./pages/UserDashboard";
+import UserProfile from "./pages/User/UserProfile";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
 import AdminUsers from "./pages/Admin/AdminUsers";
@@ -48,6 +49,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="user/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
             </ProtectedRoute>
           }
         />

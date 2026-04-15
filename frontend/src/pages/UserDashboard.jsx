@@ -18,7 +18,7 @@ const UserDashboard = () => {
       actions: [
         {
           label: t("user.dashboard.profile.view"),
-          path: "/profile",
+          path: "/user/profile",
         },
         {
           label: t("user.dashboard.profile.edit"),

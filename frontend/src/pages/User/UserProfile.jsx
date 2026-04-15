@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../components/auth/AuthSubmitButton";
-import { getMyProfile, updateMyProfile } from "../services/userProfileService";
+import PageLoader from "../../components/ui/PageLoader";
+import AuthSubmitButton from "../../components/auth/AuthSubmitButton";
+import {
+  getMyProfile,
+  updateMyProfile,
+} from "../../services/userProfileService";
 
 const UserProfile = () => {
   const { t } = useTranslation();
@@ -90,13 +94,7 @@ const UserProfile = () => {
   };
 
   if (loading) {
-    return (
-      <div className="mx-auto w-full max-w-3xl px-4 py-0">
-        <div className="rounded-md border border-black p-5">
-          <p className="text-sm text-body">{t("profile.loading")}</p>
-        </div>
-      </div>
-    );
+    return <PageLoader />;
   }
 
   return (

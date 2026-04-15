@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MenuSection from "../components/menu/MenuSection";
 import { getCategories, getMenuItems } from "../services/menuService";
+import PageLoader from "../components/ui/PageLoader";
 
 const Menu = () => {
   const [categories, setCategories] = useState([]);
@@ -77,13 +78,7 @@ const Menu = () => {
   }, [categories, menuItems, i18n.language]);
 
   if (loading) {
-    return (
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-gray-500">{t("menu.load")}</p>
-        </div>
-      </div>
-    );
+    return <PageLoader />;
   }
 
   if (error) {
