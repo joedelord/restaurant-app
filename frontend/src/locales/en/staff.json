@@ -77,6 +77,8 @@
       "editTitle": "Edit Order Status",
       "listTitle": "Orders ({{count}})",
       "empty": "No orders found.",
+      "createTitle": "Create new order",
+      "createSubtitle": "Create a new customer order linked to a reservation or as a walk-in order.",
       "fields": {
         "orderId": "Order",
         "table": "Table",
@@ -97,7 +99,12 @@
         "edit": "Edit",
         "delete": "Delete",
         "update": "Update order",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "create": "Create order",
+        "creating": "Creating order...",
+        "addItem": "Add item",
+        "removeItem": "Remove row",
+        "backToOrders": "Back to orders"
       },
       "statuses": {
         "pending": "Pending",

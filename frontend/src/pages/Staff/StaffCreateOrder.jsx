@@ -21,7 +21,7 @@ const StaffCreateOrder = () => {
           <button
             type="button"
             onClick={() => setSelectedMode("reservation")}
-            className={`rounded-xl border px-5 py-5 text-left shadow-sm transition ${
+            className={`rounded-xl border px-5 py-5 text-center shadow-sm transition ${
               selectedMode === "reservation"
                 ? "border-brand bg-gray-600 text-white"
                 : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
@@ -44,7 +44,7 @@ const StaffCreateOrder = () => {
           <button
             type="button"
             onClick={() => setSelectedMode("walkIn")}
-            className={`rounded-xl border px-5 py-5 text-left shadow-sm transition ${
+            className={`rounded-xl border px-5 py-5 text-center shadow-sm transition ${
               selectedMode === "walkIn"
                 ? "border-brand  bg-gray-600 text-white"
                 : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
