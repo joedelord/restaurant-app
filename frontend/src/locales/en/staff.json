@@ -40,7 +40,12 @@
         "edit": "Edit",
         "delete": "Delete",
         "update": "Update reservation",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "create": "Create order",
+        "creating": "Creating order...",
+        "addItem": "Add item",
+        "removeItem": "Remove row",
+        "backToOrders": "Back to orders"
       },
       "statuses": {
         "pending": "Pending",
@@ -50,7 +55,11 @@
       },
       "validation": {
         "timeRequired": "Reservation time is required.",
-        "partySizeRequired": "Party size must be at least 1."
+        "partySizeRequired": "Party size must be at least 1.",
+        "reservationRequired": "Please select a reservation.",
+        "tableRequired": "Please select a table.",
+        "itemsRequired": "Add at least one item to the order.",
+        "duplicateItems": "The same item cannot be added twice. Update the quantity instead."
       },
       "messages": {
         "fetchError": "Failed to fetch reservations.",
@@ -58,7 +67,8 @@
         "deleted": "Reservation deleted successfully.",
         "deleteError": "Failed to delete reservation.",
         "saveError": "Failed to save reservation.",
-        "confirmDelete": "Are you sure you want to delete reservation #{{id}}?"
+        "confirmDelete": "Are you sure you want to delete reservation #{{id}}?",
+        "created": "Order created successfully."
       }
     },
     "orders": {
@@ -74,7 +84,13 @@
         "total": "Total",
         "status": "Status",
         "createdAt": "Created",
-        "actions": "Actions"
+        "actions": "Actions",
+        "orderType": "Order type",
+        "reservation": "Reservation",
+        "menuItem": "Menu item",
+        "quantity": "Quantity",
+        "rowTotal": "Row total",
+        "totalPreview": "Estimated total"
       },
       "actions": {
         "edit": "Edit",
@@ -101,6 +117,21 @@
       },
       "values": {
         "table": "Table"
+      },
+      "placeholders": {
+        "selectReservation": "Select reservation",
+        "selectTable": "Select table",
+        "selectMenuItem": "Select menu item"
+      },
+      "types": {
+        "reservation": "Reservation order",
+        "walkIn": "Walk-in order"
+      },
+      "sections": {
+        "items": "Order items"
+      },
+      "loading": {
+        "form": "Loading order form data..."
       }
     }
 }

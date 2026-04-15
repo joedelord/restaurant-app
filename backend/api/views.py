@@ -117,15 +117,34 @@ class OrderCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
 
-class OrderDetailView(generics.RetrieveAPIView):
+class OrderDetailView(generics.RetrieveDestroyAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
+    permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
     def get_queryset(self):
         return (
             Order.objects.select_related("reservation", "table")
             .prefetch_related("items__menu_item")
             .all()
+        )
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        locked_statuses = ["served", "paid"]
+
+        if instance.status in locked_statuses:
+            return Response(
+                {
+                    "detail": "Served or paid orders cannot be deleted."
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        self.perform_destroy(instance)
+        return Response(
+            {"detail": "Order deleted successfully."},
+            status=status.HTTP_200_OK,
         )
     
     

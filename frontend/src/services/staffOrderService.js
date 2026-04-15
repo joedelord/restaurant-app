@@ -5,8 +5,13 @@ export const getOrders = async () => {
   return response.data;
 };
 
+export const createOrder = async (payload) => {
+  const response = await api.post("/orders/create/", payload);
+  return response.data;
+};
+
 export const updateOrder = async (id, payload) => {
-  const response = await api.patch(`/orders/${id}/`, payload);
+  const response = await api.patch(`/orders/${id}/status/`, payload);
   return response.data;
 };
 

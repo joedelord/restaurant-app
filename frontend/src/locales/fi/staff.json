@@ -67,6 +67,8 @@
       "editTitle": "Muokkaa tilauksen tilaa",
       "listTitle": "Tilaukset ({{count}})",
       "empty": "Tilauksia ei löytynyt.",
+      "createTitle": "Luo uusi tilaus",
+      "createSubtitle": "Kirjaa asiakkaalle uusi tilaus joko varaukseen liitettynä tai walk-in-tilauksena.",
       "fields": {
         "orderId": "Tilaus",
         "table": "Pöytä",
@@ -74,13 +76,24 @@
         "total": "Yhteensä",
         "status": "Tila",
         "createdAt": "Luotu",
-        "actions": "Toiminnot"
+        "actions": "Toiminnot",
+        "orderType": "Tilauksen tyyppi",
+        "reservation": "Varaus",
+        "menuItem": "Tuote",
+        "quantity": "Määrä",
+        "rowTotal": "Rivin summa",
+        "totalPreview": "Arvioitu yhteensä"
       },
       "actions": {
         "edit": "Muokkaa",
         "delete": "Poista",
         "update": "Päivitä tilaus",
-        "cancel": "Peruuta"
+        "cancel": "Peruuta",
+        "create": "Luo tilaus",
+        "creating": "Luodaan tilausta...",
+        "addItem": "Lisää tuote",
+        "removeItem": "Poista rivi",
+        "backToOrders": "Takaisin tilauksiin"
       },
       "statuses": {
         "pending": "Odottaa",
@@ -97,10 +110,32 @@
         "deleted": "Tilaus poistettiin onnistuneesti.",
         "deleteError": "Tilauksen poistaminen epäonnistui.",
         "saveError": "Tilauksen tallennus epäonnistui.",
-        "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?"
+        "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?",
+        "created": "Tilaus luotu onnistuneesti."
       },
       "values": {
         "table": "Pöytä"
+      },
+      "loading": {
+        "form": "Ladataan tilauslomakkeen tietoja..."
+      },
+      "sections": {
+        "items": "Tilausrivit"
+      },
+      "types": {
+        "reservation": "Varaukseen liittyvä",
+        "walkIn": "Walk-in"
+      },
+      "placeholders": {
+        "selectReservation": "Valitse varaus",
+        "selectTable": "Valitse pöytä",
+        "selectMenuItem": "Valitse tuote"
+      },
+      "validation": {
+        "reservationRequired": "Valitse varaus.",
+        "tableRequired": "Valitse pöytä.",
+        "itemsRequired": "Lisää vähintään yksi tuote tilaukselle.",
+        "duplicateItems": "Samaa tuotetta ei voi lisätä kahdesti. Muuta sen sijaan määrää."
       }
     }
   }
