@@ -41,21 +41,6 @@ const StaffDashboard = () => {
         },
       ],
     },
-    {
-      title: t("staff.dashboard.walkIn.title"),
-      description: t("staff.dashboard.walkIn.description"),
-      icon: PlusCircleIcon,
-      actions: [
-        {
-          label: t("staff.dashboard.walkIn.create"),
-          path: "/staff/orders/walk-in",
-        },
-        {
-          label: t("staff.dashboard.walkIn.active"),
-          path: "/staff/orders/active",
-        },
-      ],
-    },
   ];
 
   return (
@@ -69,7 +54,7 @@ const StaffDashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {cards.map((card, index) => {
           const Icon = card.icon;
 

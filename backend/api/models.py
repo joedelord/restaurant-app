@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import get_language
@@ -191,6 +192,15 @@ class Order(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["reservation"],
+                condition=Q(reservation__isnull=False),
+                name="unique_order_per_reservation",
+            )
+        ]
 
     def __str__(self):
         return f"Order {self.pk}"

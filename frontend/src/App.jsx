@@ -17,6 +17,7 @@ import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminTables from "./pages/Admin/AdminTables";
 import StaffReservations from "./pages/Staff/StaffReservations";
 import StaffOrders from "./pages/staff/StaffOrders";
+import StaffCreateOrder from "./pages/Staff/StaffCreateOrder";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -112,6 +113,14 @@ function App() {
           element={
             <RoleRoute allowedRoles={["staff", "admin"]}>
               <StaffOrders />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/staff/orders/new"
+          element={
+            <RoleRoute allowedRoles={["staff", "admin"]}>
+              <StaffCreateOrder />
             </RoleRoute>
           }
         />

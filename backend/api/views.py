@@ -24,6 +24,7 @@ from .serializers import (
     AdminMenuItemSerializer,
     OrderSerializer,
     OrderCreateSerializer,
+    OrderUpdateSerializer,
     OrderStatusUpdateSerializer,
     AdminUserSerializer
 )
@@ -117,15 +118,36 @@ class OrderCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
 
-class OrderDetailView(generics.RetrieveAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, IsStaffOrAdmin]
 
     def get_queryset(self):
         return (
             Order.objects.select_related("reservation", "table")
             .prefetch_related("items__menu_item")
             .all()
+        )
+
+    def get_serializer_class(self):
+        if self.request.method in ["PUT", "PATCH"]:
+            return OrderUpdateSerializer
+        return OrderSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        locked_statuses = ["served", "paid"]
+
+        if instance.status in locked_statuses:
+            return Response(
+                {"detail": "Served or paid orders cannot be deleted."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        self.perform_destroy(instance)
+        return Response(
+            {"detail": "Order deleted successfully."},
+            status=status.HTTP_200_OK,
         )
     
     
@@ -140,6 +162,21 @@ class OrderStatusUpdateView(generics.UpdateAPIView):
             .prefetch_related("items__menu_item")
             .all()
         )
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        refreshed_instance = (
+            Order.objects.select_related("reservation", "table")
+            .prefetch_related("items__menu_item")
+            .get(pk=instance.pk)
+        )
+
+        return Response(OrderSerializer(refreshed_instance).data)
 
 
 class LogoutView(APIView):
