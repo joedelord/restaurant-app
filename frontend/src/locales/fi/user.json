@@ -1,0 +1,23 @@
+{
+    "dashboard": {
+      "title": "Oma hallintapaneeli",
+      "subtitle": "Hallitse profiiliasi, varauksiasi ja tilauksiasi.",
+      "profile": {
+        "title": "Profiili",
+        "description": "Tarkastele ja päivitä omia tietojasi.",
+        "view": "Näytä profiili",
+        "edit": "Muokkaa profiilia"
+      },
+      "reservations": {
+        "title": "Varaukset",
+        "description": "Tarkastele tulevia ja aiempia pöytävarauksiasi.",
+        "viewAll": "Näytä varaukset",
+        "create": "Tee varaus"
+      },
+      "orders": {
+        "title": "Tilaukset",
+        "description": "Selaa varauksiisi liittyviä tilauksia.",
+        "viewAll": "Näytä tilaukset"
+      }
+    }
+}

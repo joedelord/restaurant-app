@@ -1,0 +1,23 @@
+{
+    "dashboard": {
+      "title": "My Dashboard",
+      "subtitle": "Manage your profile, reservations, and orders.",
+      "profile": {
+        "title": "Profile",
+        "description": "View and update your personal information.",
+        "view": "View profile",
+        "edit": "Edit profile"
+      },
+      "reservations": {
+        "title": "Reservations",
+        "description": "Check your upcoming and past table reservations.",
+        "viewAll": "View reservations",
+        "create": "Book a table"
+      },
+      "orders": {
+        "title": "Orders",
+        "description": "Browse your order history linked to your reservations.",
+        "viewAll": "View orders"
+      }
+    }
+}

@@ -11,6 +11,7 @@ import enHome from "./locales/en/home.json";
 import enStaff from "./locales/en/staff.json";
 import enReservation from "./locales/en/reservation.json";
 import enNotFound from "./locales/en/notFound.json";
+import enUser from "./locales/en/user.json";
 
 import fiCommon from "./locales/fi/common.json";
 import fiAuth from "./locales/fi/auth.json";
@@ -22,6 +23,7 @@ import fiHome from "./locales/fi/home.json";
 import fiStaff from "./locales/fi/staff.json";
 import fiReservation from "./locales/fi/reservation.json";
 import fiNotFound from "./locales/fi/notFound.json";
+import fiUser from "./locales/fi/user.json";
 
 const resources = {
   en: {
@@ -36,6 +38,7 @@ const resources = {
       staff: enStaff,
       reservation: enReservation,
       notFound: enNotFound,
+      user: enUser,
     },
   },
   fi: {
@@ -50,6 +53,7 @@ const resources = {
       staff: fiStaff,
       reservation: fiReservation,
       notFound: fiNotFound,
+      user: fiUser,
     },
   },
 };

@@ -10,7 +10,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import RoleRoute from "./routes/RoleRoute";
 import MainLayout from "./layouts/MainLayout";
-import UserProfile from "./pages/UserProfile";
+import UserDashboard from "./pages/UserDashboard";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
 import AdminUsers from "./pages/Admin/AdminUsers";
@@ -47,7 +47,7 @@ function App() {
           path="/user"
           element={
             <ProtectedRoute>
-              <UserProfile />
+              <UserDashboard />
             </ProtectedRoute>
           }
         />
