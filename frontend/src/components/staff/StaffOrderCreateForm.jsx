@@ -11,10 +11,39 @@ const emptyRow = {
   quantity: 1,
 };
 
-const StaffOrderCreateForm = ({ onCreated }) => {
+const getTodayDate = () => {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+};
+
+const toLocalDateString = (value) => {
+  if (!value) return "";
+
+  const date = new Date(value);
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+};
+
+const formatReservationDateTime = (value) => {
+  if (!value) return "-";
+
+  return new Date(value).toLocaleString("fi-FI", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+};
+
+const StaffOrderCreateForm = ({
+  onCreated,
+  initialMode = "reservation",
+  modeLocked = false,
+}) => {
   const { t, i18n } = useTranslation();
 
-  const [mode, setMode] = useState("reservation");
+  const [mode, setMode] = useState(initialMode);
+  const [selectedDate, setSelectedDate] = useState(getTodayDate());
+
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
@@ -30,6 +59,18 @@ const StaffOrderCreateForm = ({ onCreated }) => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    setMode(initialMode);
+    setFormData({
+      reservation_id: "",
+      table_id: "",
+      status: "pending",
+      items: [{ ...emptyRow }],
+    });
+    setError("");
+    setMessage("");
+  }, [initialMode]);
 
   const getLocalizedName = (item) => {
     return i18n.language === "fi"
@@ -83,12 +124,25 @@ const StaffOrderCreateForm = ({ onCreated }) => {
     fetchData();
   }, [t]);
 
+  const filteredReservations = useMemo(() => {
+    return reservations
+      .filter(
+        (reservation) =>
+          toLocalDateString(reservation.reservation_time) === selectedDate,
+      )
+      .sort(
+        (a, b) =>
+          new Date(a.reservation_time).getTime() -
+          new Date(b.reservation_time).getTime(),
+      );
+  }, [reservations, selectedDate]);
+
   const selectedReservation = useMemo(() => {
-    return reservations.find(
+    return filteredReservations.find(
       (reservation) =>
         String(reservation.id) === String(formData.reservation_id),
     );
-  }, [reservations, formData.reservation_id]);
+  }, [filteredReservations, formData.reservation_id]);
 
   useEffect(() => {
     if (mode === "reservation" && selectedReservation?.table?.id) {
@@ -99,7 +153,26 @@ const StaffOrderCreateForm = ({ onCreated }) => {
     }
   }, [mode, selectedReservation]);
 
+  useEffect(() => {
+    if (mode !== "reservation") return;
+
+    const stillExists = filteredReservations.some(
+      (reservation) =>
+        String(reservation.id) === String(formData.reservation_id),
+    );
+
+    if (!stillExists && formData.reservation_id) {
+      setFormData((prev) => ({
+        ...prev,
+        reservation_id: "",
+        table_id: "",
+      }));
+    }
+  }, [filteredReservations, formData.reservation_id, mode]);
+
   const handleModeChange = (nextMode) => {
+    if (modeLocked) return;
+
     setMode(nextMode);
     setError("");
     setMessage("");
@@ -228,9 +301,7 @@ const StaffOrderCreateForm = ({ onCreated }) => {
         items: [{ ...emptyRow }],
       });
 
-      if (onCreated) {
-        onCreated(createdOrder);
-      }
+      onCreated?.(createdOrder);
     } catch (err) {
       console.error(err);
 
@@ -263,262 +334,294 @@ const StaffOrderCreateForm = ({ onCreated }) => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl rounded-md border border-black p-5">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
+    <div className="mx-auto w-full max-w-5xl space-y-4">
+      {!modeLocked && (
+        <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => handleModeChange("reservation")}
+            className={`rounded-t-xl px-5 py-2.5 text-sm font-semibold transition ${
+              mode === "reservation"
+                ? "bg-brand text-white shadow-sm"
+                : "bg-gray-100 text-heading hover:bg-gray-200"
+            }`}
+          >
+            {t("staff.orders.types.reservation")}
+          </button>
 
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+          <button
+            type="button"
+            onClick={() => handleModeChange("walkIn")}
+            className={`rounded-t-xl px-5 py-2.5 text-sm font-semibold transition ${
+              mode === "walkIn"
+                ? "bg-brand text-white shadow-sm"
+                : "bg-gray-100 text-heading hover:bg-gray-200"
+            }`}
+          >
+            {t("staff.orders.types.walkIn")}
+          </button>
+        </div>
+      )}
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-2.5 block text-sm font-medium text-heading">
-              {t("staff.orders.fields.orderType")}
-            </label>
+      <div className="rounded-md border border-black p-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {message && (
+            <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
+              {message}
+            </div>
+          )}
 
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={() => handleModeChange("reservation")}
-                className={`rounded-base px-4 py-2 text-sm font-medium transition ${
-                  mode === "reservation"
-                    ? "bg-brand text-white"
-                    : "bg-gray-100 text-heading hover:bg-gray-200"
-                }`}
+          {error && (
+            <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          {mode === "reservation" && (
+            <div className="grid gap-4 md:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="selectedDate"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("staff.orders.fields.date")}
+                </label>
+
+                <input
+                  id="selectedDate"
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  disabled={loadingSubmit}
+                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="reservation_id"
+                  className="mb-2.5 block text-sm font-medium text-heading"
+                >
+                  {t("staff.orders.fields.reservation")}
+                </label>
+
+                <select
+                  id="reservation_id"
+                  name="reservation_id"
+                  value={formData.reservation_id}
+                  onChange={handleChange}
+                  disabled={loadingSubmit}
+                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                >
+                  <option value="">
+                    {t("staff.orders.placeholders.selectReservation")}
+                  </option>
+
+                  {filteredReservations.map((reservation) => {
+                    const customerName =
+                      `${reservation.user?.first_name || ""} ${reservation.user?.last_name || ""}`.trim() ||
+                      reservation.user?.email ||
+                      `#${reservation.id}`;
+
+                    return (
+                      <option key={reservation.id} value={reservation.id}>
+                        #{reservation.id} · {customerName} ·{" "}
+                        {reservation.table?.table_number
+                          ? `${t("staff.orders.values.table")} ${reservation.table.table_number}`
+                          : "-"}{" "}
+                        ·{" "}
+                        {formatReservationDateTime(
+                          reservation.reservation_time,
+                        )}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                {filteredReservations.length === 0 && (
+                  <p className="mt-2 text-sm text-body">
+                    {t("staff.orders.messages.noReservationsForDate")}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label
+                htmlFor="table_id"
+                className="mb-2.5 block text-sm font-medium text-heading"
               >
-                {t("staff.orders.types.reservation")}
-              </button>
+                {t("staff.orders.fields.table")}
+              </label>
 
-              <button
-                type="button"
-                onClick={() => handleModeChange("walkIn")}
-                className={`rounded-base px-4 py-2 text-sm font-medium transition ${
-                  mode === "walkIn"
-                    ? "bg-brand text-white"
-                    : "bg-gray-100 text-heading hover:bg-gray-200"
-                }`}
+              <select
+                id="table_id"
+                name="table_id"
+                value={formData.table_id}
+                onChange={handleChange}
+                disabled={
+                  loadingSubmit ||
+                  (mode === "reservation" && !!selectedReservation)
+                }
+                className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-60"
               >
-                {t("staff.orders.types.walkIn")}
-              </button>
+                <option value="">
+                  {t("staff.orders.placeholders.selectTable")}
+                </option>
+                {tables.map((table) => (
+                  <option key={table.id} value={table.id}>
+                    {t("staff.orders.values.table")} {table.table_number} (
+                    {table.seats})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="status"
+                className="mb-2.5 block text-sm font-medium text-heading"
+              >
+                {t("staff.orders.fields.status")}
+              </label>
+
+              <select
+                id="status"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                disabled={loadingSubmit}
+                className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+              >
+                <option value="pending">
+                  {t("staff.orders.statuses.pending")}
+                </option>
+                <option value="confirmed">
+                  {t("staff.orders.statuses.confirmed")}
+                </option>
+                <option value="preparing">
+                  {t("staff.orders.statuses.preparing")}
+                </option>
+                <option value="ready">
+                  {t("staff.orders.statuses.ready")}
+                </option>
+                <option value="served">
+                  {t("staff.orders.statuses.served")}
+                </option>
+                <option value="paid">{t("staff.orders.statuses.paid")}</option>
+                <option value="cancelled">
+                  {t("staff.orders.statuses.cancelled")}
+                </option>
+              </select>
             </div>
           </div>
 
-          <div>
-            <label
-              htmlFor="status"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("staff.orders.fields.status")}
-            </label>
-
-            <select
-              id="status"
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              disabled={loadingSubmit}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-            >
-              <option value="pending">
-                {t("staff.orders.statuses.pending")}
-              </option>
-              <option value="confirmed">
-                {t("staff.orders.statuses.confirmed")}
-              </option>
-              <option value="preparing">
-                {t("staff.orders.statuses.preparing")}
-              </option>
-              <option value="ready">{t("staff.orders.statuses.ready")}</option>
-              <option value="served">
-                {t("staff.orders.statuses.served")}
-              </option>
-              <option value="paid">{t("staff.orders.statuses.paid")}</option>
-              <option value="cancelled">
-                {t("staff.orders.statuses.cancelled")}
-              </option>
-            </select>
-          </div>
-        </div>
-
-        {mode === "reservation" && (
-          <div>
-            <label
-              htmlFor="reservation_id"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("staff.orders.fields.reservation")}
-            </label>
-
-            <select
-              id="reservation_id"
-              name="reservation_id"
-              value={formData.reservation_id}
-              onChange={handleChange}
-              disabled={loadingSubmit}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-            >
-              <option value="">
-                {t("staff.orders.placeholders.selectReservation")}
-              </option>
-              {reservations.map((reservation) => {
-                const customerName =
-                  `${reservation.user?.first_name || ""} ${reservation.user?.last_name || ""}`.trim() ||
-                  reservation.user?.email ||
-                  `#${reservation.id}`;
-
-                return (
-                  <option key={reservation.id} value={reservation.id}>
-                    #{reservation.id} · {customerName} ·{" "}
-                    {reservation.table?.table_number
-                      ? `${t("staff.orders.values.table")} ${reservation.table.table_number}`
-                      : "-"}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        )}
-
-        <div>
-          <label
-            htmlFor="table_id"
-            className="mb-2.5 block text-sm font-medium text-heading"
-          >
-            {t("staff.orders.fields.table")}
-          </label>
-
-          <select
-            id="table_id"
-            name="table_id"
-            value={formData.table_id}
-            onChange={handleChange}
-            disabled={
-              loadingSubmit || (mode === "reservation" && !!selectedReservation)
-            }
-            className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-60"
-          >
-            <option value="">
-              {t("staff.orders.placeholders.selectTable")}
-            </option>
-            {tables.map((table) => (
-              <option key={table.id} value={table.id}>
-                {t("staff.orders.values.table")} {table.table_number} (
-                {table.seats})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="space-y-4">
             <h2 className="text-lg font-semibold text-heading">
               {t("staff.orders.sections.items")}
             </h2>
 
-            <Button type="button" variant="secondary" onClick={handleAddRow}>
-              {t("staff.orders.actions.addItem")}
-            </Button>
+            {formData.items.map((row, index) => {
+              const selectedItem = menuItems.find(
+                (item) => String(item.id) === String(row.menu_item_id),
+              );
+
+              return (
+                <div
+                  key={index}
+                  className="grid gap-3 rounded-base border border-default-medium p-4 md:grid-cols-[1fr_140px_auto]"
+                >
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-heading">
+                      {t("staff.orders.fields.menuItem")}
+                    </label>
+
+                    <select
+                      value={row.menu_item_id}
+                      onChange={(e) =>
+                        handleItemChange(index, "menu_item_id", e.target.value)
+                      }
+                      disabled={loadingSubmit}
+                      className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                    >
+                      <option value="">
+                        {t("staff.orders.placeholders.selectMenuItem")}
+                      </option>
+
+                      {menuItems.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {getLocalizedName(item)} ·{" "}
+                          {getLocalizedCategoryName(item)} ·{" "}
+                          {formatCurrency(item.price)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-heading">
+                      {t("staff.orders.fields.quantity")}
+                    </label>
+
+                    <input
+                      type="number"
+                      min="1"
+                      value={row.quantity}
+                      onChange={(e) =>
+                        handleItemChange(index, "quantity", e.target.value)
+                      }
+                      disabled={loadingSubmit}
+                      className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                    />
+                  </div>
+
+                  <div className="flex items-end">
+                    <Button
+                      type="button"
+                      variant="danger"
+                      onClick={() => handleRemoveRow(index)}
+                      disabled={loadingSubmit}
+                      className="w-full"
+                    >
+                      {t("staff.orders.actions.removeItem")}
+                    </Button>
+                  </div>
+
+                  {selectedItem && (
+                    <div className="md:col-span-3 text-sm text-body">
+                      {t("staff.orders.fields.rowTotal")}:{" "}
+                      {formatCurrency(
+                        Number(selectedItem.price) * Number(row.quantity),
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <div>
+              <Button type="button" variant="secondary" onClick={handleAddRow}>
+                {t("staff.orders.actions.addItem")}
+              </Button>
+            </div>
           </div>
 
-          {formData.items.map((row, index) => {
-            const selectedItem = menuItems.find(
-              (item) => String(item.id) === String(row.menu_item_id),
-            );
+          <div className="rounded-base bg-gray-50 px-4 py-3 text-sm font-medium text-heading">
+            {t("staff.orders.fields.totalPreview")}:{" "}
+            {formatCurrency(totalPreview)}
+          </div>
 
-            return (
-              <div
-                key={index}
-                className="grid gap-3 rounded-base border border-default-medium p-4 md:grid-cols-[1fr_140px_auto]"
-              >
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-heading">
-                    {t("staff.orders.fields.menuItem")}
-                  </label>
-
-                  <select
-                    value={row.menu_item_id}
-                    onChange={(e) =>
-                      handleItemChange(index, "menu_item_id", e.target.value)
-                    }
-                    disabled={loadingSubmit}
-                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                  >
-                    <option value="">
-                      {t("staff.orders.placeholders.selectMenuItem")}
-                    </option>
-
-                    {menuItems.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {getLocalizedName(item)} ·{" "}
-                        {getLocalizedCategoryName(item)} ·{" "}
-                        {formatCurrency(item.price)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-heading">
-                    {t("staff.orders.fields.quantity")}
-                  </label>
-
-                  <input
-                    type="number"
-                    min="1"
-                    value={row.quantity}
-                    onChange={(e) =>
-                      handleItemChange(index, "quantity", e.target.value)
-                    }
-                    disabled={loadingSubmit}
-                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                  />
-                </div>
-
-                <div className="flex items-end">
-                  <Button
-                    type="button"
-                    variant="danger"
-                    onClick={() => handleRemoveRow(index)}
-                    disabled={loadingSubmit}
-                    className="w-full"
-                  >
-                    {t("staff.orders.actions.removeItem")}
-                  </Button>
-                </div>
-
-                {selectedItem && (
-                  <div className="md:col-span-3 text-sm text-body">
-                    {t("staff.orders.fields.rowTotal")}:{" "}
-                    {formatCurrency(
-                      Number(selectedItem.price) * Number(row.quantity),
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="rounded-base bg-gray-50 px-4 py-3 text-sm font-medium text-heading">
-          {t("staff.orders.fields.totalPreview")}:{" "}
-          {formatCurrency(totalPreview)}
-        </div>
-
-        <div className="flex gap-3">
-          <AuthSubmitButton
-            loading={loadingSubmit}
-            idleText={t("staff.orders.actions.create")}
-            loadingText={t("staff.orders.actions.creating")}
-          />
-        </div>
-      </form>
+          <div className="flex gap-3">
+            <AuthSubmitButton
+              loading={loadingSubmit}
+              idleText={t("staff.orders.actions.create")}
+              loadingText={t("staff.orders.actions.creating")}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

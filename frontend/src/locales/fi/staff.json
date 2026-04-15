@@ -82,7 +82,8 @@
         "menuItem": "Tuote",
         "quantity": "Määrä",
         "rowTotal": "Rivin summa",
-        "totalPreview": "Arvioitu yhteensä"
+        "totalPreview": "Arvioitu yhteensä",
+        "date": "Päivämäärä"
       },
       "actions": {
         "edit": "Muokkaa",
@@ -111,7 +112,8 @@
         "deleteError": "Tilauksen poistaminen epäonnistui.",
         "saveError": "Tilauksen tallennus epäonnistui.",
         "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?",
-        "created": "Tilaus luotu onnistuneesti."
+        "created": "Tilaus luotu onnistuneesti.",
+        "noReservationsForDate": "Valitulle päivälle ei löytynyt varauksia."
       },
       "values": {
         "table": "Pöytä"
@@ -136,6 +138,10 @@
         "tableRequired": "Valitse pöytä.",
         "itemsRequired": "Lisää vähintään yksi tuote tilaukselle.",
         "duplicateItems": "Samaa tuotetta ei voi lisätä kahdesti. Muuta sen sijaan määrää."
+      },
+      "modeDescriptions": {
+        "reservation": "Luo tilaus olemassa olevalle pöytävaraukselle.",
+        "walkIn": "Luo tilaus asiakkaalle ilman varausta."
       }
     }
   }

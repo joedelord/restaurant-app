@@ -1,11 +1,10 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import StaffOrderCreateForm from "../../components/staff/StaffOrderCreateForm";
-import Button from "../../components/ui/Button";
 
 const StaffCreateOrder = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [selectedMode, setSelectedMode] = useState(null);
 
   return (
     <div className="px-4 py-0">
@@ -18,25 +17,61 @@ const StaffCreateOrder = () => {
           {t("staff.orders.createSubtitle")}
         </p>
 
-        <div className="flex justify-center">
-          <Button
+        <div className="grid gap-4 md:grid-cols-2">
+          <button
             type="button"
-            variant="secondary"
-            onClick={() => navigate("/staff/orders")}
+            onClick={() => setSelectedMode("reservation")}
+            className={`rounded-xl border px-5 py-5 text-left shadow-sm transition ${
+              selectedMode === "reservation"
+                ? "border-brand bg-gray-600 text-white"
+                : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
+            }`}
           >
-            {t("staff.orders.actions.backToOrders")}
-          </Button>
+            <p className="text-base font-semibold">
+              {t("staff.orders.types.reservation")}
+            </p>
+            <p
+              className={`mt-2 text-sm ${
+                selectedMode === "reservation"
+                  ? "text-white/90"
+                  : "text-gray-500"
+              }`}
+            >
+              {t("staff.orders.modeDescriptions.reservation")}
+            </p>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedMode("walkIn")}
+            className={`rounded-xl border px-5 py-5 text-left shadow-sm transition ${
+              selectedMode === "walkIn"
+                ? "border-brand  bg-gray-600 text-white"
+                : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
+            }`}
+          >
+            <p className="text-base font-semibold">
+              {t("staff.orders.types.walkIn")}
+            </p>
+            <p
+              className={`mt-2 text-sm ${
+                selectedMode === "walkIn" ? "text-white/90" : "text-gray-500"
+              }`}
+            >
+              {t("staff.orders.modeDescriptions.walkIn")}
+            </p>
+          </button>
         </div>
 
-        <StaffOrderCreateForm
-          onCreated={(createdOrder) => {
-            navigate("/staff/orders", {
-              state: {
-                createdOrderId: createdOrder.id,
-              },
-            });
-          }}
-        />
+        {selectedMode && (
+          <StaffOrderCreateForm
+            initialMode={selectedMode}
+            modeLocked
+            onCreated={() => {
+              setSelectedMode(null);
+            }}
+          />
+        )}
       </div>
     </div>
   );

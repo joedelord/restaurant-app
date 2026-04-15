@@ -90,7 +90,8 @@
         "menuItem": "Menu item",
         "quantity": "Quantity",
         "rowTotal": "Row total",
-        "totalPreview": "Estimated total"
+        "totalPreview": "Estimated total",
+        "date": "Date"
       },
       "actions": {
         "edit": "Edit",
@@ -113,7 +114,8 @@
         "deleted": "Order deleted successfully.",
         "deleteError": "Failed to delete order.",
         "saveError": "Failed to save order.",
-        "confirmDelete": "Are you sure you want to delete order #{{id}}?"
+        "confirmDelete": "Are you sure you want to delete order #{{id}}?",
+        "noReservationsForDate": "No reservations found for the selected date."
       },
       "values": {
         "table": "Table"
@@ -132,6 +134,10 @@
       },
       "loading": {
         "form": "Loading order form data..."
+      },
+      "modeDescriptions": {
+        "reservation": "Create an order for an existing reservation.",
+        "walkIn": "Create an order for a customer without a reservation."
       }
     }
 }
