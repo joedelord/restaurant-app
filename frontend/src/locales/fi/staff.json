@@ -1,147 +1,153 @@
 {
-    "dashboard": {
-      "title": "Henkilökunnan hallintapaneeli",
-      "subtitle": "Hallitse varauksia ja asiakkaiden tilauksia.",
-      "reservations": {
-        "title": "Varaukset",
-        "description": "Näe kaikki varaukset ja päivitä niiden tilaa.",
-        "viewAll": "Näytä varaukset",
-        "manage": "Hallitse varauksia"
-      },
-      "orders": {
-        "title": "Tilaukset",
-        "description": "Luo, tarkastele ja hallitse asiakastilauksia.",
-        "viewAll": "Näytä tilaukset",
-        "create": "Luo tilaus"
-      },
-      "walkIn": {
-        "title": "Walk-in-tilaukset",
-        "description": "Luo ja käsittele tilauksia ilman varausta.",
-        "create": "Uusi walk-in-tilaus",
-        "active": "Aktiiviset tilaukset"
-      }
-    },
+  "dashboard": {
+    "title": "Henkilökunnan hallintapaneeli",
+    "subtitle": "Hallitse varauksia ja asiakkaiden tilauksia.",
     "reservations": {
-      "title": "Varausten hallinta",
-      "subtitle": "Tarkastele ja päivitä asiakkaiden varauksia.",
-      "editTitle": "Muokkaa varausta",
-      "listTitle": "Varaukset ({{count}})",
-      "empty": "Varauksia ei löytynyt.",
-      "fields": {
-        "customer": "Asiakas",
-        "table": "Pöytä",
-        "partySize": "Henkilömäärä",
-        "time": "Varausaika",
-        "status": "Tila",
-        "notes": "Lisätiedot",
-        "actions": "Toiminnot"
-      },
-      "actions": {
-        "edit": "Muokkaa",
-        "delete": "Poista",
-        "update": "Päivitä varaus",
-        "cancel": "Peruuta"
-      },
-      "statuses": {
-        "pending": "Odottaa",
-        "confirmed": "Vahvistettu",
-        "cancelled": "Peruttu",
-        "completed": "Valmis"
-      },
-      "validation": {
-        "timeRequired": "Varausaika on pakollinen.",
-        "partySizeRequired": "Henkilömäärän tulee olla vähintään 1."
-      },
-      "messages": {
-        "fetchError": "Varausten hakeminen epäonnistui.",
-        "updated": "Varaus päivitettiin onnistuneesti.",
-        "deleted": "Varaus poistettiin onnistuneesti.",
-        "deleteError": "Varauksen poistaminen epäonnistui.",
-        "saveError": "Varauksen tallennus epäonnistui.",
-        "confirmDelete": "Haluatko varmasti poistaa varauksen #{{id}}?"
-      }
+      "title": "Varaukset",
+      "description": "Näe kaikki varaukset ja päivitä niiden tilaa.",
+      "viewAll": "Näytä varaukset",
+      "manage": "Hallitse varauksia"
     },
     "orders": {
-      "title": "Tilausten hallinta",
-      "subtitle": "Tarkastele ja päivitä ravintolan tilauksia.",
-      "editTitle": "Muokkaa tilauksen tilaa",
-      "listTitle": "Tilaukset ({{count}})",
-      "empty": "Tilauksia ei löytynyt.",
-      "createTitle": "Luo uusi tilaus",
-      "createSubtitle": "Kirjaa asiakkaalle uusi tilaus joko varaukseen liitettynä tai walk-in-tilauksena.",
-      "fields": {
-        "orderId": "Tilaus",
-        "table": "Pöytä",
-        "items": "Rivejä",
-        "total": "Yhteensä",
-        "status": "Tila",
-        "createdAt": "Luotu",
-        "actions": "Toiminnot",
-        "orderType": "Tilauksen tyyppi",
-        "reservation": "Varaus",
-        "menuItem": "Tuote",
-        "quantity": "Määrä",
-        "rowTotal": "Rivin summa",
-        "totalPreview": "Arvioitu yhteensä",
-        "date": "Päivämäärä"
-      },
-      "actions": {
-        "edit": "Muokkaa",
-        "delete": "Poista",
-        "update": "Päivitä tilaus",
-        "cancel": "Peruuta",
-        "create": "Luo tilaus",
-        "creating": "Luodaan tilausta...",
-        "addItem": "Lisää tuote",
-        "removeItem": "Poista rivi",
-        "backToOrders": "Takaisin tilauksiin"
-      },
-      "statuses": {
-        "pending": "Odottaa",
-        "confirmed": "Vahvistettu",
-        "preparing": "Valmistuksessa",
-        "ready": "Valmis",
-        "served": "Tarjoiltu",
-        "paid": "Maksettu",
-        "cancelled": "Peruttu"
-      },
-      "messages": {
-        "fetchError": "Tilausten hakeminen epäonnistui.",
-        "updated": "Tilaus päivitettiin onnistuneesti.",
-        "deleted": "Tilaus poistettiin onnistuneesti.",
-        "deleteError": "Tilauksen poistaminen epäonnistui.",
-        "saveError": "Tilauksen tallennus epäonnistui.",
-        "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?",
-        "created": "Tilaus luotu onnistuneesti.",
-        "noReservationsForDate": "Valitulle päivälle ei löytynyt varauksia."
-      },
-      "values": {
-        "table": "Pöytä"
-      },
-      "loading": {
-        "form": "Ladataan tilauslomakkeen tietoja..."
-      },
-      "sections": {
-        "items": "Tilausrivit"
-      },
-      "types": {
-        "reservation": "Varaukseen liittyvä",
-        "walkIn": "Walk-in"
-      },
-      "placeholders": {
-        "selectReservation": "Valitse varaus",
-        "selectTable": "Valitse pöytä",
-        "selectMenuItem": "Valitse tuote"
-      },
-      "validation": {
-        "reservationRequired": "Valitse varaus.",
-        "tableRequired": "Valitse pöytä.",
-        "itemsRequired": "Lisää vähintään yksi tuote tilaukselle.",
-        "duplicateItems": "Samaa tuotetta ei voi lisätä kahdesti. Muuta sen sijaan määrää."
-      },
-      "modeDescriptions": {
-        "reservation": "Luo tilaus olemassa olevalle pöytävaraukselle.",
-        "walkIn": "Luo tilaus asiakkaalle ilman varausta."
-      }
+      "title": "Tilaukset",
+      "description": "Luo, tarkastele ja hallitse asiakastilauksia.",
+      "viewAll": "Näytä tilaukset",
+      "create": "Luo tilaus"
+    },
+    "walkIn": {
+      "title": "Walk-in-tilaukset",
+      "description": "Luo ja käsittele tilauksia ilman varausta.",
+      "create": "Uusi walk-in-tilaus",
+      "active": "Aktiiviset tilaukset"
+    }
+  },
+  "reservations": {
+    "title": "Varausten hallinta",
+    "subtitle": "Tarkastele ja päivitä asiakkaiden varauksia.",
+    "editTitle": "Muokkaa varausta",
+    "listTitle": "Varaukset ({{count}})",
+    "empty": "Varauksia ei löytynyt.",
+    "fields": {
+      "customer": "Asiakas",
+      "table": "Pöytä",
+      "partySize": "Henkilömäärä",
+      "time": "Varausaika",
+      "status": "Tila",
+      "notes": "Lisätiedot",
+      "actions": "Toiminnot"
+    },
+    "actions": {
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "update": "Päivitä varaus",
+      "cancel": "Peruuta"
+    },
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "cancelled": "Peruttu",
+      "completed": "Valmis"
+    },
+    "validation": {
+      "timeRequired": "Varausaika on pakollinen.",
+      "partySizeRequired": "Henkilömäärän tulee olla vähintään 1."
+    },
+    "messages": {
+      "fetchError": "Varausten hakeminen epäonnistui.",
+      "updated": "Varaus päivitettiin onnistuneesti.",
+      "deleted": "Varaus poistettiin onnistuneesti.",
+      "deleteError": "Varauksen poistaminen epäonnistui.",
+      "saveError": "Varauksen tallennus epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa varauksen #{{id}}?"
+    },
+    "sections": {
+      "upcoming": "Tulevat varaukset ({{count}})",
+      "past": "Menneet varaukset ({{count}})"
+    },
+    "emptyUpcoming": "Tulevia varauksia ei löytynyt.",
+    "emptyPast": "Menneitä varauksia ei löytynyt."
+  },
+  "orders": {
+    "title": "Tilausten hallinta",
+    "subtitle": "Tarkastele ja päivitä ravintolan tilauksia.",
+    "editTitle": "Muokkaa tilauksen tilaa",
+    "listTitle": "Tilaukset ({{count}})",
+    "empty": "Tilauksia ei löytynyt.",
+    "createTitle": "Luo uusi tilaus",
+    "createSubtitle": "Kirjaa asiakkaalle uusi tilaus joko varaukseen liitettynä tai walk-in-tilauksena.",
+    "fields": {
+      "orderId": "Tilaus",
+      "table": "Pöytä",
+      "items": "Rivejä",
+      "total": "Yhteensä",
+      "status": "Tila",
+      "createdAt": "Luotu",
+      "actions": "Toiminnot",
+      "orderType": "Tilauksen tyyppi",
+      "reservation": "Varaus",
+      "menuItem": "Tuote",
+      "quantity": "Määrä",
+      "rowTotal": "Rivin summa",
+      "totalPreview": "Arvioitu yhteensä",
+      "date": "Päivämäärä"
+    },
+    "actions": {
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "update": "Päivitä tilaus",
+      "cancel": "Peruuta",
+      "create": "Luo tilaus",
+      "creating": "Luodaan tilausta...",
+      "addItem": "Lisää tuote",
+      "removeItem": "Poista rivi",
+      "backToOrders": "Takaisin tilauksiin"
+    },
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "preparing": "Valmistuksessa",
+      "ready": "Valmis",
+      "served": "Tarjoiltu",
+      "paid": "Maksettu",
+      "cancelled": "Peruttu"
+    },
+    "messages": {
+      "fetchError": "Tilausten hakeminen epäonnistui.",
+      "updated": "Tilaus päivitettiin onnistuneesti.",
+      "deleted": "Tilaus poistettiin onnistuneesti.",
+      "deleteError": "Tilauksen poistaminen epäonnistui.",
+      "saveError": "Tilauksen tallennus epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?",
+      "created": "Tilaus luotu onnistuneesti.",
+      "noReservationsForDate": "Valitulle päivälle ei löytynyt varauksia."
+    },
+    "values": {
+      "table": "Pöytä"
+    },
+    "loading": {
+      "form": "Ladataan tilauslomakkeen tietoja..."
+    },
+    "sections": {
+      "items": "Tilausrivit"
+    },
+    "types": {
+      "reservation": "Varaukseen liittyvä",
+      "walkIn": "Walk-in"
+    },
+    "placeholders": {
+      "selectReservation": "Valitse varaus",
+      "selectTable": "Valitse pöytä",
+      "selectMenuItem": "Valitse tuote"
+    },
+    "validation": {
+      "reservationRequired": "Valitse varaus.",
+      "tableRequired": "Valitse pöytä.",
+      "itemsRequired": "Lisää vähintään yksi tuote tilaukselle.",
+      "duplicateItems": "Samaa tuotetta ei voi lisätä kahdesti. Muuta sen sijaan määrää."
+    },
+    "modeDescriptions": {
+      "reservation": "Luo tilaus olemassa olevalle pöytävaraukselle.",
+      "walkIn": "Luo tilaus asiakkaalle ilman varausta."
     }
   }
+}

@@ -10,13 +10,15 @@ const formatDateTime = (value) => {
   });
 };
 
-const StaffReservationList = ({ items, onEdit, onDelete }) => {
+const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
   const { t } = useTranslation();
 
   if (!items.length) {
     return (
       <div className="mx-auto w-full rounded-md border border-black p-5">
-        <p className="text-sm text-body">{t("staff.reservations.empty")}</p>
+        <p className="text-sm text-body">
+          {emptyText || t("staff.reservations.empty")}
+        </p>
       </div>
     );
   }

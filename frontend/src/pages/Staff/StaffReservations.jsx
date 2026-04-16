@@ -8,7 +8,8 @@ const StaffReservations = () => {
   const { t } = useTranslation();
 
   const {
-    reservations,
+    upcomingReservations,
+    pastReservations,
     editingReservation,
     loading,
     message,
@@ -59,25 +60,43 @@ const StaffReservations = () => {
             </div>
           )}
 
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("staff.reservations.listTitle", {
-                count: reservations.length,
-              })}
-            </h2>
+          {loading ? (
+            <div className="mx-auto w-full rounded-md border border-black p-5">
+              <PageLoader />
+            </div>
+          ) : (
+            <div className="space-y-8">
+              <section>
+                <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+                  {t("staff.reservations.sections.upcoming", {
+                    count: upcomingReservations.length,
+                  })}
+                </h2>
 
-            {loading ? (
-              <div className="mx-auto w-full rounded-md border border-black p-5">
-                <PageLoader />
-              </div>
-            ) : (
-              <StaffReservationList
-                items={reservations}
-                onEdit={startEditing}
-                onDelete={handleDelete}
-              />
-            )}
-          </div>
+                <StaffReservationList
+                  items={upcomingReservations}
+                  onEdit={startEditing}
+                  onDelete={handleDelete}
+                  emptyText={t("staff.reservations.emptyUpcoming")}
+                />
+              </section>
+
+              <section>
+                <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+                  {t("staff.reservations.sections.past", {
+                    count: pastReservations.length,
+                  })}
+                </h2>
+
+                <StaffReservationList
+                  items={pastReservations}
+                  onEdit={startEditing}
+                  onDelete={handleDelete}
+                  emptyText={t("staff.reservations.emptyPast")}
+                />
+              </section>
+            </div>
+          )}
         </section>
       </div>
     </div>
