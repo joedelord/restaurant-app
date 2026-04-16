@@ -5,7 +5,7 @@
     "reservations": {
       "title": "Reservations",
       "description": "View all reservations and update their status.",
-      "viewAll": "View reservations",
+      "view": "View pending reservations",
       "manage": "Manage reservations"
     },
     "orders": {
@@ -20,6 +20,9 @@
       "create": "New walk-in order",
       "active": "Active orders"
     }
+  },
+  "navigation": {
+    "backToDashboard": "Back to dashboard"
   },
   "reservations": {
     "title": "Reservation Management",
@@ -151,6 +154,33 @@
     "modeDescriptions": {
       "reservation": "Create an order for an existing reservation.",
       "walkIn": "Create an order for a customer without a reservation."
+    }
+  },
+  "pendingReservations": {
+    "title": "Pending Reservations",
+    "subtitle": "Review reservations waiting for confirmation.",
+    "autoRefresh": "This list updates automatically.",
+    "count": "{{count}} reservation waiting for confirmation",
+    "count_plural": "{{count}} reservations waiting for confirmation",
+    "fields": {
+      "customer": "Customer",
+      "table": "Table",
+      "partySize": "Party size",
+      "time": "Time",
+      "notes": "Notes",
+      "actions": "Actions"
+    },
+    "actions": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "empty": "No pending reservations found.",
+    "messages": {
+      "fetchError": "Failed to fetch pending reservations.",
+      "updateError": "Failed to update reservation status.",
+      "confirmed": "Reservation confirmed successfully.",
+      "cancelled": "Reservation cancelled successfully.",
+      "confirmCancel": "Are you sure you want to cancel reservation #{{id}}?"
     }
   }
 }

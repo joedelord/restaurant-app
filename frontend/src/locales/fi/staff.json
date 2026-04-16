@@ -6,7 +6,7 @@
       "title": "Varaukset",
       "description": "Näe kaikki varaukset ja päivitä niiden tilaa.",
       "viewAll": "Näytä varaukset",
-      "manage": "Hallitse varauksia"
+      "view": "Näytä vahvistettavat varaukset"
     },
     "orders": {
       "title": "Tilaukset",
@@ -148,6 +148,33 @@
     "modeDescriptions": {
       "reservation": "Luo tilaus olemassa olevalle pöytävaraukselle.",
       "walkIn": "Luo tilaus asiakkaalle ilman varausta."
+    }
+  },
+  "pendingReservations": {
+    "title": "Vahvistettavat varaukset",
+    "subtitle": "Tarkastele vahvistusta odottavia varauksia.",
+    "autoRefresh": "Lista päivittyy automaattisesti.",
+    "count_one": "{{count}} varaus odottaa vahvistusta",
+    "count_other": "{{count}} varausta odottaa vahvistusta",
+    "fields": {
+      "customer": "Asiakas",
+      "table": "Pöytä",
+      "partySize": "Henkilömäärä",
+      "time": "Aika",
+      "notes": "Lisätiedot",
+      "actions": "Toiminnot"
+    },
+    "actions": {
+      "confirm": "Vahvista",
+      "cancel": "Peruuta"
+    },
+    "empty": "Vahvistettavia varauksia ei löytynyt.",
+    "messages": {
+      "fetchError": "Vahvistettavien varausten haku epäonnistui.",
+      "updateError": "Varauksen tilan päivitys epäonnistui.",
+      "confirmed": "Varaus vahvistettu onnistuneesti.",
+      "cancelled": "Varaus peruttu onnistuneesti.",
+      "confirmCancel": "Haluatko varmasti perua varauksen #{{id}}?"
     }
   }
 }
