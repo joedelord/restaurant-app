@@ -17,12 +17,12 @@ const UserDashboard = () => {
       icon: UserCircleIcon,
       actions: [
         {
-          label: t("user.dashboard.profile.view"),
+          label: t("user.dashboard.profile.edit"),
           path: "/user/profile",
         },
         {
-          label: t("user.dashboard.profile.edit"),
-          path: "/profile/edit",
+          label: t("user.dashboard.profile.password"),
+          path: "/user/change-password",
         },
       ],
     },

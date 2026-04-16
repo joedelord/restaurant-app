@@ -12,6 +12,7 @@ import RoleRoute from "./routes/RoleRoute";
 import MainLayout from "./layouts/MainLayout";
 import UserDashboard from "./pages/UserDashboard";
 import UserProfile from "./pages/User/UserProfile";
+import ChangePassword from "./pages/User/ChangePassword";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
 import AdminUsers from "./pages/Admin/AdminUsers";
@@ -60,7 +61,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        s
+        <Route
+          path="user/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/staff"
           element={

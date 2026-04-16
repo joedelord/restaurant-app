@@ -1,23 +1,70 @@
 {
-    "dashboard": {
-      "title": "Oma hallintapaneeli",
-      "subtitle": "Hallitse profiiliasi, varauksiasi ja tilauksiasi.",
-      "profile": {
-        "title": "Profiili",
-        "description": "Tarkastele ja päivitä omia tietojasi.",
-        "view": "Näytä profiili",
-        "edit": "Muokkaa profiilia"
-      },
-      "reservations": {
-        "title": "Varaukset",
-        "description": "Tarkastele tulevia ja aiempia pöytävarauksiasi.",
-        "viewAll": "Näytä varaukset",
-        "create": "Tee varaus"
-      },
-      "orders": {
-        "title": "Tilaukset",
-        "description": "Selaa varauksiisi liittyviä tilauksia.",
-        "viewAll": "Näytä tilaukset"
-      }
+  "dashboard": {
+    "title": "Oma hallintapaneeli",
+    "subtitle": "Hallitse profiiliasi, varauksiasi ja tilauksiasi.",
+    "profile": {
+      "title": "Profiili",
+      "description": "Tarkastele ja päivitä omia tietojasi.",
+      "view": "Näytä profiili",
+      "edit": "Muokkaa profiilia",
+      "password": "Vaihda salasana"
+    },
+    "reservations": {
+      "title": "Varaukset",
+      "description": "Tarkastele tulevia ja aiempia pöytävarauksiasi.",
+      "viewAll": "Näytä varaukset",
+      "create": "Tee varaus"
+    },
+    "orders": {
+      "title": "Tilaukset",
+      "description": "Selaa varauksiisi liittyviä tilauksia.",
+      "viewAll": "Näytä tilaukset"
     }
+  },
+
+  "profile": {
+    "title": "Oma profiili",
+    "subtitle": "Hallitse omia tietojasi.",
+    "fields": {
+      "email": "Sähköposti",
+      "firstName": "Etunimi",
+      "lastName": "Sukunimi",
+      "phoneNumber": "Puhelinnumero",
+      "marketingConsent": "Hyväksyn markkinointiviestit"
+    },
+    "buttons": {
+      "save": "Tallenna muutokset",
+      "saving": "Tallennetaan...",
+      "changePassword": "Vaihda salasana"
+    },
+    "messages": {
+      "success": "Profiili päivitetty onnistuneesti.",
+      "error": "Profiilin päivitys epäonnistui."
+    }
+  },
+
+  "password": {
+    "title": "Vaihda salasana",
+    "subtitle": "Päivitä salasanasi tilin turvallisuuden varmistamiseksi.",
+    "fields": {
+      "currentPassword": "Nykyinen salasana",
+      "newPassword": "Uusi salasana",
+      "confirmPassword": "Vahvista uusi salasana"
+    },
+    "buttons": {
+      "save": "Vaihda salasana",
+      "saving": "Vaihdetaan..."
+    },
+    "messages": {
+      "success": "Salasana vaihdettu onnistuneesti.",
+      "error": "Salasanan vaihto epäonnistui.",
+      "required": "Kaikki kentät ovat pakollisia.",
+      "mismatch": "Salasanat eivät täsmää."
+    }
+  },
+
+  "navigation": {
+    "backToProfile": "Takaisin profiiliin",
+    "backToDashboard": "Takaisin hallintapaneeliin"
+  }
 }

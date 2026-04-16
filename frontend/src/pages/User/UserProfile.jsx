@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import PageLoader from "../../components/ui/PageLoader";
 import AuthSubmitButton from "../../components/auth/AuthSubmitButton";
+import Button from "../../components/ui/Button";
 import {
   getMyProfile,
   updateMyProfile,
@@ -9,6 +11,7 @@ import {
 
 const UserProfile = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -99,6 +102,18 @@ const UserProfile = () => {
 
   return (
     <div className="px-4 py-0">
+      <div className="mb-6 text-center">
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() => navigate("/user")}
+          disabled={saving}
+          className="inline-flex items-center gap-2"
+        >
+          {t("user.navigation.backToDashboard")}
+        </Button>
+      </div>
       <h1 className="text-center text-3xl font-bold">{t("profile.title")}</h1>
 
       <div className="mx-auto mt-6 w-full max-w-3xl space-y-6">
@@ -187,24 +202,6 @@ const UserProfile = () => {
               </div>
 
               <div className="mb-5">
-                <label
-                  htmlFor="role"
-                  className="mb-2.5 block text-sm font-medium text-heading"
-                >
-                  {t("profile.fields.role")}
-                </label>
-                <input
-                  id="role"
-                  type="text"
-                  value={
-                    formData.role ? t(`profile.roles.${formData.role}`) : ""
-                  }
-                  disabled
-                  className="block w-full rounded-base border border-default-medium bg-gray-100 px-3 py-2.5 text-sm text-heading shadow-xs"
-                />
-              </div>
-
-              <div className="mb-5">
                 <label className="flex items-center gap-2 text-sm text-heading">
                   <input
                     type="checkbox"
@@ -216,11 +213,13 @@ const UserProfile = () => {
                 </label>
               </div>
 
-              <AuthSubmitButton
-                loading={saving}
-                idleText={t("profile.buttons.save")}
-                loadingText={t("profile.buttons.saving")}
-              />
+              <div className="flex gap-3">
+                <AuthSubmitButton
+                  loading={saving}
+                  idleText={t("profile.buttons.save")}
+                  loadingText={t("profile.buttons.saving")}
+                />
+              </div>
             </form>
           </div>
         </div>

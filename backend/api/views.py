@@ -26,7 +26,8 @@ from .serializers import (
     OrderCreateSerializer,
     OrderUpdateSerializer,
     OrderStatusUpdateSerializer,
-    AdminUserSerializer
+    AdminUserSerializer,
+    ChangePasswordSerializer,
 )
 
 User = get_user_model()
@@ -351,3 +352,26 @@ class AdminRestaurantTableDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = RestaurantTable.objects.all()
     serializer_class = RestaurantTableSerializer
     permission_classes = [IsAdmin]
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(
+            data=request.data,
+            context={"request": request},
+        )
+        serializer.is_valid(raise_exception=True)
+
+        validated_data: dict = serializer.validated_data # type: ignore
+        new_password = validated_data["new_password"]
+
+        user = request.user
+        user.set_password(new_password)
+        user.save()
+
+        return Response(
+            {"detail": "Password changed successfully."},
+            status=status.HTTP_200_OK,
+        )

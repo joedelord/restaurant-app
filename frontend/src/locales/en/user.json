@@ -1,23 +1,70 @@
 {
-    "dashboard": {
-      "title": "My Dashboard",
-      "subtitle": "Manage your profile, reservations, and orders.",
-      "profile": {
-        "title": "Profile",
-        "description": "View and update your personal information.",
-        "view": "View profile",
-        "edit": "Edit profile"
-      },
-      "reservations": {
-        "title": "Reservations",
-        "description": "Check your upcoming and past table reservations.",
-        "viewAll": "View reservations",
-        "create": "Book a table"
-      },
-      "orders": {
-        "title": "Orders",
-        "description": "Browse your order history linked to your reservations.",
-        "viewAll": "View orders"
-      }
+  "dashboard": {
+    "title": "My Dashboard",
+    "subtitle": "Manage your profile, reservations, and orders.",
+    "profile": {
+      "title": "Profile",
+      "description": "View and update your personal information.",
+      "view": "View profile",
+      "edit": "Edit profile",
+      "password": "Change password"
+    },
+    "reservations": {
+      "title": "Reservations",
+      "description": "Check your upcoming and past table reservations.",
+      "viewAll": "View reservations",
+      "create": "Book a table"
+    },
+    "orders": {
+      "title": "Orders",
+      "description": "Browse your order history linked to your reservations.",
+      "viewAll": "View orders"
     }
+  },
+
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your personal information.",
+    "fields": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phoneNumber": "Phone number",
+      "marketingConsent": "I agree to receive marketing messages"
+    },
+    "buttons": {
+      "save": "Save changes",
+      "saving": "Saving...",
+      "changePassword": "Change password"
+    },
+    "messages": {
+      "success": "Profile updated successfully.",
+      "error": "Failed to update profile."
+    }
+  },
+
+  "password": {
+    "title": "Change Password",
+    "subtitle": "Update your password to keep your account secure.",
+    "fields": {
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password"
+    },
+    "buttons": {
+      "save": "Change password",
+      "saving": "Changing..."
+    },
+    "messages": {
+      "success": "Password changed successfully.",
+      "error": "Failed to change password.",
+      "required": "All fields are required.",
+      "mismatch": "Passwords do not match."
+    }
+  },
+
+  "navigation": {
+    "backToProfile": "Back to profile",
+    "backToDashboard": "Back to dashboard"
+  }
 }
