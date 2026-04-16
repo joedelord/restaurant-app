@@ -66,5 +66,38 @@
   "navigation": {
     "backToProfile": "Back to profile",
     "backToDashboard": "Back to dashboard"
+  },
+
+  "reservations": {
+    "title": "My Reservations",
+    "subtitle": "View your upcoming and past reservations.",
+    "sections": {
+      "upcoming": "Upcoming reservations ({{count}})",
+      "past": "Past reservations ({{count}})"
+    },
+    "fields": {
+      "table": "Table",
+      "partySize": "Party size",
+      "time": "Time",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "actions": {
+      "cancel": "Cancel reservation"
+    },
+    "emptyUpcoming": "You have no upcoming reservations.",
+    "emptyPast": "You have no past reservations.",
+    "messages": {
+      "fetchError": "Failed to fetch reservations.",
+      "cancelled": "Reservation cancelled successfully.",
+      "cancelError": "Failed to cancel reservation.",
+      "confirmCancel": "Are you sure you want to cancel this reservation?"
+    }
   }
 }

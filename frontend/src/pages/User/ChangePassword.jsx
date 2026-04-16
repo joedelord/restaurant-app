@@ -1,3 +1,4 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -89,15 +90,15 @@ const ChangePassword = () => {
   return (
     <div className="px-4 py-6">
       <div className="mx-auto w-full max-w-3xl">
-        <div className="mb-6 text-center">
+        <div className="mb-6">
           <Button
             type="button"
             size="sm"
             variant="secondary"
             onClick={() => navigate("/user")}
-            disabled={saving}
             className="inline-flex items-center gap-2"
           >
+            <ArrowLeftIcon className="h-4 w-4" />
             {t("user.navigation.backToDashboard")}
           </Button>
         </div>

@@ -33,7 +33,7 @@ const UserDashboard = () => {
       actions: [
         {
           label: t("user.dashboard.reservations.viewAll"),
-          path: "/my-reservations",
+          path: "/user/reservations",
         },
         {
           label: t("user.dashboard.reservations.create"),

@@ -66,5 +66,38 @@
   "navigation": {
     "backToProfile": "Takaisin profiiliin",
     "backToDashboard": "Takaisin hallintapaneeliin"
+  },
+
+  "reservations": {
+    "title": "Omat varaukset",
+    "subtitle": "Tarkastele tulevia ja menneitä varauksiasi.",
+    "sections": {
+      "upcoming": "Tulevat varaukset ({{count}})",
+      "past": "Menneet varaukset ({{count}})"
+    },
+    "fields": {
+      "table": "Pöytä",
+      "partySize": "Henkilömäärä",
+      "time": "Aika",
+      "status": "Tila",
+      "actions": "Toiminnot"
+    },
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "cancelled": "Peruttu",
+      "completed": "Päättynyt"
+    },
+    "actions": {
+      "cancel": "Peruuta varaus"
+    },
+    "emptyUpcoming": "Sinulla ei ole tulevia varauksia.",
+    "emptyPast": "Sinulla ei ole menneitä varauksia.",
+    "messages": {
+      "fetchError": "Varausten haku epäonnistui.",
+      "cancelled": "Varaus peruttu onnistuneesti.",
+      "cancelError": "Varauksen peruminen epäonnistui.",
+      "confirmCancel": "Haluatko varmasti perua tämän varauksen?"
+    }
   }
 }

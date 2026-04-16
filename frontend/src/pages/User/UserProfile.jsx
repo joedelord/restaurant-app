@@ -1,3 +1,4 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -101,126 +102,129 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="px-4 py-0">
-      <div className="mb-6 text-center">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/user")}
-          disabled={saving}
-          className="inline-flex items-center gap-2"
-        >
-          {t("user.navigation.backToDashboard")}
-        </Button>
-      </div>
-      <h1 className="text-center text-3xl font-bold">{t("profile.title")}</h1>
+    <div className="px-4 py-6">
+      <div className="mx-auto w-full max-w-3xl">
+        <div className="mb-6">
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            onClick={() => navigate("/user")}
+            className="inline-flex items-center gap-2"
+          >
+            <ArrowLeftIcon className="h-4 w-4" />
+            {t("user.navigation.backToDashboard")}
+          </Button>
+        </div>
 
-      <div className="mx-auto mt-6 w-full max-w-3xl space-y-6">
-        <p className="text-center text-gray-500">{t("profile.subtitle")}</p>
+        <h1 className="text-center text-3xl font-bold">{t("profile.title")}</h1>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
+        <div className="mx-auto mt-6 w-full max-w-3xl space-y-6">
+          <p className="text-center text-gray-500">{t("profile.subtitle")}</p>
 
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+          {message && (
+            <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
+              {message}
+            </div>
+          )}
 
-        <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
-          <div className="mx-auto max-w-sm">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-5">
-                <label
-                  htmlFor="email"
-                  className="mb-2.5 block text-sm font-medium text-heading"
-                >
-                  {t("profile.fields.email")}
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  disabled
-                  className="block w-full rounded-base border border-default-medium bg-gray-100 px-3 py-2.5 text-sm text-heading shadow-xs"
-                />
-              </div>
+          {error && (
+            <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
 
-              <div className="mb-5">
-                <label
-                  htmlFor="first_name"
-                  className="mb-2.5 block text-sm font-medium text-heading"
-                >
-                  {t("profile.fields.firstName")}
-                </label>
-                <input
-                  id="first_name"
-                  type="text"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                />
-              </div>
-
-              <div className="mb-5">
-                <label
-                  htmlFor="last_name"
-                  className="mb-2.5 block text-sm font-medium text-heading"
-                >
-                  {t("profile.fields.lastName")}
-                </label>
-                <input
-                  id="last_name"
-                  type="text"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                />
-              </div>
-
-              <div className="mb-5">
-                <label
-                  htmlFor="phone_number"
-                  className="mb-2.5 block text-sm font-medium text-heading"
-                >
-                  {t("profile.fields.phone")}
-                </label>
-                <input
-                  id="phone_number"
-                  type="text"
-                  name="phone_number"
-                  value={formData.phone_number}
-                  onChange={handleChange}
-                  className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                />
-              </div>
-
-              <div className="mb-5">
-                <label className="flex items-center gap-2 text-sm text-heading">
+          <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
+            <div className="mx-auto max-w-sm">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-5">
+                  <label
+                    htmlFor="email"
+                    className="mb-2.5 block text-sm font-medium text-heading"
+                  >
+                    {t("profile.fields.email")}
+                  </label>
                   <input
-                    type="checkbox"
-                    name="marketing_consent"
-                    checked={formData.marketing_consent}
-                    onChange={handleChange}
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    disabled
+                    className="block w-full rounded-base border border-default-medium bg-gray-100 px-3 py-2.5 text-sm text-heading shadow-xs"
                   />
-                  {t("profile.fields.marketing")}
-                </label>
-              </div>
+                </div>
 
-              <div className="flex gap-3">
-                <AuthSubmitButton
-                  loading={saving}
-                  idleText={t("profile.buttons.save")}
-                  loadingText={t("profile.buttons.saving")}
-                />
-              </div>
-            </form>
+                <div className="mb-5">
+                  <label
+                    htmlFor="first_name"
+                    className="mb-2.5 block text-sm font-medium text-heading"
+                  >
+                    {t("profile.fields.firstName")}
+                  </label>
+                  <input
+                    id="first_name"
+                    type="text"
+                    name="first_name"
+                    value={formData.first_name}
+                    onChange={handleChange}
+                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <label
+                    htmlFor="last_name"
+                    className="mb-2.5 block text-sm font-medium text-heading"
+                  >
+                    {t("profile.fields.lastName")}
+                  </label>
+                  <input
+                    id="last_name"
+                    type="text"
+                    name="last_name"
+                    value={formData.last_name}
+                    onChange={handleChange}
+                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <label
+                    htmlFor="phone_number"
+                    className="mb-2.5 block text-sm font-medium text-heading"
+                  >
+                    {t("profile.fields.phone")}
+                  </label>
+                  <input
+                    id="phone_number"
+                    type="text"
+                    name="phone_number"
+                    value={formData.phone_number}
+                    onChange={handleChange}
+                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <label className="flex items-center gap-2 text-sm text-heading">
+                    <input
+                      type="checkbox"
+                      name="marketing_consent"
+                      checked={formData.marketing_consent}
+                      onChange={handleChange}
+                    />
+                    {t("profile.fields.marketing")}
+                  </label>
+                </div>
+
+                <div className="flex gap-3">
+                  <AuthSubmitButton
+                    loading={saving}
+                    idleText={t("profile.buttons.save")}
+                    loadingText={t("profile.buttons.saving")}
+                  />
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
