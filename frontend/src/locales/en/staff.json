@@ -102,7 +102,8 @@
       "quantity": "Quantity",
       "rowTotal": "Row total",
       "totalPreview": "Estimated total",
-      "date": "Date"
+      "date": "Date",
+      "type": "Order type"
     },
     "actions": {
       "edit": "Edit",
@@ -131,7 +132,9 @@
       "deleteError": "Failed to delete order.",
       "saveError": "Failed to save order.",
       "confirmDelete": "Are you sure you want to delete order #{{id}}?",
-      "noReservationsForDate": "No reservations found for the selected date."
+      "noReservationsForDate": "No reservations found for the selected date.",
+      "fetchMenuError": "Failed to fetch menu items.",
+      "itemsLocked": "Items cannot be edited for paid or cancelled orders."
     },
     "values": {
       "table": "Table"
@@ -154,6 +157,9 @@
     "modeDescriptions": {
       "reservation": "Create an order for an existing reservation.",
       "walkIn": "Create an order for a customer without a reservation."
+    },
+    "validation": {
+      "itemsRequired": "Order must contain at least one item."
     }
   },
   "pendingReservations": {

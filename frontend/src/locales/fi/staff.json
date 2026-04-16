@@ -89,7 +89,8 @@
       "quantity": "Määrä",
       "rowTotal": "Rivin summa",
       "totalPreview": "Arvioitu yhteensä",
-      "date": "Päivämäärä"
+      "date": "Päivämäärä",
+      "type": "Tilauksen tyyppi"
     },
     "actions": {
       "edit": "Muokkaa",
@@ -119,7 +120,9 @@
       "saveError": "Tilauksen tallennus epäonnistui.",
       "confirmDelete": "Haluatko varmasti poistaa tilauksen #{{id}}?",
       "created": "Tilaus luotu onnistuneesti.",
-      "noReservationsForDate": "Valitulle päivälle ei löytynyt varauksia."
+      "noReservationsForDate": "Valitulle päivälle ei löytynyt varauksia.",
+      "fetchMenuError": "Ruokalistan tuotteiden haku epäonnistui.",
+      "itemsLocked": "Tuoterivejä ei voi muokata maksetussa tai perutussa tilauksessa."
     },
     "values": {
       "table": "Pöytä"
