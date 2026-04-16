@@ -11,6 +11,7 @@ urlpatterns = [
     # USERS
     path("admin/users/", views.AdminUserListCreateView.as_view(), name="admin-user-list-create"),
     path("admin/users/<int:pk>/", views.AdminUserDetailView.as_view(), name="admin-user-detail"),
+    path("users/change-password/", views.ChangePasswordView.as_view(), name="user-change-password"),
 
     # TABLES
     path("tables/", views.RestaurantTableListView.as_view(), name="table-list"),

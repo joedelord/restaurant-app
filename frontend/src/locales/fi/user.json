@@ -1,0 +1,132 @@
+{
+  "dashboard": {
+    "title": "Oma hallintapaneeli",
+    "subtitle": "Hallitse profiiliasi, varauksiasi ja tilauksiasi.",
+    "profile": {
+      "title": "Profiili",
+      "description": "Tarkastele ja päivitä omia tietojasi.",
+      "view": "Näytä profiili",
+      "edit": "Muokkaa profiilia",
+      "password": "Vaihda salasana"
+    },
+    "activity": {
+      "title": "Varaukset & tilaukset",
+      "description": "Tarkastele ja hallinnoi varauksiasi ja tilauksiasi.",
+      "viewReservations": "Näytä varaukset",
+      "viewOrders": "Näytä tilaukset"
+    }
+  },
+
+  "profile": {
+    "title": "Oma profiili",
+    "subtitle": "Hallitse omia tietojasi.",
+    "fields": {
+      "email": "Sähköposti",
+      "firstName": "Etunimi",
+      "lastName": "Sukunimi",
+      "phoneNumber": "Puhelinnumero",
+      "marketingConsent": "Hyväksyn markkinointiviestit"
+    },
+    "buttons": {
+      "save": "Tallenna muutokset",
+      "saving": "Tallennetaan...",
+      "changePassword": "Vaihda salasana"
+    },
+    "messages": {
+      "success": "Profiili päivitetty onnistuneesti.",
+      "error": "Profiilin päivitys epäonnistui."
+    }
+  },
+
+  "password": {
+    "title": "Vaihda salasana",
+    "subtitle": "Päivitä salasanasi tilin turvallisuuden varmistamiseksi.",
+    "fields": {
+      "currentPassword": "Nykyinen salasana",
+      "newPassword": "Uusi salasana",
+      "confirmPassword": "Vahvista uusi salasana"
+    },
+    "buttons": {
+      "save": "Vaihda salasana",
+      "saving": "Vaihdetaan..."
+    },
+    "messages": {
+      "success": "Salasana vaihdettu onnistuneesti.",
+      "error": "Salasanan vaihto epäonnistui.",
+      "required": "Kaikki kentät ovat pakollisia.",
+      "mismatch": "Salasanat eivät täsmää."
+    }
+  },
+
+  "navigation": {
+    "backToProfile": "Takaisin profiiliin",
+    "backToDashboard": "Takaisin hallintapaneeliin"
+  },
+
+  "reservations": {
+    "title": "Omat varaukset",
+    "subtitle": "Tarkastele tulevia ja menneitä varauksiasi.",
+    "sections": {
+      "upcoming": "Tulevat varaukset ({{count}})",
+      "past": "Menneet varaukset ({{count}})"
+    },
+    "fields": {
+      "table": "Pöytä",
+      "partySize": "Henkilömäärä",
+      "time": "Aika",
+      "status": "Tila",
+      "actions": "Toiminnot"
+    },
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "cancelled": "Peruttu",
+      "completed": "Päättynyt"
+    },
+    "actions": {
+      "cancel": "Peruuta varaus"
+    },
+    "emptyUpcoming": "Sinulla ei ole tulevia varauksia.",
+    "emptyPast": "Sinulla ei ole menneitä varauksia.",
+    "messages": {
+      "fetchError": "Varausten haku epäonnistui.",
+      "cancelled": "Varaus peruttu onnistuneesti.",
+      "cancelError": "Varauksen peruminen epäonnistui.",
+      "confirmCancel": "Haluatko varmasti perua tämän varauksen?"
+    }
+  },
+  "orders": {
+    "title": "Omat tilaukset",
+    "subtitle": "Tarkastele aktiivisia ja aiempia tilauksiasi.",
+    "sections": {
+      "active": "Aktiiviset tilaukset ({{count}})",
+      "past": "Aiemmat tilaukset ({{count}})"
+    },
+    "fields": {
+      "orderId": "Tilaus",
+      "table": "Pöytä",
+      "items": "Tuotteet",
+      "total": "Yhteensä",
+      "status": "Tila",
+      "createdAt": "Luotu"
+    },
+    "values": {
+      "table": "Pöytä"
+    },
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "preparing": "Valmistuksessa",
+      "ready": "Valmis",
+      "served": "Tarjoiltu",
+      "paid": "Maksettu",
+      "cancelled": "Peruttu"
+    },
+    "emptyActive": "Sinulla ei ole aktiivisia tilauksia.",
+    "emptyPast": "Sinulla ei ole aiempia tilauksia.",
+    "messages": {
+      "fetchError": "Tilausten haku epäonnistui."
+    }
+  }
+
+}

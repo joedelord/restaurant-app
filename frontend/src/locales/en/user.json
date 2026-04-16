@@ -1,0 +1,132 @@
+{
+  "dashboard": {
+    "title": "My Dashboard",
+    "subtitle": "Manage your profile, reservations, and orders.",
+    "profile": {
+      "title": "Profile",
+      "description": "View and update your personal information.",
+      "view": "View profile",
+      "edit": "Edit profile",
+      "password": "Change password"
+    },
+    "activity": {
+      "title": "Reservations & Orders",
+      "description": "View and manage your reservations and orders.",
+      "viewReservations": "View reservations",
+      "viewOrders": "View orders"
+    }
+  },
+
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your personal information.",
+    "fields": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phoneNumber": "Phone number",
+      "marketingConsent": "I agree to receive marketing messages"
+    },
+    "buttons": {
+      "save": "Save changes",
+      "saving": "Saving...",
+      "changePassword": "Change password"
+    },
+    "messages": {
+      "success": "Profile updated successfully.",
+      "error": "Failed to update profile."
+    }
+  },
+
+  "password": {
+    "title": "Change Password",
+    "subtitle": "Update your password to keep your account secure.",
+    "fields": {
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password"
+    },
+    "buttons": {
+      "save": "Change password",
+      "saving": "Changing..."
+    },
+    "messages": {
+      "success": "Password changed successfully.",
+      "error": "Failed to change password.",
+      "required": "All fields are required.",
+      "mismatch": "Passwords do not match."
+    }
+  },
+
+  "navigation": {
+    "backToProfile": "Back to profile",
+    "backToDashboard": "Back to dashboard"
+  },
+
+  "reservations": {
+    "title": "My Reservations",
+    "subtitle": "View your upcoming and past reservations.",
+    "sections": {
+      "upcoming": "Upcoming reservations ({{count}})",
+      "past": "Past reservations ({{count}})"
+    },
+    "fields": {
+      "table": "Table",
+      "partySize": "Party size",
+      "time": "Time",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "actions": {
+      "cancel": "Cancel reservation"
+    },
+    "emptyUpcoming": "You have no upcoming reservations.",
+    "emptyPast": "You have no past reservations.",
+    "messages": {
+      "fetchError": "Failed to fetch reservations.",
+      "cancelled": "Reservation cancelled successfully.",
+      "cancelError": "Failed to cancel reservation.",
+      "confirmCancel": "Are you sure you want to cancel this reservation?"
+    }
+  },
+  "orders": {
+    "title": "My Orders",
+    "subtitle": "View your active and past orders.",
+    "sections": {
+      "active": "Active orders ({{count}})",
+      "past": "Past orders ({{count}})"
+    },
+    "fields": {
+      "orderId": "Order",
+      "table": "Table",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "createdAt": "Created"
+    },
+    "values": {
+      "table": "Table"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "served": "Served",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    },
+    "emptyActive": "You have no active orders.",
+    "emptyPast": "You have no past orders.",
+    "messages": {
+      "fetchError": "Failed to fetch orders."
+    }
+  }
+
+}

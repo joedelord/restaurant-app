@@ -10,7 +10,11 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import RoleRoute from "./routes/RoleRoute";
 import MainLayout from "./layouts/MainLayout";
-import UserProfile from "./pages/UserProfile";
+import UserDashboard from "./pages/UserDashboard";
+import UserProfile from "./pages/User/UserProfile";
+import UserReservations from "./pages/User/UserReservations";
+import UserOrders from "./pages/User/UsertOrders";
+import ChangePassword from "./pages/User/ChangePassword";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
 import AdminUsers from "./pages/Admin/AdminUsers";
@@ -47,11 +51,42 @@ function App() {
           path="/user"
           element={
             <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="user/profile"
+          element={
+            <ProtectedRoute>
               <UserProfile />
             </ProtectedRoute>
           }
         />
-        s
+        <Route
+          path="user/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="user/reservations"
+          element={
+            <ProtectedRoute>
+              <UserReservations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="user/orders"
+          element={
+            <ProtectedRoute>
+              <UserOrders />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/staff"
           element={
