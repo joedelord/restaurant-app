@@ -9,16 +9,11 @@
       "edit": "Muokkaa profiilia",
       "password": "Vaihda salasana"
     },
-    "reservations": {
-      "title": "Varaukset",
-      "description": "Tarkastele tulevia ja aiempia pöytävarauksiasi.",
-      "viewAll": "Näytä varaukset",
-      "create": "Tee varaus"
-    },
-    "orders": {
-      "title": "Tilaukset",
-      "description": "Selaa varauksiisi liittyviä tilauksia.",
-      "viewAll": "Näytä tilaukset"
+    "activity": {
+      "title": "Varaukset & tilaukset",
+      "description": "Tarkastele ja hallinnoi varauksiasi ja tilauksiasi.",
+      "viewReservations": "Näytä varaukset",
+      "viewOrders": "Näytä tilaukset"
     }
   },
 
@@ -99,5 +94,39 @@
       "cancelError": "Varauksen peruminen epäonnistui.",
       "confirmCancel": "Haluatko varmasti perua tämän varauksen?"
     }
+  },
+  "orders": {
+    "title": "Omat tilaukset",
+    "subtitle": "Tarkastele aktiivisia ja aiempia tilauksiasi.",
+    "sections": {
+      "active": "Aktiiviset tilaukset ({{count}})",
+      "past": "Aiemmat tilaukset ({{count}})"
+    },
+    "fields": {
+      "orderId": "Tilaus",
+      "table": "Pöytä",
+      "items": "Tuotteet",
+      "total": "Yhteensä",
+      "status": "Tila",
+      "createdAt": "Luotu"
+    },
+    "values": {
+      "table": "Pöytä"
+    },
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "preparing": "Valmistuksessa",
+      "ready": "Valmis",
+      "served": "Tarjoiltu",
+      "paid": "Maksettu",
+      "cancelled": "Peruttu"
+    },
+    "emptyActive": "Sinulla ei ole aktiivisia tilauksia.",
+    "emptyPast": "Sinulla ei ole aiempia tilauksia.",
+    "messages": {
+      "fetchError": "Tilausten haku epäonnistui."
+    }
   }
+
 }

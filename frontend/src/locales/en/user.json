@@ -9,16 +9,11 @@
       "edit": "Edit profile",
       "password": "Change password"
     },
-    "reservations": {
-      "title": "Reservations",
-      "description": "Check your upcoming and past table reservations.",
-      "viewAll": "View reservations",
-      "create": "Book a table"
-    },
-    "orders": {
-      "title": "Orders",
-      "description": "Browse your order history linked to your reservations.",
-      "viewAll": "View orders"
+    "activity": {
+      "title": "Reservations & Orders",
+      "description": "View and manage your reservations and orders.",
+      "viewReservations": "View reservations",
+      "viewOrders": "View orders"
     }
   },
 
@@ -99,5 +94,39 @@
       "cancelError": "Failed to cancel reservation.",
       "confirmCancel": "Are you sure you want to cancel this reservation?"
     }
+  },
+  "orders": {
+    "title": "My Orders",
+    "subtitle": "View your active and past orders.",
+    "sections": {
+      "active": "Active orders ({{count}})",
+      "past": "Past orders ({{count}})"
+    },
+    "fields": {
+      "orderId": "Order",
+      "table": "Table",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "createdAt": "Created"
+    },
+    "values": {
+      "table": "Table"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "served": "Served",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    },
+    "emptyActive": "You have no active orders.",
+    "emptyPast": "You have no past orders.",
+    "messages": {
+      "fetchError": "Failed to fetch orders."
+    }
   }
+
 }

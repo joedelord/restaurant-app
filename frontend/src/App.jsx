@@ -13,6 +13,7 @@ import MainLayout from "./layouts/MainLayout";
 import UserDashboard from "./pages/UserDashboard";
 import UserProfile from "./pages/User/UserProfile";
 import UserReservations from "./pages/User/UserReservations";
+import UserOrders from "./pages/User/UsertOrders";
 import ChangePassword from "./pages/User/ChangePassword";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminMenuItems from "./pages/Admin/AdminMenuItems";
@@ -75,6 +76,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UserReservations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="user/orders"
+          element={
+            <ProtectedRoute>
+              <UserOrders />
             </ProtectedRoute>
           }
         />

@@ -27,28 +27,17 @@ const UserDashboard = () => {
       ],
     },
     {
-      title: t("user.dashboard.reservations.title"),
-      description: t("user.dashboard.reservations.description"),
+      title: t("user.dashboard.activity.title"),
+      description: t("user.dashboard.activity.description"),
       icon: ClipboardDocumentListIcon,
       actions: [
         {
-          label: t("user.dashboard.reservations.viewAll"),
+          label: t("user.dashboard.activity.viewReservations"),
           path: "/user/reservations",
         },
         {
-          label: t("user.dashboard.reservations.create"),
-          path: "/reservations/new",
-        },
-      ],
-    },
-    {
-      title: t("user.dashboard.orders.title"),
-      description: t("user.dashboard.orders.description"),
-      icon: ShoppingBagIcon,
-      actions: [
-        {
-          label: t("user.dashboard.orders.viewAll"),
-          path: "/my-orders",
+          label: t("user.dashboard.activity.viewOrders"),
+          path: "/user/orders",
         },
       ],
     },
@@ -65,7 +54,7 @@ const UserDashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {cards.map((card, index) => {
           const Icon = card.icon;
 
