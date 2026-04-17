@@ -28,11 +28,14 @@ urlpatterns = [
     path("admin/menu-items/", views.AdminMenuItemListCreateView.as_view(), name="admin-menu-item-list-create"),
     path("admin/menu-items/<int:pk>/", views.AdminMenuItemDetailView.as_view(), name="admin-menu-item-list-detail"),
 
+    # SALES
+    path("admin/sales/", views.AdminSalesStatsView.as_view(), name="admin-sales-stats"),
+
     # RESERVATIONS
     path("reservations/", views.ReservationListCreateView.as_view(), name="reservation-list-create"),
     path("reservations/<int:pk>/", views.ReservationDetailView.as_view(), name="reservation-detail"),
     path("reservations/<int:pk>/status/", views.ReservationStatusUpdateView.as_view(), name="reservation-status-update"),
-    path("reservations/availability/", views.ReservationAvailabilityView.as_view(),name="reservation-availability"),
+    path("reservations/availability/", views.ReservationAvailabilityView.as_view(), name="reservation-availability"),
 
     # ORDERS
     path("orders/", views.OrderListView.as_view(), name="order-list"),

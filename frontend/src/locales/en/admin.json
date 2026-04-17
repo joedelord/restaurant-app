@@ -26,11 +26,10 @@
       "view": "View tables",
       "layout": "Edit layout"
     },
-    "analytics": {
-      "title": "Analytics",
-      "description": "View sales performance and popular items",
-      "overview": "Sales overview",
-      "popular": "Popular items"
+    "sales": {
+      "title": "Sales Statistics",
+      "description": "Track revenue, popular dishes and category performance.",
+      "open": "Open sales statistics"
     }
   },
   "users": {
@@ -93,35 +92,35 @@
     "loading": "Loading tables...",
     "empty": "No tables found.",
     "fields": {
-        "tableNumber": "Table number",
-        "seats": "Seats",
-        "active": "Active",
-        "status": "Status",
-        "actions": "Actions"
+      "tableNumber": "Table number",
+      "seats": "Seats",
+      "active": "Active",
+      "status": "Status",
+      "actions": "Actions"
     },
     "actions": {
-        "add": "Add Table",
-        "update": "Update Table",
-        "edit": "Edit",
-        "delete": "Delete",
-        "cancel": "Cancel"
+      "add": "Add Table",
+      "update": "Update Table",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel"
     },
     "messages": {
-        "created": "Table created successfully.",
-        "updated": "Table updated successfully.",
-        "deleted": "Table deleted successfully.",
-        "fetchError": "Failed to fetch tables.",
-        "saveError": "Failed to save table.",
-        "deleteError": "Failed to delete table.",
-        "confirmDelete": "Are you sure you want to delete table {{tableNumber}}?"
+      "created": "Table created successfully.",
+      "updated": "Table updated successfully.",
+      "deleted": "Table deleted successfully.",
+      "fetchError": "Failed to fetch tables.",
+      "saveError": "Failed to save table.",
+      "deleteError": "Failed to delete table.",
+      "confirmDelete": "Are you sure you want to delete table {{tableNumber}}?"
     },
     "validation": {
-        "tableNumberRequired": "Table number must be greater than 0.",
-        "seatsRequired": "Seats must be greater than 0."
+      "tableNumberRequired": "Table number must be greater than 0.",
+      "seatsRequired": "Seats must be greater than 0."
     },
     "values": {
-        "active": "Active",
-        "inactive": "Inactive"
+      "active": "Active",
+      "inactive": "Inactive"
     }
   },
   "menuItems": {
@@ -150,5 +149,24 @@
   },
   "List": {
     "actions": "Actions"
+  },
+  "sales": {
+    "title": "Sales Statistics",
+    "subtitle": "Review top-selling items and sales by category.",
+    "fields": {
+      "quantitySold": "Quantity sold",
+      "revenue": "Revenue"
+    },
+    "topItems": {
+      "title": "Top-selling items ({{count}})",
+      "empty": "No item sales data is available yet."
+    },
+    "categories": {
+      "title": "Sales by category ({{count}})",
+      "empty": "No category sales data is available yet."
+    },
+    "messages": {
+      "loadError": "Failed to load sales statistics."
+    }
   }
 }

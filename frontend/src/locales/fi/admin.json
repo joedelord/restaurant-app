@@ -26,11 +26,10 @@
       "view": "Näytä pöydät",
       "layout": "Muokkaa pöytäkarttaa"
     },
-    "analytics": {
+    "sales": {
       "title": "Myyntitilastot",
-      "description": "Tarkastele myyntiä ja suosituimpia tuotteita",
-      "overview": "Myynnin yleiskuva",
-      "popular": "Suosituimmat tuotteet"
+      "description": "Seuraa myyntiä, suosituimpia annoksia ja kategorioiden suorituskykyä.",
+      "open": "Avaa myyntitilastot"
     }
   },
   "users": {
@@ -93,35 +92,35 @@
     "loading": "Ladataan pöytiä...",
     "empty": "Pöytiä ei löytynyt.",
     "fields": {
-        "tableNumber": "Pöytänumero",
-        "seats": "Paikkamäärä",
-        "active": "Aktiivinen",
-        "status": "Tila",
-        "actions": "Toiminnot"
+      "tableNumber": "Pöytänumero",
+      "seats": "Paikkamäärä",
+      "active": "Aktiivinen",
+      "status": "Tila",
+      "actions": "Toiminnot"
     },
     "actions": {
-        "add": "Lisää pöytä",
-        "update": "Päivitä pöytä",
-        "edit": "Muokkaa",
-        "delete": "Poista",
-        "cancel": "Peruuta"
+      "add": "Lisää pöytä",
+      "update": "Päivitä pöytä",
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "cancel": "Peruuta"
     },
     "messages": {
-        "created": "Pöytä luotu onnistuneesti.",
-        "updated": "Pöytä päivitetty onnistuneesti.",
-        "deleted": "Pöytä poistettu onnistuneesti.",
-        "fetchError": "Pöytien haku epäonnistui.",
-        "saveError": "Pöydän tallentaminen epäonnistui.",
-        "deleteError": "Pöydän poistaminen epäonnistui.",
-        "confirmDelete": "Haluatko varmasti poistaa pöydän {{tableNumber}}?"
+      "created": "Pöytä luotu onnistuneesti.",
+      "updated": "Pöytä päivitetty onnistuneesti.",
+      "deleted": "Pöytä poistettu onnistuneesti.",
+      "fetchError": "Pöytien haku epäonnistui.",
+      "saveError": "Pöydän tallentaminen epäonnistui.",
+      "deleteError": "Pöydän poistaminen epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa pöydän {{tableNumber}}?"
     },
     "validation": {
-        "tableNumberRequired": "Pöytänumeron tulee olla suurempi kuin 0.",
-        "seatsRequired": "Paikkamäärän tulee olla suurempi kuin 0."
+      "tableNumberRequired": "Pöytänumeron tulee olla suurempi kuin 0.",
+      "seatsRequired": "Paikkamäärän tulee olla suurempi kuin 0."
     },
     "values": {
-        "active": "Aktiivinen",
-        "inactive": "Ei aktiivinen"
+      "active": "Aktiivinen",
+      "inactive": "Ei aktiivinen"
     }
   },
   "menuItems": {
@@ -150,5 +149,24 @@
   },
   "List": {
     "actions": "Toiminnot"
+  },
+  "sales": {
+    "title": "Myyntitilastot",
+    "subtitle": "Tarkastele suosituimpia annoksia ja myyntiä kategorioittain.",
+    "fields": {
+      "quantitySold": "Myyty määrä",
+      "revenue": "Myynti"
+    },
+    "topItems": {
+      "title": "Suosituimmat annokset ({{count}})",
+      "empty": "Myyntidataa annoksista ei vielä ole saatavilla."
+    },
+    "categories": {
+      "title": "Myynti kategorioittain ({{count}})",
+      "empty": "Kategorioiden myyntidataa ei vielä ole saatavilla."
+    },
+    "messages": {
+      "loadError": "Myyntitilastojen lataaminen epäonnistui."
+    }
   }
 }
