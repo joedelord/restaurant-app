@@ -26,6 +26,15 @@ const getFormValues = (initialData) => ({
   items: getInitialItems(initialData),
 });
 
+const formatReservationDateTime = (value) => {
+  if (!value) return "-";
+
+  return new Date(value).toLocaleString("fi-FI", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+};
+
 const StaffOrderForm = ({
   onSubmit,
   initialData = null,
@@ -40,27 +49,32 @@ const StaffOrderForm = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const getLocalizedName = (item) => {
-    return i18n.language === "fi"
+  const getLocalizedName = (item) =>
+    i18n.language === "fi"
       ? item.name_fi || item.name_en
       : item.name_en || item.name_fi;
-  };
 
-  const getLocalizedCategoryName = (item) => {
-    return i18n.language === "fi"
+  const getLocalizedCategoryName = (item) =>
+    i18n.language === "fi"
       ? item.category_name_fi || item.category_name_en
       : item.category_name_en || item.category_name_fi;
-  };
+
+  useEffect(() => {
+    setFormData(getFormValues(initialData));
+    setError("");
+  }, [initialData]);
 
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
         setLoadingMenu(true);
+        setError("");
+
         const response = await api.get("/menu-items/");
         setMenuItems(response.data.filter((item) => item.is_available));
       } catch (err) {
         console.error(err);
-        setError(t("staff.orders.messages.fetchError"));
+        setError(t("staff.orders.messages.fetchMenuError"));
       } finally {
         setLoadingMenu(false);
       }
@@ -127,6 +141,12 @@ const StaffOrderForm = ({
     }, 0);
   }, [formData.items, menuItems]);
 
+  const orderType = initialData?.reservation
+    ? t("staff.orders.types.reservation")
+    : t("staff.orders.types.walkIn");
+
+  const isItemsLocked = ["paid", "cancelled"].includes(initialData?.status);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading || loadingMenu) return;
@@ -134,25 +154,15 @@ const StaffOrderForm = ({
     setError("");
 
     const cleanedItems = formData.items
-      .filter((row) => row.menu_item_id && Number(row.quantity) > 0)
-      .map((row) => ({
-        menu_item_id: Number(row.menu_item_id),
-        quantity: Number(row.quantity),
+      .filter((item) => item.menu_item_id && Number(item.quantity) > 0)
+      .map((item) => ({
+        menu_item_id: Number(item.menu_item_id),
+        quantity: Number(item.quantity),
       }));
 
     if (!cleanedItems.length) {
       setError(t("staff.orders.validation.itemsRequired"));
       return;
-    }
-
-    const duplicateIds = new Set();
-
-    for (const item of cleanedItems) {
-      if (duplicateIds.has(item.menu_item_id)) {
-        setError(t("staff.orders.validation.duplicateItems"));
-        return;
-      }
-      duplicateIds.add(item.menu_item_id);
     }
 
     try {
@@ -181,14 +191,6 @@ const StaffOrderForm = ({
     }
   };
 
-  if (loadingMenu) {
-    return (
-      <div className="mx-auto w-full max-w-5xl rounded-md border border-black p-5">
-        <p className="text-sm text-body">{t("staff.orders.loading.form")}</p>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto w-full max-w-5xl rounded-md border border-black p-5">
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -199,48 +201,18 @@ const StaffOrderForm = ({
         )}
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label
-              htmlFor="status"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("staff.orders.fields.status")}
-            </label>
-
-            <select
-              id="status"
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
-            >
-              <option value="pending">
-                {t("staff.orders.statuses.pending")}
-              </option>
-              <option value="confirmed">
-                {t("staff.orders.statuses.confirmed")}
-              </option>
-              <option value="preparing">
-                {t("staff.orders.statuses.preparing")}
-              </option>
-              <option value="ready">{t("staff.orders.statuses.ready")}</option>
-              <option value="served">
-                {t("staff.orders.statuses.served")}
-              </option>
-              <option value="paid">{t("staff.orders.statuses.paid")}</option>
-              <option value="cancelled">
-                {t("staff.orders.statuses.cancelled")}
-              </option>
-            </select>
+          <div className="rounded-base border border-default-medium bg-gray-50 px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              {t("staff.orders.fields.type")}
+            </p>
+            <p className="mt-1 text-sm font-medium text-heading">{orderType}</p>
           </div>
 
-          <div className="rounded-base bg-gray-50 px-4 py-3 text-sm">
-            <p className="font-medium text-heading">
-              {t("staff.orders.fields.orderId")}: #{initialData?.id ?? "-"}
+          <div className="rounded-base border border-default-medium bg-gray-50 px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              {t("staff.orders.fields.table")}
             </p>
-            <p className="mt-1 text-body">
-              {t("staff.orders.fields.table")}:{" "}
+            <p className="mt-1 text-sm font-medium text-heading">
               {initialData?.table?.table_number
                 ? `${t("staff.orders.values.table")} ${initialData.table.table_number}`
                 : "-"}
@@ -248,16 +220,64 @@ const StaffOrderForm = ({
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-heading">
-              {t("staff.orders.sections.items")}
-            </h2>
-
-            <Button type="button" variant="secondary" onClick={handleAddRow}>
-              {t("staff.orders.actions.addItem")}
-            </Button>
+        {initialData?.reservation && (
+          <div className="rounded-base border border-default-medium bg-gray-50 px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              {t("staff.orders.fields.reservation")}
+            </p>
+            <p className="mt-1 text-sm font-medium text-heading">
+              #{initialData.reservation.id} ·{" "}
+              {formatReservationDateTime(
+                initialData.reservation.reservation_time,
+              )}
+            </p>
           </div>
+        )}
+
+        <div className="max-w-xl">
+          <label
+            htmlFor="status"
+            className="mb-2.5 block text-sm font-medium text-heading"
+          >
+            {t("staff.orders.fields.status")}
+          </label>
+
+          <select
+            id="status"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            disabled={loading}
+            className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
+          >
+            <option value="pending">
+              {t("staff.orders.statuses.pending")}
+            </option>
+            <option value="confirmed">
+              {t("staff.orders.statuses.confirmed")}
+            </option>
+            <option value="preparing">
+              {t("staff.orders.statuses.preparing")}
+            </option>
+            <option value="ready">{t("staff.orders.statuses.ready")}</option>
+            <option value="served">{t("staff.orders.statuses.served")}</option>
+            <option value="paid">{t("staff.orders.statuses.paid")}</option>
+            <option value="cancelled">
+              {t("staff.orders.statuses.cancelled")}
+            </option>
+          </select>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-base font-semibold text-heading">
+            {t("staff.orders.fields.items")}
+          </h3>
+
+          {isItemsLocked && (
+            <div className="rounded-base border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
+              {t("staff.orders.messages.itemsLocked")}
+            </div>
+          )}
 
           {formData.items.map((row, index) => {
             const selectedItem = menuItems.find(
@@ -267,66 +287,68 @@ const StaffOrderForm = ({
             return (
               <div
                 key={index}
-                className="grid gap-3 rounded-base border border-default-medium p-4 md:grid-cols-[1fr_140px_auto]"
+                className="space-y-4 rounded-base border border-default-medium p-4"
               >
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-heading">
-                    {t("staff.orders.fields.menuItem")}
-                  </label>
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_140px_140px]">
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-heading">
+                      {t("staff.orders.fields.menuItem")}
+                    </label>
 
-                  <select
-                    value={row.menu_item_id}
-                    onChange={(e) =>
-                      handleItemChange(index, "menu_item_id", e.target.value)
-                    }
-                    disabled={loading}
-                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                  >
-                    <option value="">
-                      {t("staff.orders.placeholders.selectMenuItem")}
-                    </option>
-
-                    {menuItems.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {getLocalizedName(item)} ·{" "}
-                        {getLocalizedCategoryName(item)} ·{" "}
-                        {formatCurrency(item.price)}
+                    <select
+                      value={row.menu_item_id}
+                      onChange={(e) =>
+                        handleItemChange(index, "menu_item_id", e.target.value)
+                      }
+                      disabled={loading || loadingMenu || isItemsLocked}
+                      className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
+                    >
+                      <option value="">
+                        {t("staff.orders.placeholders.selectMenuItem")}
                       </option>
-                    ))}
-                  </select>
-                </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-heading">
-                    {t("staff.orders.fields.quantity")}
-                  </label>
+                      {menuItems.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {getLocalizedName(item)} ·{" "}
+                          {getLocalizedCategoryName(item)} ·{" "}
+                          {formatCurrency(item.price)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                  <input
-                    type="number"
-                    min="1"
-                    value={row.quantity}
-                    onChange={(e) =>
-                      handleItemChange(index, "quantity", e.target.value)
-                    }
-                    disabled={loading}
-                    className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand"
-                  />
-                </div>
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-heading">
+                      {t("staff.orders.fields.quantity")}
+                    </label>
 
-                <div className="flex items-end">
-                  <Button
-                    type="button"
-                    variant="danger"
-                    onClick={() => handleRemoveRow(index)}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    {t("staff.orders.actions.removeItem")}
-                  </Button>
+                    <input
+                      type="number"
+                      min="1"
+                      value={row.quantity}
+                      onChange={(e) =>
+                        handleItemChange(index, "quantity", e.target.value)
+                      }
+                      disabled={loading || isItemsLocked}
+                      className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
+                    />
+                  </div>
+
+                  <div className="flex items-end">
+                    <Button
+                      type="button"
+                      variant="danger"
+                      onClick={() => handleRemoveRow(index)}
+                      disabled={loading || isItemsLocked}
+                      className="w-full"
+                    >
+                      {t("staff.orders.actions.removeItem")}
+                    </Button>
+                  </div>
                 </div>
 
                 {selectedItem && (
-                  <div className="md:col-span-3 text-sm text-body">
+                  <div className="text-sm text-body">
                     {t("staff.orders.fields.rowTotal")}:{" "}
                     {formatCurrency(
                       Number(selectedItem.price) * Number(row.quantity),
@@ -336,6 +358,19 @@ const StaffOrderForm = ({
               </div>
             );
           })}
+
+          {!isItemsLocked && (
+            <div>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleAddRow}
+                disabled={loading || loadingMenu}
+              >
+                {t("staff.orders.actions.addItem")}
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="rounded-base bg-gray-50 px-4 py-3 text-sm font-medium text-heading">

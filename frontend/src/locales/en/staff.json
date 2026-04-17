@@ -1,150 +1,192 @@
 {
-    "dashboard": {
-      "title": "Staff Dashboard",
-      "subtitle": "Manage reservations and customer orders.",
-      "reservations": {
-        "title": "Reservations",
-        "description": "View all reservations and update their status.",
-        "viewAll": "View reservations",
-        "manage": "Manage reservations"
-      },
-      "orders": {
-        "title": "Orders",
-        "description": "Create, view and manage customer orders.",
-        "viewAll": "View orders",
-        "create": "Create order"
-      },
-      "walkIn": {
-        "title": "Walk-in Orders",
-        "description": "Create and handle orders without a reservation.",
-        "create": "New walk-in order",
-        "active": "Active orders"
-      }
-    },
+  "dashboard": {
+    "title": "Staff Dashboard",
+    "subtitle": "Manage reservations and customer orders.",
     "reservations": {
-      "title": "Reservation Management",
-      "subtitle": "View and update customer reservations.",
-      "editTitle": "Edit Reservation",
-      "listTitle": "Reservations ({{count}})",
-      "empty": "No reservations found.",
-      "fields": {
-        "customer": "Customer",
-        "table": "Table",
-        "partySize": "Party size",
-        "time": "Reservation time",
-        "status": "Status",
-        "notes": "Special requests",
-        "actions": "Actions"
-      },
-      "actions": {
-        "edit": "Edit",
-        "delete": "Delete",
-        "update": "Update reservation",
-        "cancel": "Cancel",
-        "create": "Create order",
-        "creating": "Creating order...",
-        "addItem": "Add item",
-        "removeItem": "Remove row",
-        "backToOrders": "Back to orders"
-      },
-      "statuses": {
-        "pending": "Pending",
-        "confirmed": "Confirmed",
-        "cancelled": "Cancelled",
-        "completed": "Completed"
-      },
-      "validation": {
-        "timeRequired": "Reservation time is required.",
-        "partySizeRequired": "Party size must be at least 1.",
-        "reservationRequired": "Please select a reservation.",
-        "tableRequired": "Please select a table.",
-        "itemsRequired": "Add at least one item to the order.",
-        "duplicateItems": "The same item cannot be added twice. Update the quantity instead."
-      },
-      "messages": {
-        "fetchError": "Failed to fetch reservations.",
-        "updated": "Reservation updated successfully.",
-        "deleted": "Reservation deleted successfully.",
-        "deleteError": "Failed to delete reservation.",
-        "saveError": "Failed to save reservation.",
-        "confirmDelete": "Are you sure you want to delete reservation #{{id}}?",
-        "created": "Order created successfully."
-      }
+      "title": "Reservations",
+      "description": "View all reservations and update their status.",
+      "view": "View pending reservations",
+      "manage": "Manage reservations"
     },
     "orders": {
-      "title": "Order Management",
-      "subtitle": "View and update restaurant orders.",
-      "editTitle": "Edit Order Status",
-      "listTitle": "Orders ({{count}})",
-      "empty": "No orders found.",
-      "createTitle": "Create new order",
-      "createSubtitle": "Create a new customer order linked to a reservation or as a walk-in order.",
-      "fields": {
-        "orderId": "Order",
-        "table": "Table",
-        "items": "Items",
-        "total": "Total",
-        "status": "Status",
-        "createdAt": "Created",
-        "actions": "Actions",
-        "orderType": "Order type",
-        "reservation": "Reservation",
-        "menuItem": "Menu item",
-        "quantity": "Quantity",
-        "rowTotal": "Row total",
-        "totalPreview": "Estimated total",
-        "date": "Date"
-      },
-      "actions": {
-        "edit": "Edit",
-        "delete": "Delete",
-        "update": "Update order",
-        "cancel": "Cancel",
-        "create": "Create order",
-        "creating": "Creating order...",
-        "addItem": "Add item",
-        "removeItem": "Remove row",
-        "backToOrders": "Back to orders"
-      },
-      "statuses": {
-        "pending": "Pending",
-        "confirmed": "Confirmed",
-        "preparing": "Preparing",
-        "ready": "Ready",
-        "served": "Served",
-        "paid": "Paid",
-        "cancelled": "Cancelled"
-      },
-      "messages": {
-        "fetchError": "Failed to fetch orders.",
-        "updated": "Order updated successfully.",
-        "deleted": "Order deleted successfully.",
-        "deleteError": "Failed to delete order.",
-        "saveError": "Failed to save order.",
-        "confirmDelete": "Are you sure you want to delete order #{{id}}?",
-        "noReservationsForDate": "No reservations found for the selected date."
-      },
-      "values": {
-        "table": "Table"
-      },
-      "placeholders": {
-        "selectReservation": "Select reservation",
-        "selectTable": "Select table",
-        "selectMenuItem": "Select menu item"
-      },
-      "types": {
-        "reservation": "Reservation order",
-        "walkIn": "Walk-in order"
-      },
-      "sections": {
-        "items": "Order items"
-      },
-      "loading": {
-        "form": "Loading order form data..."
-      },
-      "modeDescriptions": {
-        "reservation": "Create an order for an existing reservation.",
-        "walkIn": "Create an order for a customer without a reservation."
-      }
+      "title": "Orders",
+      "description": "Create, view and manage customer orders.",
+      "viewAll": "View orders",
+      "create": "Create order"
+    },
+    "walkIn": {
+      "title": "Walk-in Orders",
+      "description": "Create and handle orders without a reservation.",
+      "create": "New walk-in order",
+      "active": "Active orders"
     }
+  },
+  "navigation": {
+    "backToDashboard": "Back to dashboard"
+  },
+  "reservations": {
+    "title": "Reservation Management",
+    "subtitle": "View and update customer reservations.",
+    "editTitle": "Edit Reservation",
+    "listTitle": "Reservations ({{count}})",
+    "empty": "No reservations found.",
+    "fields": {
+      "customer": "Customer",
+      "table": "Table",
+      "partySize": "Party size",
+      "time": "Reservation time",
+      "status": "Status",
+      "notes": "Special requests",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "update": "Update reservation",
+      "cancel": "Cancel",
+      "create": "Create order",
+      "creating": "Creating order...",
+      "addItem": "Add item",
+      "removeItem": "Remove row",
+      "backToOrders": "Back to orders"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "validation": {
+      "timeRequired": "Reservation time is required.",
+      "partySizeRequired": "Party size must be at least 1.",
+      "reservationRequired": "Please select a reservation.",
+      "tableRequired": "Please select a table.",
+      "itemsRequired": "Add at least one item to the order.",
+      "duplicateItems": "The same item cannot be added twice. Update the quantity instead."
+    },
+    "messages": {
+      "fetchError": "Failed to fetch reservations.",
+      "updated": "Reservation updated successfully.",
+      "deleted": "Reservation deleted successfully.",
+      "deleteError": "Failed to delete reservation.",
+      "saveError": "Failed to save reservation.",
+      "confirmDelete": "Are you sure you want to delete reservation #{{id}}?",
+      "created": "Order created successfully."
+    },
+    "sections": {
+      "upcoming": "Upcoming reservations ({{count}})",
+      "past": "Past reservations ({{count}})"
+    },
+    "emptyUpcoming": "No upcoming reservations found.",
+    "emptyPast": "No past reservations found."
+  },
+  "orders": {
+    "title": "Order Management",
+    "subtitle": "View and update restaurant orders.",
+    "editTitle": "Edit Order Status",
+    "listTitle": "Orders ({{count}})",
+    "empty": "No orders found.",
+    "createTitle": "Create new order",
+    "createSubtitle": "Create a new customer order linked to a reservation or as a walk-in order.",
+    "fields": {
+      "orderId": "Order",
+      "table": "Table",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "createdAt": "Created",
+      "actions": "Actions",
+      "orderType": "Order type",
+      "reservation": "Reservation",
+      "menuItem": "Menu item",
+      "quantity": "Quantity",
+      "rowTotal": "Row total",
+      "totalPreview": "Estimated total",
+      "date": "Date",
+      "type": "Order type"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "update": "Update order",
+      "cancel": "Cancel",
+      "create": "Create order",
+      "creating": "Creating order...",
+      "addItem": "Add item",
+      "removeItem": "Remove row",
+      "backToOrders": "Back to orders"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "served": "Served",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    },
+    "messages": {
+      "fetchError": "Failed to fetch orders.",
+      "updated": "Order updated successfully.",
+      "deleted": "Order deleted successfully.",
+      "deleteError": "Failed to delete order.",
+      "saveError": "Failed to save order.",
+      "confirmDelete": "Are you sure you want to delete order #{{id}}?",
+      "noReservationsForDate": "No reservations found for the selected date.",
+      "fetchMenuError": "Failed to fetch menu items.",
+      "itemsLocked": "Items cannot be edited for paid or cancelled orders."
+    },
+    "values": {
+      "table": "Table"
+    },
+    "placeholders": {
+      "selectReservation": "Select reservation",
+      "selectTable": "Select table",
+      "selectMenuItem": "Select menu item"
+    },
+    "types": {
+      "reservation": "Reservation order",
+      "walkIn": "Walk-in order"
+    },
+    "sections": {
+      "items": "Order items"
+    },
+    "loading": {
+      "form": "Loading order form data..."
+    },
+    "modeDescriptions": {
+      "reservation": "Create an order for an existing reservation.",
+      "walkIn": "Create an order for a customer without a reservation."
+    },
+    "validation": {
+      "itemsRequired": "Order must contain at least one item."
+    }
+  },
+  "pendingReservations": {
+    "title": "Pending Reservations",
+    "subtitle": "Review reservations waiting for confirmation.",
+    "autoRefresh": "This list updates automatically.",
+    "count": "{{count}} reservation waiting for confirmation",
+    "count_plural": "{{count}} reservations waiting for confirmation",
+    "fields": {
+      "customer": "Customer",
+      "table": "Table",
+      "partySize": "Party size",
+      "time": "Time",
+      "notes": "Notes",
+      "actions": "Actions"
+    },
+    "actions": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "empty": "No pending reservations found.",
+    "messages": {
+      "fetchError": "Failed to fetch pending reservations.",
+      "updateError": "Failed to update reservation status.",
+      "confirmed": "Reservation confirmed successfully.",
+      "cancelled": "Reservation cancelled successfully.",
+      "confirmCancel": "Are you sure you want to cancel reservation #{{id}}?"
+    }
+  }
 }

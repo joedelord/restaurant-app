@@ -1,4 +1,7 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Button from "../../components/ui/Button";
 import StaffReservationForm from "../../components/staff/StaffReservationForm";
 import StaffReservationList from "../../components/staff/StaffReservationList";
 import useStaffReservations from "../../hooks/useStaffReservations";
@@ -6,9 +9,11 @@ import PageLoader from "../../components/ui/PageLoader";
 
 const StaffReservations = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const {
-    reservations,
+    upcomingReservations,
+    pastReservations,
     editingReservation,
     loading,
     message,
@@ -20,7 +25,19 @@ const StaffReservations = () => {
   } = useStaffReservations();
 
   return (
-    <div className="px-4 py-0">
+    <div className="px-4 py-6">
+      <div className="mb-6">
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() => navigate("/staff")}
+          className="inline-flex items-center gap-2"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          {t("staff.navigation.backToDashboard")}
+        </Button>
+      </div>
       <h1 className="text-center text-3xl font-bold">
         {t("staff.reservations.title")}
       </h1>
@@ -59,25 +76,43 @@ const StaffReservations = () => {
             </div>
           )}
 
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("staff.reservations.listTitle", {
-                count: reservations.length,
-              })}
-            </h2>
+          {loading ? (
+            <div className="mx-auto w-full rounded-md border border-black p-5">
+              <PageLoader />
+            </div>
+          ) : (
+            <div className="space-y-8">
+              <section>
+                <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+                  {t("staff.reservations.sections.upcoming", {
+                    count: upcomingReservations.length,
+                  })}
+                </h2>
 
-            {loading ? (
-              <div className="mx-auto w-full rounded-md border border-black p-5">
-                <PageLoader />
-              </div>
-            ) : (
-              <StaffReservationList
-                items={reservations}
-                onEdit={startEditing}
-                onDelete={handleDelete}
-              />
-            )}
-          </div>
+                <StaffReservationList
+                  items={upcomingReservations}
+                  onEdit={startEditing}
+                  onDelete={handleDelete}
+                  emptyText={t("staff.reservations.emptyUpcoming")}
+                />
+              </section>
+
+              <section>
+                <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+                  {t("staff.reservations.sections.past", {
+                    count: pastReservations.length,
+                  })}
+                </h2>
+
+                <StaffReservationList
+                  items={pastReservations}
+                  onEdit={startEditing}
+                  onDelete={handleDelete}
+                  emptyText={t("staff.reservations.emptyPast")}
+                />
+              </section>
+            </div>
+          )}
         </section>
       </div>
     </div>

@@ -21,8 +21,8 @@ const StaffDashboard = () => {
           path: "/staff/reservations",
         },
         {
-          label: t("staff.dashboard.reservations.manage"),
-          path: "/staff/reservations/manage",
+          label: t("staff.dashboard.reservations.view"),
+          path: "/staff/reservations/pending",
         },
       ],
     },

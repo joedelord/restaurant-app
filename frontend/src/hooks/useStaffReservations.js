@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   getReservations,
@@ -6,9 +6,14 @@ import {
   deleteReservation,
 } from "../services/staffReservationService";
 
-const sortReservations = (items) =>
+const sortUpcomingReservations = (items) =>
   [...items].sort(
     (a, b) => new Date(a.reservation_time) - new Date(b.reservation_time),
+  );
+
+const sortPastReservations = (items) =>
+  [...items].sort(
+    (a, b) => new Date(b.reservation_time) - new Date(a.reservation_time),
   );
 
 const useStaffReservations = () => {
@@ -25,7 +30,7 @@ const useStaffReservations = () => {
       try {
         setError("");
         const data = await getReservations();
-        setReservations(sortReservations(data));
+        setReservations(data);
       } catch (err) {
         console.error(err);
         setError(t("staff.reservations.messages.fetchError"));
@@ -37,29 +42,53 @@ const useStaffReservations = () => {
     fetchReservations();
   }, [t]);
 
+  const upcomingReservations = useMemo(() => {
+    const now = new Date();
+
+    return sortUpcomingReservations(
+      reservations.filter((item) => {
+        const reservationDate = new Date(item.reservation_time);
+        return reservationDate >= now && item.status !== "completed";
+      }),
+    );
+  }, [reservations]);
+
+  const pastReservations = useMemo(() => {
+    const now = new Date();
+
+    return sortPastReservations(
+      reservations.filter((item) => {
+        const reservationDate = new Date(item.reservation_time);
+        return reservationDate < now || item.status === "completed";
+      }),
+    );
+  }, [reservations]);
+
   const handleUpdate = async (payload) => {
     if (!editingReservation) return;
 
-    const updated = await updateReservation(editingReservation.id, payload);
+    try {
+      const updated = await updateReservation(editingReservation.id, payload);
 
-    setReservations((prev) =>
-      sortReservations(
+      setReservations((prev) =>
         prev.map((item) =>
           item.id === editingReservation.id ? updated : item,
         ),
-      ),
-    );
+      );
 
-    setMessage(t("staff.reservations.messages.updated"));
-    setError("");
-    setEditingReservation(null);
+      setMessage(t("staff.reservations.messages.updated"));
+      setError("");
+      setEditingReservation(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("staff.reservations.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      t("staff.reservations.messages.confirmDelete", {
-        id: item.id,
-      }),
+      t("staff.reservations.messages.confirmDelete", { id: item.id }),
     );
 
     if (!confirmed) return;
@@ -67,7 +96,9 @@ const useStaffReservations = () => {
     try {
       await deleteReservation(item.id);
 
-      setReservations((prev) => prev.filter((res) => res.id !== item.id));
+      setReservations((prev) =>
+        prev.filter((reservation) => reservation.id !== item.id),
+      );
 
       if (editingReservation?.id === item.id) {
         setEditingReservation(null);
@@ -93,7 +124,8 @@ const useStaffReservations = () => {
   };
 
   return {
-    reservations,
+    upcomingReservations,
+    pastReservations,
     editingReservation,
     loading,
     message,
