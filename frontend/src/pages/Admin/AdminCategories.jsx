@@ -1,9 +1,16 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import Button from "../../components/ui/Button";
 import CategoryForm from "../../components/admin/CategoryForm";
 import CategoryList from "../../components/admin/CategoryList";
 import useCategories from "../../hooks/useCategories";
 import PageLoader from "../../components/ui/PageLoader";
 
 const AdminCategories = () => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const {
     categories,
     editingCategory,
@@ -18,12 +25,27 @@ const AdminCategories = () => {
   } = useCategories();
 
   return (
-    <div className="px-4 py-0">
-      <h1 className="text-3xl font-bold text-center">Category Management</h1>
+    <div className="px-4 py-6">
+      <div className="mb-6">
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() => navigate("/admin")}
+          className="inline-flex items-center gap-2"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          {t("admin.navigation.backToDashboard")}
+        </Button>
+      </div>
+
+      <h1 className="text-3xl font-bold text-center">
+        {t("admin.categories.title")}
+      </h1>
 
       <div className="mx-auto w-full max-w-4xl space-y-6">
-        <p className="text-gray-500 mt-2 text-center">
-          Add, edit and delete menu categories.
+        <p className="mt-2 text-center text-gray-500">
+          {t("admin.categories.subtitle")}
         </p>
 
         {message && (
@@ -40,22 +62,28 @@ const AdminCategories = () => {
 
         <section className="space-y-6">
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-heading text-center">
-              {editingCategory ? "Edit Category" : "Add New Category"}
+            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+              {editingCategory
+                ? t("admin.categories.editTitle")
+                : t("admin.categories.addTitle")}
             </h2>
 
             <CategoryForm
               key={editingCategory?.id ?? "new"}
               initialData={editingCategory}
-              submitText={editingCategory ? "Update Category" : "Add Category"}
+              submitText={
+                editingCategory
+                  ? t("admin.categories.actions.update")
+                  : t("admin.categories.actions.add")
+              }
               onSubmit={editingCategory ? handleUpdate : handleCreate}
               onCancel={editingCategory ? cancelEditing : undefined}
             />
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-heading text-center">
-              Categories ({categories.length})
+            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+              {t("admin.categories.listTitle", { count: categories.length })}
             </h2>
 
             {loading ? (

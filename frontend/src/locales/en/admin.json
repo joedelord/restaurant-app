@@ -32,6 +32,9 @@
       "open": "Open sales statistics"
     }
   },
+  "navigation": {
+    "backToDashboard": "Back to dashboard"
+  },
   "users": {
     "title": "User Management",
     "subtitle": "Add, edit and manage system users.",
@@ -124,26 +127,84 @@
     }
   },
   "menuItems": {
+    "title": "Menu Item Management",
+    "subtitle": "Add, edit and delete menu items.",
+    "addTitle": "Add New Menu Item",
+    "editTitle": "Edit Menu Item",
+    "listTitle": "Menu Items ({{count}})",
     "fields": {
       "name": "Name",
+      "nameEn": "Item name (EN)",
+      "nameFi": "Item name (FI)",
+      "descriptionEn": "Description (EN)",
+      "descriptionFi": "Description (FI)",
       "price": "Price",
-      "category": "Category"
+      "category": "Category",
+      "imageUrl": "Image URL",
+      "available": "Available"
     },
     "actions": {
+      "add": "Add Menu Item",
+      "update": "Update Menu Item",
       "edit": "Edit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "placeholders": {
+      "nameEn": "e.g. Margherita Pizza",
+      "nameFi": "e.g. Margarita Pizza",
+      "descriptionEn": "Write a short description",
+      "descriptionFi": "Write a short description",
+      "price": "e.g. 12.90",
+      "imageUrl": "https://example.com/image.jpg",
+      "category": "Select category"
+    },
+    "validation": {
+      "nameEnRequired": "English menu item name is required.",
+      "nameFiRequired": "Finnish menu item name is required.",
+      "priceRequired": "Price must be greater than 0.",
+      "categoryRequired": "Category is required."
+    },
+    "messages": {
+      "saveError": "Failed to save menu item."
     },
     "empty": "No menu items found."
   },
   "categories": {
+    "title": "Category Management",
+    "subtitle": "Add, edit and delete menu categories.",
+    "addTitle": "Add New Category",
+    "editTitle": "Edit Category",
+    "listTitle": "Categories ({{count}})",
     "fields": {
       "name": "Name",
+      "nameEn": "Category name (EN)",
+      "nameFi": "Category name (FI)",
       "description": "Description",
+      "descriptionEn": "Description (EN)",
+      "descriptionFi": "Description (FI)",
       "order": "Order"
     },
     "actions": {
+      "add": "Add Category",
+      "update": "Update Category",
       "edit": "Edit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "placeholders": {
+      "nameEn": "e.g. Starters",
+      "nameFi": "e.g. Alkuruoat",
+      "descriptionEn": "Write a short description in English",
+      "descriptionFi": "Write a short description in Finnish"
+    },
+    "validation": {
+      "nameEnRequired": "English category name is required.",
+      "nameFiRequired": "Finnish category name is required.",
+      "displayOrderRequired": "Display order must be 0 or greater."
+    },
+    "messages": {
+      "saveError": "Failed to save category."
     },
     "empty": "No categories found."
   },

@@ -35,11 +35,11 @@ const MenuItemList = ({ items, onEdit, onDelete }) => {
             <span className="font-medium">{item.name_fi}</span>
           </div>
           <p>
-            <strong>{t("admin.menuItems.fields.price")}:</strong>
+            <strong>{t("admin.menuItems.fields.price")}:</strong>{" "}
             {formatCurrency(item.price)}
           </p>
           <p>
-            <strong>{t("admin.menuItems.fields.category")}:</strong>
+            <strong>{t("admin.menuItems.fields.category")}:</strong>{" "}
             {item.category_name}
           </p>
         </div>

@@ -179,5 +179,8 @@
       "cancelled": "Varaus peruttu onnistuneesti.",
       "confirmCancel": "Haluatko varmasti perua varauksen #{{id}}?"
     }
+  },
+  "navigation": {
+    "backToDashboard": "Takaisin hallintapaneeliin"
   }
 }

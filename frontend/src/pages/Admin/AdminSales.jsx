@@ -1,3 +1,6 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/ui/Button";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../components/ui/PageLoader";
@@ -6,6 +9,7 @@ import { formatCurrency } from "../../utils/currency";
 
 const AdminSales = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [topItems, setTopItems] = useState([]);
   const [salesByCategory, setSalesByCategory] = useState([]);
@@ -32,7 +36,19 @@ const AdminSales = () => {
   }, [t]);
 
   return (
-    <div className="px-4 py-0">
+    <div className="px-4 py-6">
+      <div className="mb-6">
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() => navigate("/admin")}
+          className="inline-flex items-center gap-2"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          {t("staff.navigation.backToDashboard")}
+        </Button>
+      </div>
       <h1 className="text-3xl font-bold text-center">
         {t("admin.sales.title")}
       </h1>
@@ -74,7 +90,7 @@ const AdminSales = () => {
                   {topItems.map((item, index) => (
                     <div
                       key={`${item.id}-${index}`}
-                      className="flex items-center justify-between border-b border-white/10 pb-2 last:border-0"
+                      className="flex items-center justify-between rounded-md border-b border-white/10 px-2 pb-3 last:border-0 hover:bg-white/5 transition"
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-semibold text-brand">
@@ -117,7 +133,7 @@ const AdminSales = () => {
                   {salesByCategory.map((category, index) => (
                     <div
                       key={`${category.id}-${index}`}
-                      className="flex items-center justify-between border-b border-white/10 pb-2 last:border-0"
+                      className="flex items-center justify-between rounded-md border-b border-white/10 px-2 pb-3 last:border-0 hover:bg-white/5 transition"
                     >
                       <div>
                         <p className="text-sm font-medium text-heading">

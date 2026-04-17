@@ -25,16 +25,24 @@ const CategoryList = ({ items, onEdit, onDelete }) => {
           <span className="font-medium">{cat.name_fi}</span>
         </div>,
         <div className="flex flex-col">
-          <span>{cat.description_en} /</span>
-          <span>{cat.description_fi}</span>
+          <span>{cat.description_en || "-"} /</span>
+          <span>{cat.description_fi || "-"}</span>
         </div>,
         cat.display_order,
       ]}
       renderMobileCard={(cat) => (
         <div className="space-y-1 text-sm">
-          <p>
-            <strong>{t("admin.categories.fields.name")}:</strong> {cat.name}
-          </p>
+          <div className="flex flex-col">
+            <span className="font-medium">{cat.name_en} /</span>
+            <span className="font-medium">{cat.name_fi}</span>
+          </div>
+          <div className="flex flex-col">
+            <span>
+              <strong>{t("admin.categories.fields.description")}:</strong>
+            </span>
+            <span>{cat.description_en || "-"}</span>
+            <span>{cat.description_fi || "-"}</span>
+          </div>
           <p>
             <strong>{t("admin.categories.fields.order")}:</strong>{" "}
             {cat.display_order}

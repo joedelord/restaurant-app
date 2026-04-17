@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
 import Button from "../ui/Button";
 
@@ -20,6 +21,7 @@ const MenuItemForm = ({
   submitText = "Save",
   onCancel,
 }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,22 +42,22 @@ const MenuItemForm = ({
     setError("");
 
     if (!formData.name_en.trim()) {
-      setError("English menu item name is required.");
+      setError(t("admin.menuItems.validation.nameEnRequired"));
       return;
     }
 
     if (!formData.name_fi.trim()) {
-      setError("Finnish menu item name is required.");
+      setError(t("admin.menuItems.validation.nameFiRequired"));
       return;
     }
 
     if (!formData.price || Number(formData.price) <= 0) {
-      setError("Price must be greater than 0.");
+      setError(t("admin.menuItems.validation.priceRequired"));
       return;
     }
 
     if (!formData.category) {
-      setError("Category is required.");
+      setError(t("admin.menuItems.validation.categoryRequired"));
       return;
     }
 
@@ -79,7 +81,7 @@ const MenuItemForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError("Failed to save menu item.");
+      setError(t("admin.menuItems.messages.saveError"));
     } finally {
       setLoading(false);
     }
@@ -100,7 +102,7 @@ const MenuItemForm = ({
               htmlFor="name_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Item name (EN)
+              {t("admin.menuItems.fields.nameEn")}
             </label>
             <input
               id="name_en"
@@ -109,7 +111,7 @@ const MenuItemForm = ({
               value={formData.name_en}
               onChange={handleChange}
               disabled={loading}
-              placeholder="e.g. Margherita Pizza"
+              placeholder={t("admin.menuItems.placeholders.nameEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -119,7 +121,7 @@ const MenuItemForm = ({
               htmlFor="name_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Item name (FI)
+              {t("admin.menuItems.fields.nameFi")}
             </label>
             <input
               id="name_fi"
@@ -128,7 +130,7 @@ const MenuItemForm = ({
               value={formData.name_fi}
               onChange={handleChange}
               disabled={loading}
-              placeholder="esim. Margarita Pizza"
+              placeholder={t("admin.menuItems.placeholders.nameFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -138,7 +140,7 @@ const MenuItemForm = ({
               htmlFor="description_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Description (EN)
+              {t("admin.menuItems.fields.descriptionEn")}
             </label>
             <textarea
               id="description_en"
@@ -147,7 +149,7 @@ const MenuItemForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder="Write a short description"
+              placeholder={t("admin.menuItems.placeholders.descriptionEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -157,7 +159,7 @@ const MenuItemForm = ({
               htmlFor="description_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Description (FI)
+              {t("admin.menuItems.fields.descriptionFi")}
             </label>
             <textarea
               id="description_fi"
@@ -166,7 +168,7 @@ const MenuItemForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder="Kirjoita lyhyt kuvaus"
+              placeholder={t("admin.menuItems.placeholders.descriptionFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -176,7 +178,7 @@ const MenuItemForm = ({
               htmlFor="price"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Price
+              {t("admin.menuItems.fields.price")}
             </label>
             <input
               id="price"
@@ -187,7 +189,7 @@ const MenuItemForm = ({
               disabled={loading}
               min="0"
               step="0.01"
-              placeholder="e.g. 12.90"
+              placeholder={t("admin.menuItems.placeholders.price")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -197,7 +199,7 @@ const MenuItemForm = ({
               htmlFor="image_url"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Image URL
+              {t("admin.menuItems.fields.imageUrl")}
             </label>
             <input
               id="image_url"
@@ -206,7 +208,7 @@ const MenuItemForm = ({
               value={formData.image_url}
               onChange={handleChange}
               disabled={loading}
-              placeholder="https://example.com/image.jpg"
+              placeholder={t("admin.menuItems.placeholders.imageUrl")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -216,7 +218,7 @@ const MenuItemForm = ({
               htmlFor="category"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Category
+              {t("admin.menuItems.fields.category")}
             </label>
             <select
               id="category"
@@ -226,7 +228,9 @@ const MenuItemForm = ({
               disabled={loading}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
             >
-              <option value="">Select category</option>
+              <option value="">
+                {t("admin.menuItems.placeholders.category")}
+              </option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name_en} / {category.name_fi}
@@ -249,7 +253,7 @@ const MenuItemForm = ({
               htmlFor="is_available"
               className="text-sm font-medium text-heading"
             >
-              Available
+              {t("admin.menuItems.fields.available")}
             </label>
           </div>
 
@@ -257,7 +261,11 @@ const MenuItemForm = ({
             <AuthSubmitButton
               loading={loading}
               idleText={submitText}
-              loadingText={initialData ? "Updating..." : "Creating..."}
+              loadingText={
+                initialData
+                  ? `${t("admin.menuItems.actions.update")}...`
+                  : `${t("admin.menuItems.actions.add")}...`
+              }
             />
 
             {onCancel && (
@@ -267,7 +275,7 @@ const MenuItemForm = ({
                 onClick={onCancel}
                 disabled={loading}
               >
-                Cancel
+                {t("admin.menuItems.actions.cancel")}
               </Button>
             )}
           </div>
