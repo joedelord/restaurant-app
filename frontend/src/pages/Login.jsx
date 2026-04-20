@@ -34,7 +34,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || null;
+  const from =
+    location.state?.from?.pathname || location.state?.redirectTo || null;
 
   useEffect(() => {
     if (location.state?.successMessage) {

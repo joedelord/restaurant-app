@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import PageLoader from "../components/ui/PageLoader";
 
@@ -16,6 +16,7 @@ const getDashboardByRole = (role) => {
 
 const PublicRoute = ({ children }) => {
   const { isAuthorized, user } = useAuth();
+  const location = useLocation();
 
   if (isAuthorized === null) {
     return <PageLoader />;
@@ -26,7 +27,12 @@ const PublicRoute = ({ children }) => {
   }
 
   if (isAuthorized) {
-    return <Navigate to={getDashboardByRole(user?.role)} replace />;
+    const redirectTarget =
+      location.state?.from?.pathname ||
+      location.state?.redirectTo ||
+      getDashboardByRole(user?.role);
+
+    return <Navigate to={redirectTarget} replace />;
   }
 
   return children;
