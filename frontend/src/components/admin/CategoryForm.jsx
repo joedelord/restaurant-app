@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
 import Button from "../ui/Button";
 
@@ -16,6 +17,7 @@ const CategoryForm = ({
   submitText = "Save",
   onCancel,
 }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,17 +38,17 @@ const CategoryForm = ({
     setError("");
 
     if (!formData.name_en.trim()) {
-      setError("English category name is required.");
+      setError(t("admin.categories.validation.nameEnRequired"));
       return;
     }
 
     if (!formData.name_fi.trim()) {
-      setError("Finnish category name is required.");
+      setError(t("admin.categories.validation.nameFiRequired"));
       return;
     }
 
     if (formData.display_order === "" || Number(formData.display_order) < 0) {
-      setError("Display order must be 0 or greater.");
+      setError(t("admin.categories.validation.displayOrderRequired"));
       return;
     }
 
@@ -67,7 +69,7 @@ const CategoryForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError("Failed to save category.");
+      setError(t("admin.categories.messages.saveError"));
     } finally {
       setLoading(false);
     }
@@ -88,7 +90,7 @@ const CategoryForm = ({
               htmlFor="name_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Category name (EN)
+              {t("admin.categories.fields.nameEn")}
             </label>
             <input
               id="name_en"
@@ -97,7 +99,7 @@ const CategoryForm = ({
               value={formData.name_en}
               onChange={handleChange}
               disabled={loading}
-              placeholder="e.g. Starters"
+              placeholder={t("admin.categories.placeholders.nameEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -107,7 +109,7 @@ const CategoryForm = ({
               htmlFor="name_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Category name (FI)
+              {t("admin.categories.fields.nameFi")}
             </label>
             <input
               id="name_fi"
@@ -116,7 +118,7 @@ const CategoryForm = ({
               value={formData.name_fi}
               onChange={handleChange}
               disabled={loading}
-              placeholder="esim. Alkuruoat"
+              placeholder={t("admin.categories.placeholders.nameFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -126,7 +128,7 @@ const CategoryForm = ({
               htmlFor="description_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Description (EN)
+              {t("admin.categories.fields.descriptionEn")}
             </label>
             <textarea
               id="description_en"
@@ -135,7 +137,7 @@ const CategoryForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder="Write a short description"
+              placeholder={t("admin.categories.placeholders.descriptionEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -145,7 +147,7 @@ const CategoryForm = ({
               htmlFor="description_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Description (FI)
+              {t("admin.categories.fields.descriptionFi")}
             </label>
             <textarea
               id="description_fi"
@@ -154,7 +156,7 @@ const CategoryForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder="Kirjoita lyhyt kuvaus"
+              placeholder={t("admin.categories.placeholders.descriptionFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -164,7 +166,7 @@ const CategoryForm = ({
               htmlFor="display_order"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              Display order
+              {t("admin.categories.fields.order")}
             </label>
             <input
               id="display_order"
@@ -182,7 +184,11 @@ const CategoryForm = ({
             <AuthSubmitButton
               loading={loading}
               idleText={submitText}
-              loadingText={initialData ? "Updating..." : "Creating..."}
+              loadingText={
+                initialData
+                  ? `${t("admin.categories.actions.update")}...`
+                  : `${t("admin.categories.actions.add")}...`
+              }
             />
 
             {onCancel && (
@@ -192,7 +198,7 @@ const CategoryForm = ({
                 onClick={onCancel}
                 disabled={loading}
               >
-                Cancel
+                {t("admin.categories.actions.cancel")}
               </Button>
             )}
           </div>

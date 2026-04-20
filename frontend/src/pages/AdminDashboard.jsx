@@ -1,6 +1,5 @@
 import {
   UsersIcon,
-  ClipboardDocumentListIcon,
   BookOpenIcon,
   Squares2X2Icon,
   ChartBarIcon,
@@ -21,10 +20,6 @@ const AdminDashboard = () => {
         {
           label: t("admin.dashboard.users.view"),
           path: "/admin/users",
-        },
-        {
-          label: t("admin.dashboard.users.roles"),
-          path: "/admin/roles",
         },
       ],
     },
@@ -59,17 +54,13 @@ const AdminDashboard = () => {
       ],
     },
     {
-      title: t("admin.dashboard.analytics.title"),
-      description: t("admin.dashboard.analytics.description"),
+      title: t("admin.dashboard.sales.title"),
+      description: t("admin.dashboard.sales.description"),
       icon: ChartBarIcon,
       actions: [
         {
-          label: t("admin.dashboard.analytics.overview"),
-          path: "/admin/analytics",
-        },
-        {
-          label: t("admin.dashboard.analytics.popular"),
-          path: "/admin/analytics/popular",
+          label: t("admin.dashboard.sales.open"),
+          path: "/admin/sales",
         },
       ],
     },
@@ -108,7 +99,11 @@ const AdminDashboard = () => {
 
               <p className="text-gray-500 mb-6 text-sm">{card.description}</p>
 
-              <div className="mt-auto flex flex-col gap-2">
+              <div
+                className={`flex flex-col gap-3 ${
+                  card.actions.length > 1 ? "mt-auto" : "mt-2"
+                }`}
+              >
                 {card.actions.map((action, i) => (
                   <button
                     key={i}

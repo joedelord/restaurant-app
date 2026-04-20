@@ -26,12 +26,14 @@
       "view": "Näytä pöydät",
       "layout": "Muokkaa pöytäkarttaa"
     },
-    "analytics": {
+    "sales": {
       "title": "Myyntitilastot",
-      "description": "Tarkastele myyntiä ja suosituimpia tuotteita",
-      "overview": "Myynnin yleiskuva",
-      "popular": "Suosituimmat tuotteet"
+      "description": "Seuraa myyntiä, suosituimpia annoksia ja kategorioiden suorituskykyä.",
+      "open": "Avaa myyntitilastot"
     }
+  },
+  "navigation": {
+    "backToDashboard": "Takaisin hallintapaneeliin"
   },
   "users": {
     "title": "Käyttäjähallinta",
@@ -93,62 +95,139 @@
     "loading": "Ladataan pöytiä...",
     "empty": "Pöytiä ei löytynyt.",
     "fields": {
-        "tableNumber": "Pöytänumero",
-        "seats": "Paikkamäärä",
-        "active": "Aktiivinen",
-        "status": "Tila",
-        "actions": "Toiminnot"
+      "tableNumber": "Pöytänumero",
+      "seats": "Paikkamäärä",
+      "active": "Aktiivinen",
+      "status": "Tila",
+      "actions": "Toiminnot"
     },
     "actions": {
-        "add": "Lisää pöytä",
-        "update": "Päivitä pöytä",
-        "edit": "Muokkaa",
-        "delete": "Poista",
-        "cancel": "Peruuta"
+      "add": "Lisää pöytä",
+      "update": "Päivitä pöytä",
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "cancel": "Peruuta"
     },
     "messages": {
-        "created": "Pöytä luotu onnistuneesti.",
-        "updated": "Pöytä päivitetty onnistuneesti.",
-        "deleted": "Pöytä poistettu onnistuneesti.",
-        "fetchError": "Pöytien haku epäonnistui.",
-        "saveError": "Pöydän tallentaminen epäonnistui.",
-        "deleteError": "Pöydän poistaminen epäonnistui.",
-        "confirmDelete": "Haluatko varmasti poistaa pöydän {{tableNumber}}?"
+      "created": "Pöytä luotu onnistuneesti.",
+      "updated": "Pöytä päivitetty onnistuneesti.",
+      "deleted": "Pöytä poistettu onnistuneesti.",
+      "fetchError": "Pöytien haku epäonnistui.",
+      "saveError": "Pöydän tallentaminen epäonnistui.",
+      "deleteError": "Pöydän poistaminen epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa pöydän {{tableNumber}}?"
     },
     "validation": {
-        "tableNumberRequired": "Pöytänumeron tulee olla suurempi kuin 0.",
-        "seatsRequired": "Paikkamäärän tulee olla suurempi kuin 0."
+      "tableNumberRequired": "Pöytänumeron tulee olla suurempi kuin 0.",
+      "seatsRequired": "Paikkamäärän tulee olla suurempi kuin 0."
     },
     "values": {
-        "active": "Aktiivinen",
-        "inactive": "Ei aktiivinen"
+      "active": "Aktiivinen",
+      "inactive": "Ei aktiivinen"
     }
   },
   "menuItems": {
+    "title": "Ruoka-annosten hallinta",
+    "subtitle": "Lisää, muokkaa ja poista ruokalistan tuotteita.",
+    "addTitle": "Lisää uusi annos",
+    "editTitle": "Muokkaa annosta",
+    "listTitle": "Ruoka-annokset ({{count}})",
     "fields": {
       "name": "Nimi",
+      "nameEn": "Annoksen nimi (EN)",
+      "nameFi": "Annoksen nimi (FI)",
+      "descriptionEn": "Kuvaus (EN)",
+      "descriptionFi": "Kuvaus (FI)",
       "price": "Hinta",
-      "category": "Kategoria"
+      "category": "Kategoria",
+      "imageUrl": "Kuvan URL",
+      "available": "Saatavilla"
     },
     "actions": {
+      "add": "Lisää annos",
+      "update": "Päivitä annos",
       "edit": "Muokkaa",
-      "delete": "Poista"
+      "delete": "Poista",
+      "cancel": "Peruuta"
+    },
+    "placeholders": {
+      "nameEn": "e.g. Margherita Pizza",
+      "nameFi": "esim. Margarita Pizza",
+      "descriptionEn": "Write a short description",
+      "descriptionFi": "Kirjoita lyhyt kuvaus",
+      "price": "esim. 12.90",
+      "imageUrl": "https://example.com/image.jpg",
+      "category": "Valitse kategoria"
+    },
+    "validation": {
+      "nameEnRequired": "Englanninkielinen annoksen nimi on pakollinen.",
+      "nameFiRequired": "Suomenkielinen annoksen nimi on pakollinen.",
+      "priceRequired": "Hinnan on oltava suurempi kuin 0.",
+      "categoryRequired": "Kategoria on pakollinen."
+    },
+    "messages": {
+      "saveError": "Annoksen tallentaminen epäonnistui."
     },
     "empty": "Ei ruokalistan tuotteita."
   },
   "categories": {
+    "title": "Kategorioiden hallinta",
+    "subtitle": "Lisää, muokkaa ja poista ruokalistan kategorioita.",
+    "addTitle": "Lisää uusi kategoria",
+    "editTitle": "Muokkaa kategoriaa",
+    "listTitle": "Kategoriat ({{count}})",
     "fields": {
       "name": "Nimi",
+      "nameEn": "Kategorian nimi (EN)",
+      "nameFi": "Kategorian nimi (FI)",
       "description": "Kuvaus",
+      "descriptionEn": "Kuvaus (EN)",
+      "descriptionFi": "Kuvaus (FI)",
       "order": "Järjestys"
     },
     "actions": {
+      "add": "Lisää kategoria",
+      "update": "Päivitä kategoria",
       "edit": "Muokkaa",
-      "delete": "Poista"
+      "delete": "Poista",
+      "cancel": "Peruuta"
+    },
+    "placeholders": {
+      "nameEn": "esim. Starters",
+      "nameFi": "esim. Alkuruoat",
+      "descriptionEn": "Kirjoita lyhyt kuvaus englanniksi",
+      "descriptionFi": "Kirjoita lyhyt kuvaus suomeksi"
+    },
+    "validation": {
+      "nameEnRequired": "Englanninkielinen kategorian nimi on pakollinen.",
+      "nameFiRequired": "Suomenkielinen kategorian nimi on pakollinen.",
+      "displayOrderRequired": "Järjestyksen on oltava 0 tai suurempi."
+    },
+    "messages": {
+      "saveError": "Kategorian tallentaminen epäonnistui."
     },
     "empty": "Ei kategorioita."
   },
   "List": {
     "actions": "Toiminnot"
+  },
+  "sales": {
+    "title": "Myyntitilastot",
+    "subtitle": "Tarkastele suosituimpia annoksia ja myyntiä kategorioittain.",
+    "fields": {
+      "quantitySold": "Myyty määrä",
+      "revenue": "Myynti"
+    },
+    "topItems": {
+      "title": "Suosituimmat annokset ({{count}})",
+      "empty": "Myyntidataa annoksista ei vielä ole saatavilla."
+    },
+    "categories": {
+      "title": "Myynti kategorioittain ({{count}})",
+      "empty": "Kategorioiden myyntidataa ei vielä ole saatavilla."
+    },
+    "messages": {
+      "loadError": "Myyntitilastojen lataaminen epäonnistui."
+    }
   }
 }
