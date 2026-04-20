@@ -55,7 +55,7 @@ A full-stack restaurant management application that allows customers to browse m
 - Manage tables
 - View reservations
 
-### 📦 Orders (in progress)
+### 📦 Orders
 
 - Staff can create and manage orders
 - Link orders to tables/reservations
