@@ -5,43 +5,111 @@ import api from "../api";
 import AuthCard from "../components/auth/AuthCard";
 import AuthField from "../components/auth/AuthField";
 import AuthSubmitButton from "../components/auth/AuthSubmitButton";
+import FormMessage from "../components/ui/FormMessage";
 
 const Register = () => {
   const { t } = useTranslation();
-
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [marketingConsent, setMarketingConsent] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
-  const getErrorMessage = (error) => {
-    const data = error?.response?.data;
+  const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    marketingConsent: false,
+    password: "",
+    confirmPassword: "",
+  });
 
-    if (!data) return t("auth.register.errors.default");
-    if (typeof data.detail === "string") return data.detail;
-    if (data.email?.[0]) return data.email[0];
-    if (data.password?.[0]) return data.password[0];
-    if (data.first_name?.[0]) return data.first_name[0];
-    if (data.last_name?.[0]) return data.last_name[0];
-    if (data.phone_number?.[0]) return data.phone_number[0];
-    if (typeof data.non_field_errors?.[0] === "string") {
-      return data.non_field_errors[0];
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [formError, setFormError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const mapRegisterErrors = (error) => {
+    const data = error?.response?.data || {};
+
+    const nextFieldErrors = {};
+    let nextFormError = "";
+
+    if (data.email?.[0]) nextFieldErrors.email = data.email[0];
+    if (data.password?.[0]) nextFieldErrors.password = data.password[0];
+    if (data.first_name?.[0]) nextFieldErrors.firstName = data.first_name[0];
+    if (data.last_name?.[0]) nextFieldErrors.lastName = data.last_name[0];
+    if (data.phone_number?.[0])
+      nextFieldErrors.phoneNumber = data.phone_number[0];
+
+    if (typeof data.detail === "string") {
+      nextFormError = data.detail;
+    } else if (typeof data.non_field_errors?.[0] === "string") {
+      nextFormError = data.non_field_errors[0];
     }
 
-    return t("auth.register.errors.default");
+    if (!nextFormError && Object.keys(nextFieldErrors).length === 0) {
+      nextFormError = t("auth.register.errors.default");
+    }
+
+    return { nextFieldErrors, nextFormError };
+  };
+
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [id]: type === "checkbox" ? checked : value,
+    }));
+
+    setFormError("");
+
+    setFieldErrors((prev) => ({
+      ...prev,
+      [id]: "",
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
 
-    if (password !== confirmPassword) {
-      alert(t("auth.register.errors.passwordMismatch"));
+    setFormError("");
+    setFieldErrors({});
+
+    const nextFieldErrors = {};
+
+    if (!formData.email.trim()) {
+      nextFieldErrors.email = t("auth.register.errors.emailRequired");
+    }
+
+    if (!formData.firstName.trim()) {
+      nextFieldErrors.firstName = t("auth.register.errors.firstNameRequired");
+    }
+
+    if (!formData.lastName.trim()) {
+      nextFieldErrors.lastName = t("auth.register.errors.lastNameRequired");
+    }
+
+    if (!formData.password) {
+      nextFieldErrors.password = t("auth.register.errors.passwordRequired");
+    }
+
+    if (!formData.confirmPassword) {
+      nextFieldErrors.confirmPassword = t(
+        "auth.register.errors.confirmPasswordRequired",
+      );
+    }
+
+    if (
+      formData.password &&
+      formData.confirmPassword &&
+      formData.password !== formData.confirmPassword
+    ) {
+      nextFieldErrors.confirmPassword = t(
+        "auth.register.errors.passwordMismatch",
+      );
+    }
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      setFieldErrors(nextFieldErrors);
       return;
     }
 
@@ -49,19 +117,25 @@ const Register = () => {
 
     try {
       await api.post("/users/register/", {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        phone_number: phoneNumber,
-        marketing_consent: marketingConsent,
+        email: formData.email.trim(),
+        password: formData.password,
+        first_name: formData.firstName.trim(),
+        last_name: formData.lastName.trim(),
+        phone_number: formData.phoneNumber.trim(),
+        marketing_consent: formData.marketingConsent,
       });
 
-      alert(t("auth.register.success"));
-      navigate("/login", { replace: true });
+      navigate("/login", {
+        replace: true,
+        state: {
+          successMessage: t("auth.register.success"),
+        },
+      });
     } catch (error) {
       console.error(error);
-      alert(getErrorMessage(error));
+      const { nextFieldErrors, nextFormError } = mapRegisterErrors(error);
+      setFieldErrors(nextFieldErrors);
+      setFormError(nextFormError);
     } finally {
       setLoading(false);
     }
@@ -74,76 +148,91 @@ const Register = () => {
       footerLinkText={t("auth.register.footerLinkText")}
       footerLinkTo="/login"
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
+        <FormMessage message={formError} variant="error" />
+
         <AuthField
           id="email"
           label={t("auth.register.email")}
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           placeholder="name@example.com"
           autoComplete="email"
           required
+          disabled={loading}
+          error={fieldErrors.email}
         />
 
         <AuthField
           id="firstName"
           label={t("auth.register.firstName")}
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          value={formData.firstName}
+          onChange={handleChange}
           placeholder={t("auth.register.firstName")}
           autoComplete="given-name"
           required
+          disabled={loading}
+          error={fieldErrors.firstName}
         />
 
         <AuthField
           id="lastName"
           label={t("auth.register.lastName")}
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          value={formData.lastName}
+          onChange={handleChange}
           placeholder={t("auth.register.lastName")}
           autoComplete="family-name"
           required
+          disabled={loading}
+          error={fieldErrors.lastName}
         />
 
         <AuthField
           id="phoneNumber"
           label={t("auth.register.phone")}
           type="tel"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          value={formData.phoneNumber}
+          onChange={handleChange}
           placeholder="+358 40 123 4567"
           autoComplete="tel"
+          disabled={loading}
+          error={fieldErrors.phoneNumber}
         />
 
         <AuthField
           id="password"
           label={t("auth.register.password")}
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           placeholder={t("auth.register.passwordPlaceholder")}
           autoComplete="new-password"
           required
+          disabled={loading}
+          error={fieldErrors.password}
         />
 
         <AuthField
           id="confirmPassword"
           label={t("auth.register.confirmPassword")}
           type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={formData.confirmPassword}
+          onChange={handleChange}
           placeholder={t("auth.register.confirmPassword")}
           autoComplete="new-password"
           required
+          disabled={loading}
+          error={fieldErrors.confirmPassword}
         />
 
         <label htmlFor="marketingConsent" className="mb-5 flex items-center">
           <input
             id="marketingConsent"
             type="checkbox"
-            checked={marketingConsent}
-            onChange={(e) => setMarketingConsent(e.target.checked)}
+            checked={formData.marketingConsent}
+            onChange={handleChange}
+            disabled={loading}
             className="h-4 w-4 rounded-xs border border-default-medium bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
           />
           <p className="ms-2 select-none text-sm font-medium text-heading">

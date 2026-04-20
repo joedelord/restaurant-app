@@ -2,6 +2,18 @@ import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import PageLoader from "../components/ui/PageLoader";
 
+const getDashboardByRole = (role) => {
+  switch (role) {
+    case "admin":
+      return "/admin";
+    case "staff":
+      return "/staff";
+    case "customer":
+    default:
+      return "/user";
+  }
+};
+
 const RoleRoute = ({ children, allowedRoles = [] }) => {
   const { isAuthorized, user } = useAuth();
   const location = useLocation();
@@ -21,7 +33,7 @@ const RoleRoute = ({ children, allowedRoles = [] }) => {
   const hasAccess = allowedRoles.includes(user.role);
 
   if (!hasAccess) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={getDashboardByRole(user.role)} replace />;
   }
 
   return children;
