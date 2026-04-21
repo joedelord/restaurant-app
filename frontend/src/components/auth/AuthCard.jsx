@@ -11,7 +11,7 @@ const AuthCard = ({
     <div className="px-4 py-0">
       <h1 className="text-3xl font-bold text-center p-6">{title}</h1>
 
-      <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
+      <div className="mx-auto w-full max-w-xl rounded-2xl border bg-white border-gray-200 p-5 shadow-sm">
         <div className="mx-auto max-w-sm">
           {children}
 

@@ -58,13 +58,13 @@ const Navbar = () => {
           <div className="flex items-center gap-8">
             <Link
               to="/"
-              className="text-xl font-bold tracking-tight"
+              className="text-xl font-semibold tracking-tight"
               onClick={() => {
                 closeMenu();
                 closeProfileMenu();
               }}
             >
-              Restaurant
+              RestaurantApp
             </Link>
 
             <div className="hidden md:block">
