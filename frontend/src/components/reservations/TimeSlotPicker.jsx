@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
+import { isPastTimeSlot } from "../../utils/date";
 
-const TimeSlotPicker = ({ slots, selectedSlot, onSelect }) => {
+const TimeSlotPicker = ({ date, slots, selectedSlot, onSelect }) => {
   const { t } = useTranslation();
 
   if (!slots.length) {
@@ -20,27 +21,33 @@ const TimeSlotPicker = ({ slots, selectedSlot, onSelect }) => {
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
         {slots.map((slot) => {
           const isSelected = selectedSlot?.time === slot.time;
+          const isPast = isPastTimeSlot(date, slot.time);
+          const isDisabled = !slot.available || isPast;
 
           return (
             <button
               key={slot.time}
               type="button"
-              onClick={() => slot.available && onSelect(slot)}
-              disabled={!slot.available}
+              onClick={() => !isDisabled && onSelect(slot)}
+              disabled={isDisabled}
               className={`rounded-xl px-3 py-2 text-sm font-medium transition ${
                 isSelected
                   ? "bg-black text-white"
-                  : slot.available
-                    ? "bg-green-100 text-green-700 hover:bg-green-200"
-                    : "cursor-not-allowed bg-red-100 text-red-500"
+                  : isPast
+                    ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                    : slot.available
+                      ? "bg-green-100 text-green-700 hover:bg-green-200"
+                      : "cursor-not-allowed bg-red-100 text-red-500"
               }`}
             >
               <div>{slot.time}</div>
 
               <div className="text-xs">
-                {slot.available
-                  ? t("reservation.timeSlot.available")
-                  : t("reservation.timeSlot.reserved")}
+                {isPast
+                  ? t("reservation.timeSlot.past")
+                  : slot.available
+                    ? t("reservation.timeSlot.available")
+                    : t("reservation.timeSlot.reserved")}
               </div>
             </button>
           );

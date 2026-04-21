@@ -1,79 +1,80 @@
 {
-    "page": {
-      "title": "Table Reservation",
-      "subtitle": "Book a table easily online",
-      "success": "Reservation successful!",
-      "error": "Failed to create reservation.",
-      "loading": "Saving reservation..."
-    },
-    "form": {
-      "title": "Table Reservation",
-      "date": "Date",
-      "time": "Time",
-      "partySize": "Party size",
-      "table": "Select table",
-      "specialRequests": "Additional requests",
-      "specialPlaceholder": "E.g. allergies or preferences",
-      "submit": "Review reservation",
-      "loading": "Processing...",
-      "errors": {
-        "missingFields": "Please fill all required fields.",
-        "noTable": "Please select a table."
-      }
-    },
-    "confirm": {
-      "title": "Review reservation",
-      "subtitle": "Please check your details before final confirmation.",
-      "date": "Date",
-      "time": "Time",
-      "partySize": "Party size",
-      "table": "Table",
-      "specialRequests": "Additional requests",
-      "noRequests": "No additional requests",
-      "loginRequired": "You need to log in to confirm your reservation.",
-      "back": "Back",
-      "login": "Log in",
-      "confirm": "Confirm reservation",
-      "saving": "Saving..."
-    },
-    "tablePicker": {
-      "noTables": "No tables available.",
-      "table": "Table {{number}}",
-      "seats": "{{count}} seats",
-      "tooSmall": "Too small for selected party size",
-      "available": "Suitable for reservation"
-    },
-    "timeSlot": {
-      "title": "Select time",
-      "noSlots": "No available times for selected date",
-      "available": "Available",
-      "reserved": "Reserved"
-    },
-    "fields": {
-        "date": "Date",
-        "partySize": "Party size",
-        "specialRequests": "Additional requests",
-        "specialRequestsPlaceholder": "E.g. child seat, allergies, or a request for a quiet table"
-    },
-    "sections": {
-        "availableTimes": "Available times",
-        "availableTablesForTime": "Available tables for {{time}}"
-    },
-    "loading": {
-        "slots": "Loading available times...",
-        "tables": "Loading tables..."
-    },
-    "actions": {
-        "review": "Review reservation",
-        "saving": "Saving..."
-    },
-    "messages": {
-        "created": "Reservation created successfully.",
-        "createError": "Failed to create reservation.",
-        "tablesFetchError": "Failed to fetch tables.",
-        "slotsFetchError": "Failed to fetch available times."
-    },
-    "validation": {
-        "selectionRequired": "Please select a date, time, and table."
+  "page": {
+    "title": "Table Reservation",
+    "subtitle": "Book a table easily online",
+    "success": "Reservation successful!",
+    "error": "Failed to create reservation.",
+    "loading": "Saving reservation..."
+  },
+  "form": {
+    "title": "Table Reservation",
+    "date": "Date",
+    "time": "Time",
+    "partySize": "Party size",
+    "table": "Select table",
+    "specialRequests": "Additional requests",
+    "specialPlaceholder": "E.g. allergies or preferences",
+    "submit": "Review reservation",
+    "loading": "Processing...",
+    "errors": {
+      "missingFields": "Please fill all required fields.",
+      "noTable": "Please select a table."
     }
+  },
+  "confirm": {
+    "title": "Review reservation",
+    "subtitle": "Please check your details before final confirmation.",
+    "date": "Date",
+    "time": "Time",
+    "partySize": "Party size",
+    "table": "Table",
+    "specialRequests": "Additional requests",
+    "noRequests": "No additional requests",
+    "loginRequired": "You need to log in to confirm your reservation.",
+    "back": "Back",
+    "login": "Log in",
+    "confirm": "Confirm reservation",
+    "saving": "Saving..."
+  },
+  "tablePicker": {
+    "noTables": "No tables available.",
+    "table": "Table {{number}}",
+    "seats": "{{count}} seats",
+    "tooSmall": "Too small for selected party size",
+    "available": "Suitable for reservation"
+  },
+  "timeSlot": {
+    "title": "Select time",
+    "noSlots": "No available times for selected date",
+    "available": "Available",
+    "reserved": "Reserved",
+    "past": "Past"
+  },
+  "fields": {
+    "date": "Date",
+    "partySize": "Party size",
+    "specialRequests": "Additional requests",
+    "specialRequestsPlaceholder": "E.g. child seat, allergies, or a request for a quiet table"
+  },
+  "sections": {
+    "availableTimes": "Available times",
+    "availableTablesForTime": "Available tables for {{time}}"
+  },
+  "loading": {
+    "slots": "Loading available times...",
+    "tables": "Loading tables..."
+  },
+  "actions": {
+    "review": "Review reservation",
+    "saving": "Saving..."
+  },
+  "messages": {
+    "created": "Reservation created successfully.",
+    "createError": "Failed to create reservation.",
+    "tablesFetchError": "Failed to fetch tables.",
+    "slotsFetchError": "Failed to fetch available times."
+  },
+  "validation": {
+    "selectionRequired": "Please select a date, time, and table."
+  }
 }

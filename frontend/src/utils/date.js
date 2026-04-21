@@ -46,3 +46,39 @@ export const formatTime = (value) => {
     minute: "2-digit",
   }).format(date);
 };
+
+export const toDateInputValue = (date = new Date()) => {
+  const d = new Date(date);
+
+  if (Number.isNaN(d.getTime())) return "";
+
+  const year = d.getFullYear();
+  const month = `${d.getMonth() + 1}`.padStart(2, "0");
+  const day = `${d.getDate()}`.padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+export const getDefaultReservationDate = (closingHour = 22) => {
+  const now = new Date();
+
+  if (now.getHours() >= closingHour) {
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return toDateInputValue(tomorrow);
+  }
+
+  return toDateInputValue(now);
+};
+
+export const isPastTimeSlot = (dateValue, timeValue) => {
+  if (!dateValue || !timeValue) return false;
+
+  const slotDate = new Date(`${dateValue}T${timeValue}:00`);
+
+  if (Number.isNaN(slotDate.getTime())) {
+    return false;
+  }
+
+  return slotDate < new Date();
+};

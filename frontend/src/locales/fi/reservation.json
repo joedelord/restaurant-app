@@ -1,80 +1,80 @@
 {
-    "page": {
-      "title": "Pöytävaraus",
-      "subtitle": "Varaa pöytä helposti verkossa",
-      "success": "Varaus onnistui!",
-      "error": "Varauksen tekeminen epäonnistui.",
-      "loading": "Tallennetaan varausta..."
-    },
-    "form": {
-      "title": "Pöytävaraus",
-      "date": "Päivämäärä",
-      "time": "Aika",
-      "partySize": "Henkilömäärä",
-      "table": "Valitse pöytä",
-      "specialRequests": "Lisätiedot",
-      "specialPlaceholder": "Esim. allergiat tai toiveet",
-      "submit": "Tarkista varaus",
-      "loading": "Käsitellään...",
-      "errors": {
-        "missingFields": "Täytä kaikki pakolliset kentät.",
-        "noTable": "Valitse pöytä."
-      }
-    },
-    "confirm": {
-      "title": "Tarkista varaus",
-      "subtitle": "Varmista tiedot ennen lopullista vahvistusta.",
-      "date": "Päivämäärä",
-      "time": "Aika",
-      "partySize": "Henkilömäärä",
-      "table": "Pöytä",
-      "specialRequests": "Lisätiedot",
-      "noRequests": "Ei lisätietoja",
-      "loginRequired": "Jatkaaksesi varauksen vahvistamista sinun täytyy kirjautua sisään.",
-      "back": "Takaisin",
-      "login": "Kirjaudu sisään",
-      "confirm": "Vahvista varaus",
-      "saving": "Tallennetaan..."
-    },
-    "tablePicker": {
-      "noTables": "Ei pöytiä saatavilla.",
-      "table": "Pöytä {{number}}",
-      "seats": "{{count}} henkilöä",
-      "tooSmall": "Liian pieni valitulle henkilömäärälle",
-      "available": "Sopiva valinta varaukselle"
-    },
-    "timeSlot": {
-      "title": "Valitse aika",
-      "noSlots": "Ei vapaita aikoja valitulle päivälle",
-      "available": "Vapaa",
-      "reserved": "Varattu"
-    },
-    "fields": {
-      "date": "Päivämäärä",
-      "partySize": "Henkilömäärä",
-      "specialRequests": "Lisätiedot",
-      "specialRequestsPlaceholder": "Esim. lastenistuin, allergiat tai toive rauhallisesta pöydästä"
-    },
-    "sections": {
-      "availableTimes": "Vapaat ajat",
-      "availableTablesForTime": "Vapaat pöydät ajalle {{time}}"
-    },
-    "loading": {
-      "slots": "Haetaan aikoja...",
-      "tables": "Ladataan pöytiä..."
-    },
-    "actions": {
-      "review": "Tarkista varaus",
-      "saving": "Tallennetaan..."
-    },
-    "messages": {
-      "created": "Varaus luotu onnistuneesti.",
-      "createError": "Varauksen tekeminen epäonnistui.",
-      "tablesFetchError": "Pöytien hakeminen epäonnistui.",
-      "slotsFetchError": "Aikojen haku epäonnistui."
-    },
-    "validation": {
-      "selectionRequired": "Valitse päivä, aika ja pöytä."
+  "page": {
+    "title": "Pöytävaraus",
+    "subtitle": "Varaa pöytä helposti verkossa",
+    "success": "Varaus onnistui!",
+    "error": "Varauksen tekeminen epäonnistui.",
+    "loading": "Tallennetaan varausta..."
+  },
+  "form": {
+    "title": "Pöytävaraus",
+    "date": "Päivämäärä",
+    "time": "Aika",
+    "partySize": "Henkilömäärä",
+    "table": "Valitse pöytä",
+    "specialRequests": "Lisätiedot",
+    "specialPlaceholder": "Esim. allergiat tai toiveet",
+    "submit": "Tarkista varaus",
+    "loading": "Käsitellään...",
+    "errors": {
+      "missingFields": "Täytä kaikki pakolliset kentät.",
+      "noTable": "Valitse pöytä."
     }
-
+  },
+  "confirm": {
+    "title": "Tarkista varaus",
+    "subtitle": "Varmista tiedot ennen lopullista vahvistusta.",
+    "date": "Päivämäärä",
+    "time": "Aika",
+    "partySize": "Henkilömäärä",
+    "table": "Pöytä",
+    "specialRequests": "Lisätiedot",
+    "noRequests": "Ei lisätietoja",
+    "loginRequired": "Jatkaaksesi varauksen vahvistamista sinun täytyy kirjautua sisään.",
+    "back": "Takaisin",
+    "login": "Kirjaudu sisään",
+    "confirm": "Vahvista varaus",
+    "saving": "Tallennetaan..."
+  },
+  "tablePicker": {
+    "noTables": "Ei pöytiä saatavilla.",
+    "table": "Pöytä {{number}}",
+    "seats": "{{count}} henkilöä",
+    "tooSmall": "Liian pieni valitulle henkilömäärälle",
+    "available": "Sopiva valinta varaukselle"
+  },
+  "timeSlot": {
+    "title": "Valitse aika",
+    "noSlots": "Ei vapaita aikoja valitulle päivälle",
+    "available": "Vapaa",
+    "reserved": "Varattu",
+    "past": "Mennyt"
+  },
+  "fields": {
+    "date": "Päivämäärä",
+    "partySize": "Henkilömäärä",
+    "specialRequests": "Lisätiedot",
+    "specialRequestsPlaceholder": "Esim. lastenistuin, allergiat tai toive rauhallisesta pöydästä"
+  },
+  "sections": {
+    "availableTimes": "Vapaat ajat",
+    "availableTablesForTime": "Vapaat pöydät ajalle {{time}}"
+  },
+  "loading": {
+    "slots": "Haetaan aikoja...",
+    "tables": "Ladataan pöytiä..."
+  },
+  "actions": {
+    "review": "Tarkista varaus",
+    "saving": "Tallennetaan..."
+  },
+  "messages": {
+    "created": "Varaus luotu onnistuneesti.",
+    "createError": "Varauksen tekeminen epäonnistui.",
+    "tablesFetchError": "Pöytien hakeminen epäonnistui.",
+    "slotsFetchError": "Aikojen haku epäonnistui."
+  },
+  "validation": {
+    "selectionRequired": "Valitse päivä, aika ja pöytä."
+  }
 }

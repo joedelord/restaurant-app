@@ -288,7 +288,7 @@ class ReservationAvailabilityView(APIView):
         if not selected_date:
             return Response({"detail": "Invalid date format."}, status=400)
 
-        opening_hour = 12
+        opening_hour = 14
         closing_hour = 22
         slot_minutes = 30
         reservation_duration = timedelta(hours=2)
@@ -300,8 +300,12 @@ class ReservationAvailabilityView(APIView):
 
         blocking_statuses = ["pending", "confirmed"]
 
-        day_start = timezone.make_aware(datetime.combine(selected_date, time(hour=0, minute=0)))
-        day_end = timezone.make_aware(datetime.combine(selected_date, time(hour=23, minute=59, second=59)))
+        day_start = timezone.make_aware(
+            datetime.combine(selected_date, time(hour=0, minute=0))
+        )
+        day_end = timezone.make_aware(
+            datetime.combine(selected_date, time(hour=23, minute=59, second=59))
+        )
 
         reservations = Reservation.objects.filter(
             table__in=eligible_tables,
@@ -310,11 +314,22 @@ class ReservationAvailabilityView(APIView):
             reservation_time__lte=day_end + reservation_duration,
         ).select_related("table")
 
+        now = timezone.localtime()
+        is_today = selected_date == now.date()
+
         slots = []
-        current = timezone.make_aware(datetime.combine(selected_date, time(hour=opening_hour, minute=0)))
-        end = timezone.make_aware(datetime.combine(selected_date, time(hour=closing_hour, minute=0)))
+        current = timezone.make_aware(
+            datetime.combine(selected_date, time(hour=opening_hour, minute=0))
+        )
+        end = timezone.make_aware(
+            datetime.combine(selected_date, time(hour=closing_hour, minute=0))
+        )
 
         while current < end:
+            if is_today and current <= now:
+                current += timedelta(minutes=slot_minutes)
+                continue
+
             slot_end = current + reservation_duration
             free_tables = []
 
@@ -328,19 +343,23 @@ class ReservationAvailabilityView(APIView):
                 if not overlapping_exists:
                     free_tables.append(table.pk)
 
-            slots.append({
-                "time": current.strftime("%H:%M"),
-                "available": len(free_tables) > 0,
-                "available_tables": free_tables,
-            })
+            slots.append(
+                {
+                    "time": current.strftime("%H:%M"),
+                    "available": len(free_tables) > 0,
+                    "available_tables": free_tables,
+                }
+            )
 
             current += timedelta(minutes=slot_minutes)
 
-        return Response({
-            "date": selected_date.isoformat(),
-            "party_size": party_size,
-            "slots": slots,
-        })
+        return Response(
+            {
+                "date": selected_date.isoformat(),
+                "party_size": party_size,
+                "slots": slots,
+            }
+        )
     
 
 class AdminRestaurantTableListCreateView(generics.ListCreateAPIView):
