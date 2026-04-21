@@ -25,7 +25,7 @@ const ReservationForm = () => {
   const navigate = useNavigate();
   const { isAuthorized } = useAuth();
 
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(getLocalDateValue());
   const [partySize, setPartySize] = useState(2);
   const [slots, setSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -144,7 +144,7 @@ const ReservationForm = () => {
   };
 
   const resetForm = () => {
-    setDate("");
+    setDate(getLocalDateValue());
     setPartySize(2);
     setSlots([]);
     setSelectedSlot(null);
@@ -186,6 +186,7 @@ const ReservationForm = () => {
 
     navigate("/login", {
       state: {
+        from: { pathname: "/reservations" },
         redirectTo: "/reservations",
       },
     });
