@@ -11,21 +11,16 @@ import TimeSlotPicker from "./TimeSlotPicker";
 import TablePicker from "./TablePicker";
 import ReservationConfirmModal from "./ReservationConfirmModal";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
+import { getDefaultReservationDate, toDateInputValue } from "../../utils/date";
 
 const STORAGE_KEY = "pendingReservation";
-
-const getLocalDateValue = () => {
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  return now.toISOString().split("T")[0];
-};
 
 const ReservationForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isAuthorized } = useAuth();
 
-  const [date, setDate] = useState(getLocalDateValue());
+  const [date, setDate] = useState(getDefaultReservationDate());
   const [partySize, setPartySize] = useState(2);
   const [slots, setSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -144,7 +139,7 @@ const ReservationForm = () => {
   };
 
   const resetForm = () => {
-    setDate(getLocalDateValue());
+    setDate(getDefaultReservationDate());
     setPartySize(2);
     setSlots([]);
     setSelectedSlot(null);
@@ -260,7 +255,7 @@ const ReservationForm = () => {
               <input
                 type="date"
                 value={date}
-                min={getLocalDateValue()}
+                min={toDateInputValue()}
                 onChange={(e) => {
                   setDate(e.target.value);
                   clearFeedback();
@@ -297,8 +292,9 @@ const ReservationForm = () => {
               </div>
             ) : (
               <TimeSlotPicker
+                date={date}
                 slots={slots}
-                selectedTime={selectedSlot?.time || null}
+                selectedSlot={selectedSlot}
                 onSelect={(slot) => {
                   setSelectedSlot(slot);
                   setSelectedTableId(null);
