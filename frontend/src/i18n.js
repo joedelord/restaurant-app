@@ -12,6 +12,7 @@ import enStaff from "./locales/en/staff.json";
 import enReservation from "./locales/en/reservation.json";
 import enNotFound from "./locales/en/notFound.json";
 import enUser from "./locales/en/user.json";
+import enFooter from "./locales/en/footer.json";
 
 import fiCommon from "./locales/fi/common.json";
 import fiAuth from "./locales/fi/auth.json";
@@ -24,6 +25,7 @@ import fiStaff from "./locales/fi/staff.json";
 import fiReservation from "./locales/fi/reservation.json";
 import fiNotFound from "./locales/fi/notFound.json";
 import fiUser from "./locales/fi/user.json";
+import fiFooter from "./locales/fi/footer.json";
 
 const resources = {
   en: {
@@ -39,6 +41,7 @@ const resources = {
       reservation: enReservation,
       notFound: enNotFound,
       user: enUser,
+      footer: enFooter,
     },
   },
   fi: {
@@ -54,6 +57,7 @@ const resources = {
       reservation: fiReservation,
       notFound: fiNotFound,
       user: fiUser,
+      footer: fiFooter,
     },
   },
 };
