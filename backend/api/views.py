@@ -155,7 +155,7 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     
 class OrderStatusUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusUpdateSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrAdmin]
+    permission_classes = [IsAuthenticated, IsStaffOrAdmin]
     http_method_names = ["patch"]
 
     def get_queryset(self):
