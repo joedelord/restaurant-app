@@ -2,7 +2,7 @@ import MenuItemCard from "./MenuItemCard";
 
 const MenuSection = ({ category, items }) => {
   return (
-    <section className="rounded-3xl border border-default-medium bg-white p-5 shadow-sm sm:p-7">
+    <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-7">
       <div className="mb-6 text-center">
         <h2 className="text-2xl font-semibold text-heading sm:text-3xl">
           {category.localizedName || "-"}

@@ -19,11 +19,11 @@ const Home = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-bottom from-[#f8f9fb] via-white to-[#f3f4f6] px-4 py-12 text-gray-900 md:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 h-600px w-600px -translate-x-1/2 rounded-full bg-amber-400/20 blur-[120px]" />
+        <div className="absolute -top-40 left-1/2 h-600px w-600px -translate-x-1/2 rounded-full bg-amber-400/20 blur-120px" />
       </div>
 
       <div
-        className={`relative mx-auto grid max-w-7xl items-center gap-10 rounded-2rem border border-gray-200 bg-white/70 p-6 shadow-xl backdrop-blur-md transition-all duration-700 ease-out md:grid-cols-2 md:p-10 ${
+        className={`relative mx-auto grid max-w-7xl items-center gap-10 rounded-2xl border border-gray-200 bg-white/70 p-6 shadow-xl backdrop-blur-md transition-all duration-700 ease-out md:grid-cols-2 md:p-10 ${
           isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
         }`}
       >
