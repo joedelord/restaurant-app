@@ -288,7 +288,7 @@ class ReservationAvailabilityView(APIView):
         if not selected_date:
             return Response({"detail": "Invalid date format."}, status=400)
 
-        opening_hour = 14
+        opening_hour = 12
         closing_hour = 22
         slot_minutes = 30
         reservation_duration = timedelta(hours=2)
