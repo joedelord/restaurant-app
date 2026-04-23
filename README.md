@@ -123,13 +123,22 @@ source venv/bin/activate   # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Create `.env` file:
+cp ../.env.example .env
 
 ```
 SECRET_KEY=your_secret_key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
-DATABASE_URL=your_database_url
+
+DB_NAME=restaurant_db
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+
+JWT_SECRET=your_jwt_secret
+
+CORS_ALLOWED_ORIGINS=http://localhost:5173
 ```
 
 Run migrations:
@@ -163,6 +172,7 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 - `POST /api/token/` → login
 - `POST /api/token/refresh/` → refresh token
+- `POST /api/users/login/`
 
 ### Users
 
@@ -178,6 +188,12 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 - `POST /api/reservations/`
 - `GET /api/reservations/`
+- `GET /api/reservations/availability/`
+
+### Orders
+
+- `POST /api/orders/create/`
+- `GET /api/orders/`
 
 ### Tables
 
@@ -185,7 +201,7 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 ---
 
-## 🧪 Testing (optional)
+## 🧪 Testing
 
 Backend tests:
 
@@ -195,40 +211,50 @@ python manage.py test
 
 ---
 
+## 🌍 Internationalization
+
+- Frontend: i18next (EN / FI)
+- Backend: Django i18n (gettext)
+- Language is controlled via Accept-Language header
+
+---
+
 ## 🗺️ Roadmap
 
 ### ✅ Implemented
 
-- Authentication (JWT)
-- Admin dashboard (users, tables, menu)
+- JWT authentication
+- Role-based access
 - Reservation system
-- Table selection logic
+- Admin dashboard
+- Staff dashboard
+- User dashboard
+- Multi-language support
 
 ### 🚧 In Progress
 
-- Staff order management
-- Improved reservation time-slot UI
+- UI/UX refinements
 
 ### 🔮 Planned
 
 - Analytics dashboard
-- Table layout editor (visual)
-- Notifications (email)
+- Visual table layout editor
+- Email notifications
+- Real-time updates (WebSockets)
 
 ---
 
 ## 💡 Future Improvements
 
-- Full i18n coverage across all components
-- Reusable admin table & form components
-- Better error handling & toast notifications
-- Performance optimizations (loading states)
+- Component reusability
+- Performance optimizations
 
 ---
 
 ## 👨‍💻 Author
 
-Jouni Seppänen (joedelord)
+Jouni Seppänen
+GitHub: https://github.com/joedelord
 
 ---
 
