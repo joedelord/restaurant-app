@@ -1,4 +1,36 @@
+/**
+ * TablePicker
+ *
+ * Displays available restaurant tables for the selected reservation slot.
+ *
+ * Responsibilities:
+ * - Renders selectable table options
+ * - Highlights the selected table
+ * - Disables tables that are too small for the party size
+ * - Shows table availability and seat capacity information
+ */
+
 import { useTranslation } from "react-i18next";
+
+const getTableClasses = ({ isSelected, isTooSmall }) => {
+  if (isSelected) {
+    return "border-black bg-gray-900 text-white";
+  }
+
+  if (isTooSmall) {
+    return "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400";
+  }
+
+  return "border-gray-200 bg-white hover:border-gray-400 hover:shadow-sm";
+};
+
+const getTableStatusLabel = ({ isTooSmall, t }) => {
+  if (isTooSmall) {
+    return t("reservation.tablePicker.tooSmall");
+  }
+
+  return t("reservation.tablePicker.available");
+};
 
 const TablePicker = ({ tables, selectedTableId, onSelect, partySize }) => {
   const { t } = useTranslation();
@@ -14,22 +46,21 @@ const TablePicker = ({ tables, selectedTableId, onSelect, partySize }) => {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {tables.map((table) => {
-        const tooSmall = partySize && Number(partySize) > table.seats;
+        const isTooSmall = Number(partySize) > table.seats;
         const isSelected = selectedTableId === table.id;
 
         return (
           <button
             key={table.id}
             type="button"
-            onClick={() => !tooSmall && onSelect(table.id)}
-            disabled={tooSmall}
-            className={`rounded-2xl border p-4 text-left transition ${
-              isSelected
-                ? "border-black bg-gray-900 text-white"
-                : tooSmall
-                  ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
-                  : "border-gray-200 bg-white hover:border-gray-400 hover:shadow-sm"
-            }`}
+            onClick={() => !isTooSmall && onSelect(table.id)}
+            disabled={isTooSmall}
+            className={`rounded-2xl border p-4 text-left transition ${getTableClasses(
+              {
+                isSelected,
+                isTooSmall,
+              },
+            )}`}
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">
@@ -47,9 +78,7 @@ const TablePicker = ({ tables, selectedTableId, onSelect, partySize }) => {
             </div>
 
             <p className="mt-2 text-sm opacity-80">
-              {tooSmall
-                ? t("reservation.tablePicker.tooSmall")
-                : t("reservation.tablePicker.available")}
+              {getTableStatusLabel({ isTooSmall, t })}
             </p>
           </button>
         );

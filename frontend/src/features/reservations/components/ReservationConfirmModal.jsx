@@ -1,6 +1,24 @@
+/**
+ * ReservationConfirmModal
+ *
+ * Confirmation modal shown before a reservation is finally submitted.
+ *
+ * Responsibilities:
+ * - Displays a summary of the reservation details
+ * - Informs the user when login is required
+ * - Lets the user go back, log in, or confirm the reservation
+ */
+
 import { useTranslation } from "react-i18next";
 import { formatDate } from "../../../utils/date";
 import Button from "../../../components/ui/Button";
+
+const SummaryRow = ({ label, value }) => (
+  <div className="flex justify-between gap-4">
+    <span className="text-gray-500">{label}</span>
+    <span className="font-medium text-gray-900">{value}</span>
+  </div>
+);
 
 const ReservationConfirmModal = ({
   open,
@@ -15,9 +33,22 @@ const ReservationConfirmModal = ({
 
   if (!open || !reservation) return null;
 
+  const tableLabel = reservation.table_number
+    ? t("reservation.tablePicker.table", {
+        number: reservation.table_number,
+      })
+    : "-";
+
+  const specialRequests =
+    reservation.special_requests || t("reservation.confirm.noRequests");
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+      <div
+        className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="mb-4">
           <h2 className="text-2xl font-bold text-gray-900">
             {t("reservation.confirm.title")}
@@ -29,54 +60,31 @@ const ReservationConfirmModal = ({
         </div>
 
         <div className="space-y-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm">
-          <div className="flex justify-between gap-4">
-            <span className="text-gray-500">
-              {t("reservation.confirm.date")}
-            </span>
-            <span className="font-medium text-gray-900">
-              {formatDate(reservation.date)}
-            </span>
-          </div>
+          <SummaryRow
+            label={t("reservation.confirm.date")}
+            value={formatDate(reservation.date)}
+          />
 
-          <div className="flex justify-between gap-4">
-            <span className="text-gray-500">
-              {t("reservation.confirm.time")}
-            </span>
-            <span className="font-medium text-gray-900">
-              {reservation.time}
-            </span>
-          </div>
+          <SummaryRow
+            label={t("reservation.confirm.time")}
+            value={reservation.time}
+          />
 
-          <div className="flex justify-between gap-4">
-            <span className="text-gray-500">
-              {t("reservation.confirm.partySize")}
-            </span>
-            <span className="font-medium text-gray-900">
-              {reservation.party_size}
-            </span>
-          </div>
+          <SummaryRow
+            label={t("reservation.confirm.partySize")}
+            value={reservation.party_size}
+          />
 
-          <div className="flex justify-between gap-4">
-            <span className="text-gray-500">
-              {t("reservation.confirm.table")}
-            </span>
-            <span className="font-medium text-gray-900">
-              {reservation.table_number
-                ? t("reservation.tablePicker.table", {
-                    number: reservation.table_number,
-                  })
-                : "-"}
-            </span>
-          </div>
+          <SummaryRow
+            label={t("reservation.confirm.table")}
+            value={tableLabel}
+          />
 
           <div className="pt-2">
             <div className="mb-1 text-gray-500">
               {t("reservation.confirm.specialRequests")}
             </div>
-            <div className="text-gray-900">
-              {reservation.special_requests ||
-                t("reservation.confirm.noRequests")}
-            </div>
+            <div className="text-gray-900">{specialRequests}</div>
           </div>
         </div>
 
