@@ -1,19 +1,41 @@
+/**
+ * ReservationForm
+ *
+ * Main reservation form component for creating a table booking.
+ *
+ * Responsibilities:
+ * - Manages reservation form state
+ * - Fetches available reservation slots based on date and party size
+ * - Displays available tables for the selected time slot
+ * - Restores a pending reservation after login
+ * - Opens a confirmation modal before final submission
+ * - Creates the reservation through the reservation service
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 import {
   createReservation,
   getReservationAvailability,
   getTables,
-} from "../../services/reservationService";
-import useAuth from "../../hooks/useAuth";
+} from "../services/reservationService";
+import {
+  STORAGE_KEY,
+  buildReservationDraft,
+  getReservationErrorMessage,
+} from "../utils/reservationHelpers";
+import useAuth from "../../../hooks/useAuth";
+import {
+  getDefaultReservationDate,
+  toDateInputValue,
+} from "../../../utils/date";
+
 import TimeSlotPicker from "./TimeSlotPicker";
 import TablePicker from "./TablePicker";
 import ReservationConfirmModal from "./ReservationConfirmModal";
-import AuthSubmitButton from "../../features/auth/AuthSubmitButton";
-import { getDefaultReservationDate, toDateInputValue } from "../../utils/date";
-
-const STORAGE_KEY = "pendingReservation";
+import AuthSubmitButton from "../../auth/AuthSubmitButton";
 
 const ReservationForm = () => {
   const { t } = useTranslation();
@@ -37,6 +59,22 @@ const ReservationForm = () => {
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [pendingReservation, setPendingReservation] = useState(null);
+
+  const clearFeedback = () => {
+    setMessage("");
+    setError("");
+  };
+
+  const resetForm = () => {
+    setDate(getDefaultReservationDate());
+    setPartySize(2);
+    setSlots([]);
+    setSelectedSlot(null);
+    setSelectedTableId(null);
+    setSpecialRequests("");
+    setPendingReservation(null);
+    setShowConfirmModal(false);
+  };
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -133,22 +171,6 @@ const ReservationForm = () => {
     );
   }, [selectedSlot, tables, partySize]);
 
-  const clearFeedback = () => {
-    setMessage("");
-    setError("");
-  };
-
-  const resetForm = () => {
-    setDate(getDefaultReservationDate());
-    setPartySize(2);
-    setSlots([]);
-    setSelectedSlot(null);
-    setSelectedTableId(null);
-    setSpecialRequests("");
-    setPendingReservation(null);
-    setShowConfirmModal(false);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -157,17 +179,14 @@ const ReservationForm = () => {
       return;
     }
 
-    const selectedTable = tables.find((table) => table.id === selectedTableId);
-
-    const reservationDraft = {
-      reservation_time: `${date}T${selectedSlot.time}:00`,
+    const reservationDraft = buildReservationDraft({
       date,
-      time: selectedSlot.time,
-      party_size: Number(partySize),
-      table_id: selectedTableId,
-      table_number: selectedTable?.table_number ?? null,
-      special_requests: specialRequests.trim(),
-    };
+      selectedSlot,
+      selectedTableId,
+      tables,
+      partySize,
+      specialRequests,
+    });
 
     clearFeedback();
     setPendingReservation(reservationDraft);
@@ -210,21 +229,9 @@ const ReservationForm = () => {
       resetForm();
     } catch (err) {
       console.error(err);
-
-      const data = err?.response?.data;
-
-      if (data?.reservation_time?.[0]) {
-        setError(data.reservation_time[0]);
-      } else if (data?.party_size?.[0]) {
-        setError(data.party_size[0]);
-      } else if (data?.table_id?.[0]) {
-        setError(data.table_id[0]);
-      } else if (data?.detail) {
-        setError(data.detail);
-      } else {
-        setError(t("reservation.messages.createError"));
-      }
-
+      setError(
+        getReservationErrorMessage(err, t("reservation.messages.createError")),
+      );
       setShowConfirmModal(false);
     } finally {
       setLoadingSubmit(false);

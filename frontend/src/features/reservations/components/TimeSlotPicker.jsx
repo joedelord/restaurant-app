@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { isPastTimeSlot } from "../../utils/date";
+import { isPastTimeSlot } from "../../../utils/date";
 
 const TimeSlotPicker = ({ date, slots, selectedSlot, onSelect }) => {
   const { t } = useTranslation();
