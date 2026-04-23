@@ -1,18 +1,43 @@
+"""
+permissions.py
+
+Custom permission classes for the restaurant management system API.
+
+This file defines role-based and object-level access control rules used
+across the application.
+
+Permission classes:
+- IsAdmin: Allows access only to admin users.
+- IsStaffOrAdmin: Allows access to staff and admin users.
+- IsOwnerOrStaffOrAdmin:
+    - Staff/Admin: Full access
+    - Owner: Read-only access to their own resources
+    - Special case: Owner may cancel their own reservation via
+      ReservationStatusUpdateView (PATCH request)
+
+These permissions are applied in API views to enforce business rules
+and protect resources.
+"""
+
+from django.utils.translation import gettext_lazy as _
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
+
+# ROLE-BASED PERMISSIONS
 class IsAdmin(BasePermission):
-    message = "You do not have permission to perform this action."
+    message = _("You do not have permission to perform this action.")
 
     def has_permission(self, request, view):
         user = request.user
         return bool(
             user
             and user.is_authenticated
-            and getattr(user, "role", None) in ["admin"]
+            and getattr(user, "role", None) == "admin"
         )
 
+
 class IsStaffOrAdmin(BasePermission):
-    message = "You do not have permission to perform this action."
+    message = _("You do not have permission to perform this action.")
 
     def has_permission(self, request, view):
         user = request.user
@@ -23,15 +48,16 @@ class IsStaffOrAdmin(BasePermission):
         )
 
 
+# OBJECT-LEVEL PERMISSIONS
 class IsOwnerOrStaffOrAdmin(BasePermission):
     """
-    Sallii:
-    - staff/admin: kaiken
-    - owner: lukuoikeuden omaan objektiin
-    - reservation-status endpointissä owner voi myös perua oman varauksensa
+    Allows:
+    - staff/admin: full access
+    - owner: read access to own resource
+    - owner: can cancel own reservation via ReservationStatusUpdateView
     """
 
-    message = "You do not have permission to access this resource."
+    message = _("You do not have permission to access this resource.")
 
     def has_object_permission(self, request, view, obj):
         user = request.user
@@ -54,13 +80,13 @@ class IsOwnerOrStaffOrAdmin(BasePermission):
         if not owner_match:
             return False
 
-        # Owner saa lukea omia resurssejaan
         if request.method in SAFE_METHODS:
             return True
 
-        # Owner saa päivittää reservation-status endpointin kautta omaa varaustaan
-        if view.__class__.__name__ == "ReservationStatusUpdateView" and request.method == "PATCH":
+        if (
+            view.__class__.__name__ == "ReservationStatusUpdateView"
+            and request.method == "PATCH"
+        ):
             return True
 
-        # Muut muokkaukset ownerilta estetään
         return False

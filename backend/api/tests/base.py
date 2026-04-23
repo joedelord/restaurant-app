@@ -1,3 +1,13 @@
+"""
+base.py
+
+Base test utilities for API test cases.
+
+This file defines the shared BaseAPITestCase used across backend tests.
+It provides common setup data such as test users, tables, categories,
+menu items, and helper methods for authentication and future timestamps.
+"""
+
 from __future__ import annotations
 
 from datetime import timedelta

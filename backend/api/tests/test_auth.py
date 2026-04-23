@@ -1,3 +1,12 @@
+"""
+test_auth.py
+
+Authentication-related API tests.
+
+This file contains tests for user login and password change flows,
+including both successful and failing authentication scenarios.
+"""
+
 from __future__ import annotations
 
 from typing import Any, Mapping, cast

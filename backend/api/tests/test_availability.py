@@ -1,3 +1,12 @@
+"""
+test_availability.py
+
+Reservation availability API tests.
+
+This file verifies reservation slot availability logic, including
+required parameters, valid party sizes, returned slots, and overlap handling.
+"""
+
 from __future__ import annotations
 
 from datetime import datetime, time, timedelta

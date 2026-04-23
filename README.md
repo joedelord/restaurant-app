@@ -1,6 +1,8 @@
 # 🍽️ Restaurant Reservation & Management System
 
-A full-stack restaurant management application that allows customers to browse menus and make reservations, while staff and administrators manage tables, menu items, users, and orders.
+A full-stack restaurant management system built with modern web technologies.
+
+The application allows customers to browse menus and make reservations, while staff and administrators manage tables, menu items, users, and orders through dedicated dashboards.
 
 ---
 
@@ -12,7 +14,7 @@ A full-stack restaurant management application that allows customers to browse m
 - Tailwind CSS
 - React Router
 - Axios
-- i18next (multi-language support)
+- i18next (EN / FI)
 
 ### Backend
 
@@ -28,37 +30,38 @@ A full-stack restaurant management application that allows customers to browse m
 ### 👤 Authentication
 
 - User registration & login
-- JWT-based authentication (access + refresh tokens)
+- JWT authentication (access + refresh tokens)
 - Role-based access (customer / staff / admin)
 
 ### 🍽️ Menu
 
 - Browse menu items by category
 - Multi-language support (EN / FI)
-- Admin can manage categories and menu items
+- Admin management for categories & items
 
 ### 📅 Reservations
 
 - Create table reservations
-- Select table based on party size
-- Prevent invalid bookings
+- Automatic table filtering based on party size
+- Time-slot availability validation
 
 ### 🪑 Tables
 
-- Manage restaurant tables (admin)
-- Table capacity filtering for reservations
-
-### 🛠️ Admin Dashboard
-
-- Manage users
-- Manage menu (categories & items)
-- Manage tables
-- View reservations
+- Table management (admin)
+- Seat-based filtering for reservations
 
 ### 📦 Orders
 
 - Staff can create and manage orders
-- Link orders to tables/reservations
+- Orders linked to reservations or tables
+
+### 🛠️ Admin Dashboard
+
+- Manage users
+- Manage menu
+- Manage tables
+- View reservations
+- Sales overview (basic)
 
 ---
 
@@ -68,28 +71,32 @@ A full-stack restaurant management application that allows customers to browse m
 restaurant-app/
 │
 ├── backend/
-│   ├── api/
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── permissions.py
-│   ├── config/
-│   ├── manage.py
-│   └── requirements.txt
+│ ├── api/
+│ │ ├── locale/
+│ │ ├── models/
+│ │ ├── serializers/
+│ │ ├── tests/
+│ │ ├── views/
+│ │ ├── permissions.py
+│ │ └── urls.py
+│ ├── config/
+│ ├── locale/
+│ ├── manage.py
+│ └── requirements.txt
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   ├── context/
-│   │   ├── layouts/
-│   │   └── routes/
-│   ├── package.json
-│   └── vite.config.js
+│ ├── src/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── hooks/
+│ │ ├── services/
+│ │ ├── context/
+│ │ ├── layouts/
+│ │ └── routes/
+│ ├── package.json
+│ └── vite.config.js
 │
+├── .env.example
 ├── .gitignore
 └── README.md
 ```
@@ -112,17 +119,26 @@ cd restaurant-app
 ```
 cd backend
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate   # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Create `.env` file:
+cp ../.env.example .env
 
 ```
 SECRET_KEY=your_secret_key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
-DATABASE_URL=your_database_url
+
+DB_NAME=restaurant_db
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+
+JWT_SECRET=your_jwt_secret
+
+CORS_ALLOWED_ORIGINS=http://localhost:5173
 ```
 
 Run migrations:
@@ -156,6 +172,7 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 - `POST /api/token/` → login
 - `POST /api/token/refresh/` → refresh token
+- `POST /api/users/login/`
 
 ### Users
 
@@ -171,6 +188,12 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 - `POST /api/reservations/`
 - `GET /api/reservations/`
+- `GET /api/reservations/availability/`
+
+### Orders
+
+- `POST /api/orders/create/`
+- `GET /api/orders/`
 
 ### Tables
 
@@ -178,13 +201,22 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 ---
 
-## 🧪 Testing (optional)
+## 🧪 Testing
 
-Backend tests:
+Backend tests are organized by feature area under `backend/api/tests/`.
 
-```
+Run all tests:
+
+```bash
 python manage.py test
-```
+
+---
+
+## 🌍 Internationalization
+
+- Frontend: i18next (EN / FI)
+- Backend: Django i18n (gettext)
+- Language is controlled via Accept-Language header
 
 ---
 
@@ -192,39 +224,42 @@ python manage.py test
 
 ### ✅ Implemented
 
-- Authentication (JWT)
-- Admin dashboard (users, tables, menu)
+- JWT authentication
+- Role-based access
 - Reservation system
-- Table selection logic
+- Admin dashboard
+- Staff dashboard
+- User dashboard
+- Multi-language support
 
 ### 🚧 In Progress
 
-- Staff order management
-- Improved reservation time-slot UI
+- UI/UX refinements
 
 ### 🔮 Planned
 
 - Analytics dashboard
-- Table layout editor (visual)
-- Notifications (email)
+- Visual table layout editor
+- Email notifications
+- Real-time updates (WebSockets)
 
 ---
 
 ## 💡 Future Improvements
 
-- Full i18n coverage across all components
-- Reusable admin table & form components
-- Better error handling & toast notifications
-- Performance optimizations (loading states)
+- Component reusability
+- Performance optimizations
 
 ---
 
 ## 👨‍💻 Author
 
-Jouni Seppänen (joedelord)
+Jouni Seppänen
+GitHub: https://github.com/joedelord
 
 ---
 
 ## 📄 License
 
 This project is for educational and portfolio purposes.
+```

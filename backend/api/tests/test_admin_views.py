@@ -1,3 +1,12 @@
+"""
+test_admin_views.py
+
+Admin view API tests.
+
+This file verifies admin-only endpoints for managing users, tables,
+categories, menu items, and viewing sales statistics.
+"""
+
 from __future__ import annotations
 
 from typing import cast

@@ -1,3 +1,12 @@
+"""
+test_permissions.py
+
+Permission-related API tests.
+
+This file verifies role-based and object-level access control for
+customers, staff, and admin users across protected endpoints.
+"""
+
 from __future__ import annotations
 
 from typing import cast

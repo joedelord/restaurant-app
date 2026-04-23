@@ -1,0 +1,166 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2026-04-23 12:54+0300\n"
+"PO-Revision-Date: 2026-04-23 12:54+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\api\permissions.py:28 .\api\permissions.py:40
+msgid "You do not have permission to perform this action."
+msgstr "Sinulla ei ole oikeutta suorittaa tätä toimintoa."
+
+#: .\api\permissions.py:60
+msgid "You do not have permission to access this resource."
+msgstr "Sinulla ei ole oikeutta käyttää tätä resurssia."
+
+#: .\api\serializers\order.py:65
+msgid "Selected menu item is not available."
+msgstr "Valittu ruoka-annos ei ole saatavilla."
+
+#: .\api\serializers\order.py:97 .\api\serializers\reservation.py:99
+msgid "Selected table is not active."
+msgstr "Valittu pöytä ei ole aktiivinen."
+
+#: .\api\serializers\order.py:105
+msgid "You are not allowed to set order status."
+msgstr "Sinulla ei ole oikeutta asettaa tilauksen tilaa."
+
+#: .\api\serializers\order.py:108 .\api\serializers\order.py:216
+#: .\api\serializers\order.py:241
+msgid "Invalid order status."
+msgstr "Virheellinen tilauksen tila."
+
+#: .\api\serializers\order.py:114 .\api\serializers\order.py:140
+#: .\api\serializers\order.py:247
+msgid "Order must contain at least one item."
+msgstr "Tilauksen on sisällettävä vähintään yksi tuote."
+
+#: .\api\serializers\order.py:122 .\api\serializers\order.py:255
+msgid "Duplicate menu items are not allowed. Combine quantities into one row."
+msgstr "Samoja ruoka-annoksia ei saa olla usealla rivillä. Yhdistä määrät samalle riville."
+
+#: .\api\serializers\order.py:135 .\api\serializers\reservation.py:95
+msgid "Table is required."
+msgstr "Pöytä on pakollinen."
+
+#: .\api\serializers\order.py:149
+msgid "Selected table does not match the reservation table."
+msgstr "Valittu pöytä ei vastaa varauksen pöytää."
+
+#: .\api\serializers\order.py:154
+msgid "Cannot create an order for this reservation."
+msgstr "Tälle varaukselle ei voida luoda tilausta."
+
+#: .\api\serializers\order.py:159
+msgid "An order already exists for this reservation."
+msgstr "Tälle varaukselle on jo olemassa tilaus."
+
+#: .\api\serializers\order.py:212 .\api\serializers\order.py:237
+msgid "You are not allowed to update order status."
+msgstr "Sinulla ei ole oikeutta päivittää tilauksen tilaa."
+
+#: .\api\serializers\order.py:269
+msgid "Paid or cancelled orders cannot be edited."
+msgstr "Maksettua tai peruttua tilausta ei voi muokata."
+
+#: .\api\serializers\reservation.py:52
+msgid "Party size must be greater than zero."
+msgstr "Henkilömäärän on oltava suurempi kuin nolla."
+
+#: .\api\serializers\reservation.py:57
+msgid "Reservation time cannot be in the past."
+msgstr "Varausaika ei voi olla menneisyydessä."
+
+#: .\api\serializers\reservation.py:69 .\api\serializers\reservation.py:172
+msgid "Invalid reservation status."
+msgstr "Virheellinen varauksen tila."
+
+#: .\api\serializers\reservation.py:74
+msgid "You are not allowed to set this reservation status."
+msgstr "Sinulla ei ole oikeutta asettaa tätä varaustilaa."
+
+#: .\api\serializers\reservation.py:104
+msgid "Party size exceeds the number of seats at this table."
+msgstr "Henkilömäärä ylittää pöydän istumapaikkojen määrän."
+
+#: .\api\serializers\reservation.py:114
+msgid "You cannot modify a confirmed or completed reservation."
+msgstr "Et voi muokata vahvistettua tai päättynyttä varausta."
+
+#: .\api\serializers\reservation.py:121 .\api\serializers\reservation.py:176
+msgid "You may only cancel your reservation."
+msgstr "Voit ainoastaan perua oman varauksesi."
+
+#: .\api\serializers\reservation.py:127
+msgid "New reservations are created with pending status only."
+msgstr "Uudet varaukset luodaan aina odottava-tilassa."
+
+#: .\api\serializers\reservation.py:150
+msgid "This table is not available at the selected time."
+msgstr "Tämä pöytä ei ole saatavilla valittuna ajankohtana."
+
+#: .\api\serializers\reservation.py:168
+msgid "Authentication required."
+msgstr "Tunnistautuminen vaaditaan."
+
+#: .\api\serializers\user.py:66
+msgid "Invalid email or password."
+msgstr "Virheellinen sähköposti tai salasana."
+
+#: .\api\serializers\user.py:101
+msgid "Current password is incorrect."
+msgstr "Nykyinen salasana on virheellinen."
+
+#: .\api\serializers\user.py:108
+msgid "Passwords do not match."
+msgstr "Salasanat eivät täsmää."
+
+#: .\api\serializers\user.py:115
+msgid "New password must be different from the current password."
+msgstr "Uuden salasanan täytyy olla eri kuin nykyinen salasana."
+
+#: .\api\views\auth.py:46
+msgid "Refresh token is required."
+msgstr "Refresh token on pakollinen."
+
+#: .\api\views\auth.py:54
+msgid "Successfully logged out."
+msgstr "Uloskirjautuminen onnistui."
+
+#: .\api\views\auth.py:59
+msgid "Invalid or expired refresh token."
+msgstr "Virheellinen tai vanhentunut refresh token."
+
+#: .\api\views\orders.py:67
+msgid "Served or paid orders cannot be deleted."
+msgstr "Tarjoiltua tai maksettua tilausta ei voi poistaa."
+
+#: .\api\views\orders.py:73
+msgid "Order deleted successfully."
+msgstr "Tilaus poistettu onnistuneesti."
+
+#: .\api\views\reservations.py:66
+msgid "date is required."
+msgstr "Päivämäärä on pakollinen."
+
+#: .\api\views\reservations.py:69
+msgid "party_size is required."
+msgstr "Henkilömäärä on pakollinen."
+
+#: .\api\views\reservations.py:77
+msgid "party_size must be a positive integer."
+msgstr "Henkilömäärän on oltava positiivinen kokonaisluku."
+
+#: .\api\views\reservations.py:83
+msgid "Invalid date format."
+msgstr "Virheellinen päivämäärämuoto."
+
+#: .\api\views\users.py:43
+msgid "Password changed successfully."
+msgstr "Salasana vaihdettu onnistuneesti."
