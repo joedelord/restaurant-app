@@ -21,10 +21,10 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import useAuth from "../../hooks/useAuth";
-import LogoutButton from "../ui/LogoutButton";
+import LogoutButton from "../auth/LogoutButton";
 import NavbarSection from "./NavbarSection";
 import NavbarItem from "./NavbarItem";
-import LanguageToggle from "../ui/LanguageToggle";
+import LanguageToggle from "./LanguageToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
