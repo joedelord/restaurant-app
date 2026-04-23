@@ -9,6 +9,8 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from django.utils.translation import gettext_lazy as _
+
 from api.models import Order
 from api.permissions import IsStaffOrAdmin
 from api.serializers import (
@@ -62,13 +64,13 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
 
         if instance.status in locked_statuses:
             return Response(
-                {"detail": "Served or paid orders cannot be deleted."},
+                {"detail": _("Served or paid orders cannot be deleted.")},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         self.perform_destroy(instance)
         return Response(
-            {"detail": "Order deleted successfully."},
+            {"detail": _("Order deleted successfully.")},
             status=status.HTTP_200_OK,
         )
 

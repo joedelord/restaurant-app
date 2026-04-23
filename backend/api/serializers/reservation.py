@@ -8,6 +8,7 @@ changing reservation status.
 from datetime import timedelta
 
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
@@ -48,12 +49,12 @@ class ReservationSerializer(serializers.ModelSerializer):
 
     def validate_party_size(self, value):
         if value <= 0:
-            raise serializers.ValidationError("Party size must be greater than zero.")
+            raise serializers.ValidationError(_("Party size must be greater than zero."))
         return value
 
     def validate_reservation_time(self, value):
         if value < timezone.now():
-            raise serializers.ValidationError("Reservation time cannot be in the past.")
+            raise serializers.ValidationError(_("Reservation time cannot be in the past."))
         return value
 
     def validate_status(self, value):
@@ -65,13 +66,13 @@ class ReservationSerializer(serializers.ModelSerializer):
 
         if is_staff_or_admin(user):
             if value not in RESERVATION_STAFF_ALLOWED_STATUSES:
-                raise serializers.ValidationError("Invalid reservation status.")
+                raise serializers.ValidationError(_("Invalid reservation status."))
             return value
 
         if value not in RESERVATION_CUSTOMER_ALLOWED_STATUSES:
-            raise serializers.ValidationError(
+            raise serializers.ValidationError(_(
                 "You are not allowed to set this reservation status."
-            )
+            ))
 
         return value
 
@@ -91,16 +92,16 @@ class ReservationSerializer(serializers.ModelSerializer):
         )
 
         if not table:
-            raise serializers.ValidationError({"table_id": "Table is required."})
+            raise serializers.ValidationError({"table_id": _("Table is required.")})
 
         if not table.is_active:
             raise serializers.ValidationError(
-                {"table_id": "Selected table is not active."}
+                {"table_id": _("Selected table is not active.")}
             )
 
         if party_size and party_size > table.seats:
             raise serializers.ValidationError(
-                {"party_size": "Party size exceeds the number of seats at this table."}
+                {"party_size": _("Party size exceeds the number of seats at this table.")}
             )
 
         if self.instance and user and not is_staff_or_admin(user):
@@ -109,21 +110,21 @@ class ReservationSerializer(serializers.ModelSerializer):
             if self.instance.status in locked_statuses:
                 attempted_fields = set(attrs.keys()) - {"status"}
                 if attempted_fields:
-                    raise serializers.ValidationError(
+                    raise serializers.ValidationError(_(
                         "You cannot modify a confirmed or completed reservation."
-                    )
+                    ))
 
             if "status" in attrs and attrs["status"] != "cancelled":
                 current_status = self.instance.status
                 if attrs["status"] != current_status:
                     raise serializers.ValidationError(
-                        {"status": "You may only cancel your reservation."}
+                        {"status": _("You may only cancel your reservation.")}
                     )
 
         if not self.instance and user and not is_staff_or_admin(user):
             if "status" in attrs and attrs["status"] != "pending":
                 raise serializers.ValidationError(
-                    {"status": "New reservations are created with pending status only."}
+                    {"status": _("New reservations are created with pending status only.")}
                 )
 
         blocking_statuses = ["pending", "confirmed"]
@@ -145,9 +146,9 @@ class ReservationSerializer(serializers.ModelSerializer):
             if overlapping.exists():
                 raise serializers.ValidationError(
                     {
-                        "reservation_time": (
+                        "reservation_time": (_(
                             "This table is not available at the selected time."
-                        )
+                        ))
                     }
                 )
 
@@ -164,14 +165,14 @@ class ReservationStatusUpdateSerializer(serializers.ModelSerializer):
         user = getattr(request, "user", None)
 
         if not user or not user.is_authenticated:
-            raise serializers.ValidationError("Authentication required.")
+            raise serializers.ValidationError(_("Authentication required."))
 
         if is_staff_or_admin(user):
             if value not in RESERVATION_STAFF_ALLOWED_STATUSES:
-                raise serializers.ValidationError("Invalid reservation status.")
+                raise serializers.ValidationError(_("Invalid reservation status."))
             return value
 
         if value != "cancelled":
-            raise serializers.ValidationError("You may only cancel your reservation.")
+            raise serializers.ValidationError(_("You may only cancel your reservation."))
 
         return value

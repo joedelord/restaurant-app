@@ -5,6 +5,7 @@ Authentication-related API views for user registration, login, and logout.
 """
 
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -42,7 +43,7 @@ class LogoutView(APIView):
 
         if not refresh_token:
             return Response(
-                {"detail": "Refresh token is required."},
+                {"detail": _("Refresh token is required.")},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -50,11 +51,11 @@ class LogoutView(APIView):
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(
-                {"detail": "Successfully logged out."},
+                {"detail": _("Successfully logged out.")},
                 status=status.HTTP_205_RESET_CONTENT,
             )
         except TokenError:
             return Response(
-                {"detail": "Invalid or expired refresh token."},
+                {"detail": _("Invalid or expired refresh token.")},
                 status=status.HTTP_400_BAD_REQUEST,
             )

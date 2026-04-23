@@ -6,6 +6,7 @@ handling, and password changes.
 """
 
 from django.contrib.auth import authenticate, get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -62,7 +63,7 @@ class LoginSerializer(serializers.Serializer):
         )
 
         if not user:
-            raise serializers.ValidationError("Invalid email or password.")
+            raise serializers.ValidationError(_("Invalid email or password."))
 
         refresh = RefreshToken.for_user(user)
 
@@ -97,20 +98,20 @@ class ChangePasswordSerializer(serializers.Serializer):
         user = self.context["request"].user
 
         if not user.check_password(value):
-            raise serializers.ValidationError("Current password is incorrect.")
+            raise serializers.ValidationError(_("Current password is incorrect."))
 
         return value
 
     def validate(self, attrs):
         if attrs["new_password"] != attrs["confirm_password"]:
             raise serializers.ValidationError(
-                {"confirm_password": "Passwords do not match."}
+                {"confirm_password": _("Passwords do not match.")}
             )
 
         if attrs["current_password"] == attrs["new_password"]:
             raise serializers.ValidationError(
                 {
-                    "new_password": (
+                    "new_password": _(
                         "New password must be different from the current password."
                     )
                 }

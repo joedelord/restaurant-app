@@ -8,6 +8,7 @@ order status.
 from decimal import Decimal
 
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
@@ -61,7 +62,7 @@ class OrderItemCreateSerializer(serializers.Serializer):
 
     def validate_menu_item(self, value):
         if not value.is_available:
-            raise serializers.ValidationError("Selected menu item is not available.")
+            raise serializers.ValidationError(_("Selected menu item is not available."))
         return value
 
 
@@ -93,7 +94,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     def validate_table(self, value):
         if not value.is_active:
-            raise serializers.ValidationError("Selected table is not active.")
+            raise serializers.ValidationError(_("Selected table is not active."))
         return value
 
     def validate_status(self, value):
@@ -101,25 +102,25 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         user = getattr(request, "user", None)
 
         if not user or not user.is_authenticated or not is_staff_or_admin(user):
-            raise serializers.ValidationError("You are not allowed to set order status.")
+            raise serializers.ValidationError(_("You are not allowed to set order status."))
 
         if value not in ORDER_STAFF_ALLOWED_STATUSES:
-            raise serializers.ValidationError("Invalid order status.")
+            raise serializers.ValidationError(_("Invalid order status."))
 
         return value
 
     def validate_items(self, value):
         if not value:
-            raise serializers.ValidationError("Order must contain at least one item.")
+            raise serializers.ValidationError(_("Order must contain at least one item."))
 
         seen_ids = set()
         for item in value:
             menu_item = item["menu_item"]
 
             if menu_item.id in seen_ids:
-                raise serializers.ValidationError(
+                raise serializers.ValidationError(_(
                     "Duplicate menu items are not allowed. Combine quantities into one row."
-                )
+                ))
             seen_ids.add(menu_item.id)
 
         return value
@@ -130,11 +131,13 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         items = attrs.get("items", [])
 
         if not table:
-            raise serializers.ValidationError({"table_id": "Table is required."})
-
+            raise serializers.ValidationError(
+                {"table_id": _("Table is required.")}
+                )
+        
         if not items:
             raise serializers.ValidationError(
-                {"items": "Order must contain at least one item."}
+                {"items": _("Order must contain at least one item.")}
             )
 
         if not attrs.get("status"):
@@ -143,17 +146,17 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         if reservation:
             if reservation.table_id != table.id:
                 raise serializers.ValidationError(
-                    {"table_id": "Selected table does not match the reservation table."}
+                    {"table_id": _("Selected table does not match the reservation table.")}
                 )
 
             if reservation.status in ["cancelled", "completed"]:
                 raise serializers.ValidationError(
-                    {"reservation_id": "Cannot create an order for this reservation."}
+                    {"reservation_id": _("Cannot create an order for this reservation.")}
                 )
 
             if Order.objects.filter(reservation=reservation).exists():
                 raise serializers.ValidationError(
-                    {"reservation_id": "An order already exists for this reservation."}
+                    {"reservation_id": _("An order already exists for this reservation.")}
                 )
 
         return attrs
@@ -205,12 +208,12 @@ class OrderStatusUpdateSerializer(serializers.ModelSerializer):
         user = getattr(request, "user", None)
 
         if not user or not user.is_authenticated or not is_staff_or_admin(user):
-            raise serializers.ValidationError(
+            raise serializers.ValidationError(_(
                 "You are not allowed to update order status."
-            )
+            ))
 
         if value not in ORDER_STAFF_ALLOWED_STATUSES:
-            raise serializers.ValidationError("Invalid order status.")
+            raise serializers.ValidationError(_("Invalid order status."))
 
         return value
 
@@ -230,27 +233,27 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
         user = getattr(request, "user", None)
 
         if not user or not user.is_authenticated or not is_staff_or_admin(user):
-            raise serializers.ValidationError(
+            raise serializers.ValidationError(_(
                 "You are not allowed to update order status."
-            )
+            ))
 
         if value not in ORDER_STAFF_ALLOWED_STATUSES:
-            raise serializers.ValidationError("Invalid order status.")
+            raise serializers.ValidationError(_("Invalid order status."))
 
         return value
 
     def validate_items(self, value):
         if not value:
-            raise serializers.ValidationError("Order must contain at least one item.")
+            raise serializers.ValidationError(_("Order must contain at least one item."))
 
         seen_ids = set()
         for item in value:
             menu_item = item["menu_item"]
 
             if menu_item.id in seen_ids:
-                raise serializers.ValidationError(
+                raise serializers.ValidationError(_(
                     "Duplicate menu items are not allowed. Combine quantities into one row."
-                )
+                ))
             seen_ids.add(menu_item.id)
 
         return value
@@ -263,7 +266,7 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
         locked_statuses = ["paid", "cancelled"]
         if instance.status in locked_statuses and items_data is not None:
             raise serializers.ValidationError(
-                {"items": "Paid or cancelled orders cannot be edited."}
+                {"items": _("Paid or cancelled orders cannot be edited.")}
             )
 
         instance.status = new_status

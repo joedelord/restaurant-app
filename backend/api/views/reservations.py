@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, time
 
 from django.utils import timezone
 from django.utils.dateparse import parse_date
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -62,10 +63,10 @@ class ReservationAvailabilityView(APIView):
         party_size = request.query_params.get("party_size")
 
         if not date_str:
-            return Response({"detail": "date is required."}, status=400)
+            return Response({"detail": _("date is required.")}, status=400)
 
         if not party_size:
-            return Response({"detail": "party_size is required."}, status=400)
+            return Response({"detail": _("party_size is required.")}, status=400)
 
         try:
             party_size = int(party_size)
@@ -73,13 +74,13 @@ class ReservationAvailabilityView(APIView):
                 raise ValueError
         except ValueError:
             return Response(
-                {"detail": "party_size must be a positive integer."},
+                {"detail": _("party_size must be a positive integer.")},
                 status=400,
             )
 
         selected_date = parse_date(date_str)
         if not selected_date:
-            return Response({"detail": "Invalid date format."}, status=400)
+            return Response({"detail": _("Invalid date format.")}, status=400)
 
         opening_hour = 12
         closing_hour = 22
