@@ -13,3 +13,14 @@ from .table import RestaurantTable
 from .reservation import Reservation
 from .menu import Category, MenuItem
 from .order import Order, OrderItem
+
+__all__ = [
+    "User",
+    "UserManager",
+    "RestaurantTable",
+    "Reservation",
+    "Category",
+    "MenuItem",
+    "Order",
+    "OrderItem",
+]
