@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import Button from "../ui/Button";
+import Button from "../../components/ui/Button";
 
 const formatDateTime = (value) => {
   if (!value) return "-";
@@ -10,38 +10,15 @@ const formatDateTime = (value) => {
   });
 };
 
-const getStatusClass = (status) => {
-  switch (status) {
-    case "confirmed":
-      return "bg-green-100 text-green-700";
-    case "pending":
-      return "bg-yellow-100 text-yellow-700";
-    case "completed":
-      return "bg-blue-100 text-blue-700";
-    case "cancelled":
-      return "bg-red-100 text-red-700";
-    default:
-      return "bg-gray-100 text-gray-700";
-  }
-};
-
-const ReservationStatusBadge = ({ status, label }) => (
-  <span
-    className={`inline-flex rounded-md px-2 py-1 text-xs font-medium ${getStatusClass(
-      status,
-    )}`}
-  >
-    {label}
-  </span>
-);
-
-const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
+const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
   const { t } = useTranslation();
 
   if (!items.length) {
     return (
       <div className="mx-auto w-full rounded-md border border-black p-5">
-        <p className="text-sm text-body">{emptyText}</p>
+        <p className="text-sm text-body">
+          {emptyText || t("staff.reservations.empty")}
+        </p>
       </div>
     );
   }
@@ -53,19 +30,22 @@ const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
           <thead className="border-b border-default-medium">
             <tr className="text-heading">
               <th className="px-3 py-3 font-medium">
-                {t("user.reservations.fields.table")}
+                {t("staff.reservations.fields.customer")}
               </th>
               <th className="px-3 py-3 font-medium">
-                {t("user.reservations.fields.partySize")}
+                {t("staff.reservations.fields.table")}
               </th>
               <th className="px-3 py-3 font-medium">
-                {t("user.reservations.fields.time")}
+                {t("staff.reservations.fields.partySize")}
               </th>
               <th className="px-3 py-3 font-medium">
-                {t("user.reservations.fields.status")}
+                {t("staff.reservations.fields.time")}
               </th>
               <th className="px-3 py-3 font-medium">
-                {t("user.reservations.fields.actions")}
+                {t("staff.reservations.fields.status")}
+              </th>
+              <th className="px-3 py-3 font-medium">
+                {t("staff.reservations.fields.actions")}
               </th>
             </tr>
           </thead>
@@ -77,6 +57,13 @@ const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
                 className="border-b border-default-medium last:border-b-0"
               >
                 <td className="px-3 py-4 text-body">
+                  {item.user
+                    ? `${item.user.first_name || ""} ${item.user.last_name || ""}`.trim() ||
+                      item.user.email
+                    : "-"}
+                </td>
+
+                <td className="px-3 py-4 text-body">
                   {item.table?.table_number || "-"}
                 </td>
 
@@ -87,25 +74,29 @@ const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
                 </td>
 
                 <td className="px-3 py-4 text-body">
-                  <ReservationStatusBadge
-                    status={item.status}
-                    label={t(`user.reservations.statuses.${item.status}`)}
-                  />
+                  {t(`staff.reservations.statuses.${item.status || "pending"}`)}
                 </td>
 
                 <td className="px-3 py-4">
-                  {canCancel(item) ? (
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => onEdit(item)}
+                    >
+                      {t("staff.reservations.actions.edit")}
+                    </Button>
+
                     <Button
                       type="button"
                       size="sm"
                       variant="danger"
-                      onClick={() => onCancel(item)}
+                      onClick={() => onDelete(item)}
                     >
-                      {t("user.reservations.actions.cancel")}
+                      {t("staff.reservations.actions.delete")}
                     </Button>
-                  ) : (
-                    <span className="text-sm text-gray-400">-</span>
-                  )}
+                  </div>
                 </td>
               </tr>
             ))}
@@ -116,4 +107,4 @@ const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
   );
 };
 
-export default UserReservationList;
+export default StaffReservationList;

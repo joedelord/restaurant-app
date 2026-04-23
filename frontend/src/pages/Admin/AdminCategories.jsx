@@ -2,8 +2,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/ui/Button";
-import CategoryForm from "../../components/admin/CategoryForm";
-import CategoryList from "../../components/admin/CategoryList";
+import CategoryForm from "../../features/admin/CategoryForm";
+import CategoryList from "../../features/admin/CategoryList";
 import useCategories from "../../hooks/useCategories";
 import PageLoader from "../../components/ui/PageLoader";
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import StaffOrderCreateForm from "../../components/staff/StaffOrderCreateForm";
+import StaffOrderCreateForm from "../../features/staff/StaffOrderCreateForm";
 
 const StaffCreateOrder = () => {
   const { t } = useTranslation();

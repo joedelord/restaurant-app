@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import TimeSlotPicker from "./TimeSlotPicker";
 import TablePicker from "./TablePicker";
 import ReservationConfirmModal from "./ReservationConfirmModal";
-import AuthSubmitButton from "../auth/AuthSubmitButton";
+import AuthSubmitButton from "../../features/auth/AuthSubmitButton";
 import { getDefaultReservationDate, toDateInputValue } from "../../utils/date";
 
 const STORAGE_KEY = "pendingReservation";

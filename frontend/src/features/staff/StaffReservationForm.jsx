@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../auth/AuthSubmitButton";
-import Button from "../ui/Button";
+import AuthSubmitButton from "../../features/auth/AuthSubmitButton";
+import Button from "../../components/ui/Button";
 
 const getLocalDateTimeValue = (value) => {
   if (!value) return "";

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../../components/ui/PageLoader";
-import AuthSubmitButton from "../../components/auth/AuthSubmitButton";
+import AuthSubmitButton from "../../features/auth/AuthSubmitButton";
 import Button from "../../components/ui/Button";
 import {
   getMyProfile,

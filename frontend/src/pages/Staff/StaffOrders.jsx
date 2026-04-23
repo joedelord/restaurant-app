@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../components/ui/PageLoader";
-import StaffOrderForm from "../../components/staff/StaffOrderForm";
-import StaffOrderList from "../../components/staff/StaffOrderList";
+import StaffOrderForm from "../../features/staff/StaffOrderForm";
+import StaffOrderList from "../../features/staff/StaffOrderList";
 import useStaffOrders from "../../hooks/useStaffOrders";
 
 const StaffOrders = () => {

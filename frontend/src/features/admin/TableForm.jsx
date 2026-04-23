@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
-import Button from "../ui/Button";
+import Button from "../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   table_number: initialData?.table_number ?? "",

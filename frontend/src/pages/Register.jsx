@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../api";
-import AuthCard from "../components/auth/AuthCard";
-import AuthField from "../components/auth/AuthField";
-import AuthSubmitButton from "../components/auth/AuthSubmitButton";
+import AuthCard from "../features/auth/AuthCard";
+import AuthField from "../features/auth/AuthField";
+import AuthSubmitButton from "../features/auth/AuthSubmitButton";
 import FormMessage from "../components/ui/FormMessage";
 
 const Register = () => {

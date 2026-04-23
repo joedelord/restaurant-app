@@ -2,8 +2,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/ui/Button";
-import StaffReservationForm from "../../components/staff/StaffReservationForm";
-import StaffReservationList from "../../components/staff/StaffReservationList";
+import StaffReservationForm from "../../features/staff/StaffReservationForm";
+import StaffReservationList from "../../features/staff/StaffReservationList";
 import useStaffReservations from "../../hooks/useStaffReservations";
 import PageLoader from "../../components/ui/PageLoader";
 

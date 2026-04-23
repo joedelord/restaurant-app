@@ -1,22 +1,18 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
-import Button from "../ui/Button";
+import Button from "../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   name_en: initialData?.name_en ?? "",
   name_fi: initialData?.name_fi ?? "",
   description_en: initialData?.description_en ?? "",
   description_fi: initialData?.description_fi ?? "",
-  price: initialData?.price ?? "",
-  image_url: initialData?.image_url ?? "",
-  category: initialData?.category ?? "",
-  is_available: initialData?.is_available ?? true,
+  display_order: initialData?.display_order ?? "",
 });
 
-const MenuItemForm = ({
+const CategoryForm = ({
   onSubmit,
-  categories = [],
   initialData = null,
   submitText = "Save",
   onCancel,
@@ -27,11 +23,11 @@ const MenuItemForm = ({
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
@@ -42,22 +38,17 @@ const MenuItemForm = ({
     setError("");
 
     if (!formData.name_en.trim()) {
-      setError(t("admin.menuItems.validation.nameEnRequired"));
+      setError(t("admin.categories.validation.nameEnRequired"));
       return;
     }
 
     if (!formData.name_fi.trim()) {
-      setError(t("admin.menuItems.validation.nameFiRequired"));
+      setError(t("admin.categories.validation.nameFiRequired"));
       return;
     }
 
-    if (!formData.price || Number(formData.price) <= 0) {
-      setError(t("admin.menuItems.validation.priceRequired"));
-      return;
-    }
-
-    if (!formData.category) {
-      setError(t("admin.menuItems.validation.categoryRequired"));
+    if (formData.display_order === "" || Number(formData.display_order) < 0) {
+      setError(t("admin.categories.validation.displayOrderRequired"));
       return;
     }
 
@@ -66,10 +57,7 @@ const MenuItemForm = ({
       name_fi: formData.name_fi.trim(),
       description_en: formData.description_en.trim(),
       description_fi: formData.description_fi.trim(),
-      price: formData.price,
-      image_url: formData.image_url.trim(),
-      category: Number(formData.category),
-      is_available: formData.is_available,
+      display_order: Number(formData.display_order),
     };
 
     try {
@@ -81,7 +69,7 @@ const MenuItemForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError(t("admin.menuItems.messages.saveError"));
+      setError(t("admin.categories.messages.saveError"));
     } finally {
       setLoading(false);
     }
@@ -102,7 +90,7 @@ const MenuItemForm = ({
               htmlFor="name_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.menuItems.fields.nameEn")}
+              {t("admin.categories.fields.nameEn")}
             </label>
             <input
               id="name_en"
@@ -111,7 +99,7 @@ const MenuItemForm = ({
               value={formData.name_en}
               onChange={handleChange}
               disabled={loading}
-              placeholder={t("admin.menuItems.placeholders.nameEn")}
+              placeholder={t("admin.categories.placeholders.nameEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -121,7 +109,7 @@ const MenuItemForm = ({
               htmlFor="name_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.menuItems.fields.nameFi")}
+              {t("admin.categories.fields.nameFi")}
             </label>
             <input
               id="name_fi"
@@ -130,7 +118,7 @@ const MenuItemForm = ({
               value={formData.name_fi}
               onChange={handleChange}
               disabled={loading}
-              placeholder={t("admin.menuItems.placeholders.nameFi")}
+              placeholder={t("admin.categories.placeholders.nameFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -140,7 +128,7 @@ const MenuItemForm = ({
               htmlFor="description_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.menuItems.fields.descriptionEn")}
+              {t("admin.categories.fields.descriptionEn")}
             </label>
             <textarea
               id="description_en"
@@ -149,7 +137,7 @@ const MenuItemForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder={t("admin.menuItems.placeholders.descriptionEn")}
+              placeholder={t("admin.categories.placeholders.descriptionEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -159,7 +147,7 @@ const MenuItemForm = ({
               htmlFor="description_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.menuItems.fields.descriptionFi")}
+              {t("admin.categories.fields.descriptionFi")}
             </label>
             <textarea
               id="description_fi"
@@ -168,93 +156,28 @@ const MenuItemForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder={t("admin.menuItems.placeholders.descriptionFi")}
+              placeholder={t("admin.categories.placeholders.descriptionFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 
           <div className="mb-5">
             <label
-              htmlFor="price"
+              htmlFor="display_order"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.menuItems.fields.price")}
+              {t("admin.categories.fields.order")}
             </label>
             <input
-              id="price"
+              id="display_order"
               type="number"
-              name="price"
-              value={formData.price}
+              name="display_order"
+              value={formData.display_order}
               onChange={handleChange}
               disabled={loading}
               min="0"
-              step="0.01"
-              placeholder={t("admin.menuItems.placeholders.price")}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-            />
-          </div>
-
-          <div className="mb-5">
-            <label
-              htmlFor="image_url"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("admin.menuItems.fields.imageUrl")}
-            </label>
-            <input
-              id="image_url"
-              type="url"
-              name="image_url"
-              value={formData.image_url}
-              onChange={handleChange}
-              disabled={loading}
-              placeholder={t("admin.menuItems.placeholders.imageUrl")}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-            />
-          </div>
-
-          <div className="mb-5">
-            <label
-              htmlFor="category"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("admin.menuItems.fields.category")}
-            </label>
-            <select
-              id="category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              disabled={loading}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
-            >
-              <option value="">
-                {t("admin.menuItems.placeholders.category")}
-              </option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name_en} / {category.name_fi}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-5 flex items-center gap-3">
-            <input
-              id="is_available"
-              type="checkbox"
-              name="is_available"
-              checked={formData.is_available}
-              onChange={handleChange}
-              disabled={loading}
-              className="h-4 w-4"
             />
-            <label
-              htmlFor="is_available"
-              className="text-sm font-medium text-heading"
-            >
-              {t("admin.menuItems.fields.available")}
-            </label>
           </div>
 
           <div className="flex gap-3">
@@ -263,8 +186,8 @@ const MenuItemForm = ({
               idleText={submitText}
               loadingText={
                 initialData
-                  ? `${t("admin.menuItems.actions.update")}...`
-                  : `${t("admin.menuItems.actions.add")}...`
+                  ? `${t("admin.categories.actions.update")}...`
+                  : `${t("admin.categories.actions.add")}...`
               }
             />
 
@@ -275,7 +198,7 @@ const MenuItemForm = ({
                 onClick={onCancel}
                 disabled={loading}
               >
-                {t("admin.menuItems.actions.cancel")}
+                {t("admin.categories.actions.cancel")}
               </Button>
             )}
           </div>
@@ -285,4 +208,4 @@ const MenuItemForm = ({
   );
 };
 
-export default MenuItemForm;
+export default CategoryForm;

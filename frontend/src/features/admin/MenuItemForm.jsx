@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../auth/AuthSubmitButton";
-import Button from "../ui/Button";
+import Button from "../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   name_en: initialData?.name_en ?? "",
   name_fi: initialData?.name_fi ?? "",
   description_en: initialData?.description_en ?? "",
   description_fi: initialData?.description_fi ?? "",
-  display_order: initialData?.display_order ?? "",
+  price: initialData?.price ?? "",
+  image_url: initialData?.image_url ?? "",
+  category: initialData?.category ?? "",
+  is_available: initialData?.is_available ?? true,
 });
 
-const CategoryForm = ({
+const MenuItemForm = ({
   onSubmit,
+  categories = [],
   initialData = null,
   submitText = "Save",
   onCancel,
@@ -23,11 +27,11 @@ const CategoryForm = ({
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -38,17 +42,22 @@ const CategoryForm = ({
     setError("");
 
     if (!formData.name_en.trim()) {
-      setError(t("admin.categories.validation.nameEnRequired"));
+      setError(t("admin.menuItems.validation.nameEnRequired"));
       return;
     }
 
     if (!formData.name_fi.trim()) {
-      setError(t("admin.categories.validation.nameFiRequired"));
+      setError(t("admin.menuItems.validation.nameFiRequired"));
       return;
     }
 
-    if (formData.display_order === "" || Number(formData.display_order) < 0) {
-      setError(t("admin.categories.validation.displayOrderRequired"));
+    if (!formData.price || Number(formData.price) <= 0) {
+      setError(t("admin.menuItems.validation.priceRequired"));
+      return;
+    }
+
+    if (!formData.category) {
+      setError(t("admin.menuItems.validation.categoryRequired"));
       return;
     }
 
@@ -57,7 +66,10 @@ const CategoryForm = ({
       name_fi: formData.name_fi.trim(),
       description_en: formData.description_en.trim(),
       description_fi: formData.description_fi.trim(),
-      display_order: Number(formData.display_order),
+      price: formData.price,
+      image_url: formData.image_url.trim(),
+      category: Number(formData.category),
+      is_available: formData.is_available,
     };
 
     try {
@@ -69,7 +81,7 @@ const CategoryForm = ({
       }
     } catch (err) {
       console.error(err);
-      setError(t("admin.categories.messages.saveError"));
+      setError(t("admin.menuItems.messages.saveError"));
     } finally {
       setLoading(false);
     }
@@ -90,7 +102,7 @@ const CategoryForm = ({
               htmlFor="name_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.categories.fields.nameEn")}
+              {t("admin.menuItems.fields.nameEn")}
             </label>
             <input
               id="name_en"
@@ -99,7 +111,7 @@ const CategoryForm = ({
               value={formData.name_en}
               onChange={handleChange}
               disabled={loading}
-              placeholder={t("admin.categories.placeholders.nameEn")}
+              placeholder={t("admin.menuItems.placeholders.nameEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -109,7 +121,7 @@ const CategoryForm = ({
               htmlFor="name_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.categories.fields.nameFi")}
+              {t("admin.menuItems.fields.nameFi")}
             </label>
             <input
               id="name_fi"
@@ -118,7 +130,7 @@ const CategoryForm = ({
               value={formData.name_fi}
               onChange={handleChange}
               disabled={loading}
-              placeholder={t("admin.categories.placeholders.nameFi")}
+              placeholder={t("admin.menuItems.placeholders.nameFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -128,7 +140,7 @@ const CategoryForm = ({
               htmlFor="description_en"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.categories.fields.descriptionEn")}
+              {t("admin.menuItems.fields.descriptionEn")}
             </label>
             <textarea
               id="description_en"
@@ -137,7 +149,7 @@ const CategoryForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder={t("admin.categories.placeholders.descriptionEn")}
+              placeholder={t("admin.menuItems.placeholders.descriptionEn")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
@@ -147,7 +159,7 @@ const CategoryForm = ({
               htmlFor="description_fi"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.categories.fields.descriptionFi")}
+              {t("admin.menuItems.fields.descriptionFi")}
             </label>
             <textarea
               id="description_fi"
@@ -156,28 +168,93 @@ const CategoryForm = ({
               onChange={handleChange}
               disabled={loading}
               rows="4"
-              placeholder={t("admin.categories.placeholders.descriptionFi")}
+              placeholder={t("admin.menuItems.placeholders.descriptionFi")}
               className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
           </div>
 
           <div className="mb-5">
             <label
-              htmlFor="display_order"
+              htmlFor="price"
               className="mb-2.5 block text-sm font-medium text-heading"
             >
-              {t("admin.categories.fields.order")}
+              {t("admin.menuItems.fields.price")}
             </label>
             <input
-              id="display_order"
+              id="price"
               type="number"
-              name="display_order"
-              value={formData.display_order}
+              name="price"
+              value={formData.price}
               onChange={handleChange}
               disabled={loading}
               min="0"
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
+              step="0.01"
+              placeholder={t("admin.menuItems.placeholders.price")}
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
             />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="image_url"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.menuItems.fields.imageUrl")}
+            </label>
+            <input
+              id="image_url"
+              type="url"
+              name="image_url"
+              value={formData.image_url}
+              onChange={handleChange}
+              disabled={loading}
+              placeholder={t("admin.menuItems.placeholders.imageUrl")}
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="category"
+              className="mb-2.5 block text-sm font-medium text-heading"
+            >
+              {t("admin.menuItems.fields.category")}
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              disabled={loading}
+              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
+            >
+              <option value="">
+                {t("admin.menuItems.placeholders.category")}
+              </option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name_en} / {category.name_fi}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-5 flex items-center gap-3">
+            <input
+              id="is_available"
+              type="checkbox"
+              name="is_available"
+              checked={formData.is_available}
+              onChange={handleChange}
+              disabled={loading}
+              className="h-4 w-4"
+            />
+            <label
+              htmlFor="is_available"
+              className="text-sm font-medium text-heading"
+            >
+              {t("admin.menuItems.fields.available")}
+            </label>
           </div>
 
           <div className="flex gap-3">
@@ -186,8 +263,8 @@ const CategoryForm = ({
               idleText={submitText}
               loadingText={
                 initialData
-                  ? `${t("admin.categories.actions.update")}...`
-                  : `${t("admin.categories.actions.add")}...`
+                  ? `${t("admin.menuItems.actions.update")}...`
+                  : `${t("admin.menuItems.actions.add")}...`
               }
             />
 
@@ -198,7 +275,7 @@ const CategoryForm = ({
                 onClick={onCancel}
                 disabled={loading}
               >
-                {t("admin.categories.actions.cancel")}
+                {t("admin.menuItems.actions.cancel")}
               </Button>
             )}
           </div>
@@ -208,4 +285,4 @@ const CategoryForm = ({
   );
 };
 
-export default CategoryForm;
+export default MenuItemForm;

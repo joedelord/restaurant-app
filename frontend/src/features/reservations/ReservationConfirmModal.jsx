@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { formatDate } from "../../utils/date";
-import Button from "../ui/Button";
+import Button from "../../components/ui/Button";
 
 const ReservationConfirmModal = ({
   open,

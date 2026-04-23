@@ -2,8 +2,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { useTranslation } from "react-i18next";
-import TableForm from "../../components/admin/TableForm";
-import TableList from "../../components/admin/TableList";
+import TableForm from "../../features/admin/TableForm";
+import TableList from "../../features/admin/TableList";
 import useTables from "../../hooks/useTables";
 
 const AdminTables = () => {
