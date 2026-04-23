@@ -1,6 +1,8 @@
 # 🍽️ Restaurant Reservation & Management System
 
-A full-stack restaurant management application that allows customers to browse menus and make reservations, while staff and administrators manage tables, menu items, users, and orders.
+A full-stack restaurant management system built with modern web technologies.
+
+The application allows customers to browse menus and make reservations, while staff and administrators manage tables, menu items, users, and orders through dedicated dashboards.
 
 ---
 
@@ -12,7 +14,7 @@ A full-stack restaurant management application that allows customers to browse m
 - Tailwind CSS
 - React Router
 - Axios
-- i18next (multi-language support)
+- i18next (EN / FI)
 
 ### Backend
 
@@ -28,37 +30,38 @@ A full-stack restaurant management application that allows customers to browse m
 ### 👤 Authentication
 
 - User registration & login
-- JWT-based authentication (access + refresh tokens)
+- JWT authentication (access + refresh tokens)
 - Role-based access (customer / staff / admin)
 
 ### 🍽️ Menu
 
 - Browse menu items by category
 - Multi-language support (EN / FI)
-- Admin can manage categories and menu items
+- Admin management for categories & items
 
 ### 📅 Reservations
 
 - Create table reservations
-- Select table based on party size
-- Prevent invalid bookings
+- Automatic table filtering based on party size
+- Time-slot availability validation
 
 ### 🪑 Tables
 
-- Manage restaurant tables (admin)
-- Table capacity filtering for reservations
-
-### 🛠️ Admin Dashboard
-
-- Manage users
-- Manage menu (categories & items)
-- Manage tables
-- View reservations
+- Table management (admin)
+- Seat-based filtering for reservations
 
 ### 📦 Orders
 
 - Staff can create and manage orders
-- Link orders to tables/reservations
+- Orders linked to reservations or tables
+
+### 🛠️ Admin Dashboard
+
+- Manage users
+- Manage menu
+- Manage tables
+- View reservations
+- Sales overview (basic)
 
 ---
 
@@ -68,28 +71,32 @@ A full-stack restaurant management application that allows customers to browse m
 restaurant-app/
 │
 ├── backend/
-│   ├── api/
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── permissions.py
-│   ├── config/
-│   ├── manage.py
-│   └── requirements.txt
+│ ├── api/
+│ │ ├── locale/
+│ │ ├── models/
+│ │ ├── serializers/
+│ │ ├── tests/
+│ │ ├── views/
+│ │ ├── permissions.py
+│ │ └── urls.py
+│ ├── config/
+│ ├── locale/
+│ ├── manage.py
+│ └── requirements.txt
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   ├── context/
-│   │   ├── layouts/
-│   │   └── routes/
-│   ├── package.json
-│   └── vite.config.js
+│ ├── src/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── hooks/
+│ │ ├── services/
+│ │ ├── context/
+│ │ ├── layouts/
+│ │ └── routes/
+│ ├── package.json
+│ └── vite.config.js
 │
+├── .env.example
 ├── .gitignore
 └── README.md
 ```
@@ -112,7 +119,7 @@ cd restaurant-app
 ```
 cd backend
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate   # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
