@@ -1,3 +1,12 @@
+"""
+test_orders.py
+
+Order-related API tests.
+
+This file contains tests for order creation and order status updates,
+including role restrictions and invalid status handling.
+"""
+
 from __future__ import annotations
 
 from typing import Any, Mapping, cast

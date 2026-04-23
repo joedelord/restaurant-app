@@ -1,3 +1,12 @@
+"""
+test_reservations.py
+
+Reservation-related API tests.
+
+This file contains tests for reservation creation, validation,
+ownership restrictions, and staff access to reservation data.
+"""
+
 from __future__ import annotations
 
 from datetime import timedelta

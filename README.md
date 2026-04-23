@@ -203,11 +203,12 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 ## 🧪 Testing
 
-Backend tests:
+Backend tests are organized by feature area under `backend/api/tests/`.
 
-```
+Run all tests:
+
+```bash
 python manage.py test
-```
 
 ---
 
@@ -261,3 +262,4 @@ GitHub: https://github.com/joedelord
 ## 📄 License
 
 This project is for educational and portfolio purposes.
+```
