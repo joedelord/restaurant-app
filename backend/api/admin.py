@@ -23,10 +23,6 @@ from .models import (
 )
 
 
-# =========================
-# USER ADMIN
-# =========================
-
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ("email", "first_name", "last_name", "role", "is_active")
@@ -35,10 +31,6 @@ class UserAdmin(admin.ModelAdmin):
     ordering = ("email",)
 
 
-# =========================
-# TABLE ADMIN
-# =========================
-
 @admin.register(RestaurantTable)
 class TableAdmin(admin.ModelAdmin):
     list_display = ("table_number", "seats", "is_active")
@@ -46,20 +38,12 @@ class TableAdmin(admin.ModelAdmin):
     ordering = ("table_number",)
 
 
-# =========================
-# CATEGORY ADMIN
-# =========================
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name_en", "name_fi", "display_order")
     search_fields = ("name_en", "name_fi")
     ordering = ("display_order",)
 
-
-# =========================
-# MENU ITEM ADMIN
-# =========================
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
@@ -69,10 +53,6 @@ class MenuItemAdmin(admin.ModelAdmin):
     ordering = ("category", "name_en")
 
 
-# =========================
-# RESERVATION ADMIN
-# =========================
-
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "table", "reservation_time", "status")
@@ -81,19 +61,11 @@ class ReservationAdmin(admin.ModelAdmin):
     ordering = ("-reservation_time",)
 
 
-# =========================
-# ORDER ITEM INLINE
-# =========================
-
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
     readonly_fields = ("name_en", "name_fi", "price")
 
-
-# =========================
-# ORDER ADMIN
-# =========================
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
