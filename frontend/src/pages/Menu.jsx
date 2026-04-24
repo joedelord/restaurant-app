@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MenuSection } from "../features/menu";
-import { getCategories, getMenuItems } from "../services/menuService";
+import {
+  getCategories,
+  getMenuItems,
+} from "../features/menu/services/menuService";
 import PageLoader from "../components/ui/PageLoader";
 
 const Menu = () => {
