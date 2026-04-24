@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../features/auth/hooks/useAuth";
 import AuthCard from "../features/auth/components/AuthCard";
 import AuthField from "../features/auth/components/AuthField";
 import AuthSubmitButton from "../features/auth/components/AuthSubmitButton";

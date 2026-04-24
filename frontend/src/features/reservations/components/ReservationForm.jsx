@@ -26,7 +26,7 @@ import {
   buildReservationDraft,
   getReservationErrorMessage,
 } from "../utils/reservationHelpers";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../auth/hooks/useAuth";
 import {
   getDefaultReservationDate,
   toDateInputValue,

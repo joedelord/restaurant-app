@@ -20,7 +20,7 @@ import {
   UserCircleIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../features/auth/hooks/useAuth";
 import LogoutButton from "../../features/auth/components/LogoutButton";
 import NavbarSection from "./NavbarSection";
 import NavbarItem from "./NavbarItem";
