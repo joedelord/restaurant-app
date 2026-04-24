@@ -13,8 +13,12 @@ export { default as MenuItemCard } from "./components/MenuItemCard";
 export { default as MenuSection } from "./components/MenuSection";
 
 export {
-  getLocalizedMenuItemDescription,
   getLocalizedMenuItemName,
+  getLocalizedMenuItemDescription,
+  getLocalizedCategoryName,
+  getLocalizedCategoryDescription,
+  getItemCategoryId,
+  groupMenuItemsByCategory,
 } from "./utils/menuHelpers";
 
 export { getMenuItems, getMenuCategories } from "./services/menuService";

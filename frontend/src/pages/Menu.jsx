@@ -1,10 +1,24 @@
+/**
+ * Menu
+ *
+ * Public menu page for browsing restaurant categories and menu items.
+ *
+ * Responsibilities:
+ * - Fetches menu categories and menu items
+ * - Groups available menu items by category
+ * - Displays localized menu content
+ * - Handles loading and error states
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { MenuSection } from "../features/menu";
+
 import {
-  getCategories,
+  getMenuCategories,
   getMenuItems,
-} from "../features/menu/services/menuService";
+  groupMenuItemsByCategory,
+  MenuSection,
+} from "../features/menu";
 import PageLoader from "../components/ui/PageLoader";
 
 const Menu = () => {
@@ -22,7 +36,7 @@ const Menu = () => {
         setError("");
 
         const [categoriesData, menuItemsData] = await Promise.all([
-          getCategories(),
+          getMenuCategories(),
           getMenuItems(),
         ]);
 
@@ -39,46 +53,11 @@ const Menu = () => {
     fetchMenuData();
   }, []);
 
+  const language = i18n.language?.startsWith("fi") ? "fi" : "en";
+
   const groupedMenu = useMemo(() => {
-    const getLocalizedCategoryName = (category) => {
-      return i18n.language === "fi"
-        ? category.name_fi || category.name_en || ""
-        : category.name_en || category.name_fi || "";
-    };
-
-    const getLocalizedCategoryDescription = (category) => {
-      return i18n.language === "fi"
-        ? category.description_fi || category.description_en || ""
-        : category.description_en || category.description_fi || "";
-    };
-
-    const sortedCategories = [...categories].sort(
-      (a, b) =>
-        a.display_order - b.display_order ||
-        getLocalizedCategoryName(a).localeCompare(getLocalizedCategoryName(b)),
-    );
-
-    return sortedCategories.map((category) => {
-      const items = menuItems.filter((item) => {
-        if (!item.is_available) return false;
-
-        if (typeof item.category === "object" && item.category !== null) {
-          return item.category.id === category.id;
-        }
-
-        return item.category === category.id;
-      });
-
-      return {
-        category: {
-          ...category,
-          localizedName: getLocalizedCategoryName(category),
-          localizedDescription: getLocalizedCategoryDescription(category),
-        },
-        items,
-      };
-    });
-  }, [categories, menuItems, i18n.language]);
+    return groupMenuItemsByCategory(categories, menuItems, language);
+  }, [categories, menuItems, language]);
 
   if (loading) {
     return <PageLoader />;
@@ -97,23 +76,26 @@ const Menu = () => {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-10">
-        <div className="grid grid-cols-3 items-center">
-          <div />
-          <h1 className="mt-3 justify-self-center text-4xl font-bold text-gray-900">
-            {t("menu.title")}
-          </h1>
-        </div>
+        <h1 className="mt-3 text-center text-4xl font-bold text-gray-900">
+          {t("menu.title")}
+        </h1>
 
         <p className="mx-auto mt-3 max-w-2xl text-center text-gray-600">
           {t("menu.subtitle")}
         </p>
       </header>
 
-      <div className="space-y-10">
-        {groupedMenu.map(({ category, items }) => (
-          <MenuSection key={category.id} category={category} items={items} />
-        ))}
-      </div>
+      {groupedMenu.length > 0 ? (
+        <div className="space-y-10">
+          {groupedMenu.map(({ category, items }) => (
+            <MenuSection key={category.id} category={category} items={items} />
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center text-gray-500 shadow-sm">
+          {t("menu.noItems")}
+        </div>
+      )}
     </div>
   );
 };
