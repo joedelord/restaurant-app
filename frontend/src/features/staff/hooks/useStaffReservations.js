@@ -1,3 +1,15 @@
+/**
+ * useStaffReservations
+ *
+ * Manages all reservations for staff dashboard.
+ *
+ * Responsibilities:
+ * - Fetches reservations
+ * - Splits into upcoming and past
+ * - Supports editing, updating and deleting reservations
+ * - Handles UI state (loading, message, error)
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {

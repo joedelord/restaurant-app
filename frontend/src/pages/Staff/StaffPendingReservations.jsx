@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/ui/Button";
 import PageLoader from "../../components/ui/PageLoader";
-import StaffPendingReservationList from "../../features/staff/StaffPendingReservationList";
-import useStaffPendingReservations from "../../hooks/useStaffPendingReservations";
+import StaffPendingReservationList from "../../features/staff/components/StaffPendingReservationList";
+import useStaffPendingReservations from "../../features/staff/hooks/useStaffPendingReservations";
 
 const StaffPendingReservations = () => {
   const { t } = useTranslation();

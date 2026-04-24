@@ -1,5 +1,15 @@
+/**
+ * StaffPendingReservationList
+ *
+ * Displays reservations waiting for confirmation.
+ *
+ * Responsibilities:
+ * - Shows pending reservations
+ * - Allows staff to confirm or reject reservations
+ */
+
 import { useTranslation } from "react-i18next";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 
 const formatDateTime = (value) => {
   if (!value) return "-";

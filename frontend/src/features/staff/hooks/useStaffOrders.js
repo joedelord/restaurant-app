@@ -1,3 +1,14 @@
+/**
+ * useStaffOrders
+ *
+ * Manages orders for staff dashboard.
+ *
+ * Responsibilities:
+ * - Fetches and sorts orders
+ * - Supports editing, updating and deleting orders
+ * - Handles loading, message and error state
+ */
+
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -38,17 +49,22 @@ const useStaffOrders = () => {
   const handleUpdate = async (payload) => {
     if (!editingOrder) return;
 
-    const updated = await updateOrder(editingOrder.id, payload);
+    try {
+      const updated = await updateOrder(editingOrder.id, payload);
 
-    setOrders((prev) =>
-      sortOrders(
-        prev.map((item) => (item.id === editingOrder.id ? updated : item)),
-      ),
-    );
+      setOrders((prev) =>
+        sortOrders(
+          prev.map((item) => (item.id === editingOrder.id ? updated : item)),
+        ),
+      );
 
-    setMessage(t("staff.orders.messages.updated"));
-    setError("");
-    setEditingOrder(null);
+      setMessage(t("staff.orders.messages.updated"));
+      setError("");
+      setEditingOrder(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("staff.orders.messages.updateError"));
+    }
   };
 
   const handleDelete = async (item) => {

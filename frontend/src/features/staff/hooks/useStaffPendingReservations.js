@@ -1,3 +1,15 @@
+/**
+ * useStaffPendingReservations
+ *
+ * Manages pending reservations for staff dashboard.
+ *
+ * Responsibilities:
+ * - Fetches reservations with polling
+ * - Filters pending reservations
+ * - Allows confirming and cancelling reservations
+ * - Handles loading, error and action states
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {

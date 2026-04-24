@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../../features/auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
-import api from "../../api";
-import { createOrder } from "../../services/staffOrderService";
-import { formatCurrency } from "../../utils/currency";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
+import api from "../../../api";
+import { createOrder } from "../services/staffOrderService";
+import { formatCurrency } from "../../../utils/currency";
 
 const emptyRow = {
   menu_item_id: "",

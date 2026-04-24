@@ -1,6 +1,17 @@
+/**
+ * StaffOrderList
+ *
+ * Displays and manages orders for staff users.
+ *
+ * Responsibilities:
+ * - Shows list of orders
+ * - Allows updating order status
+ * - Displays reservation linkage when available
+ */
+
 import { useTranslation } from "react-i18next";
-import { formatCurrency } from "../../utils/currency";
-import AdminResponsiveList from "../../features/admin/AdminResponsiveList";
+import { formatCurrency } from "../../../utils/currency";
+import AdminResponsiveList from "../../admin/AdminResponsiveList";
 
 const formatDateTime = (value) => {
   if (!value) return "-";
