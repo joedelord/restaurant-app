@@ -1,3 +1,25 @@
+/**
+ * AuthProvider
+ *
+ * Context provider for managing authentication state across the application.
+ *
+ * Responsibilities:
+ * - Stores the current authenticated user
+ * - Handles login and logout actions
+ * - Manages JWT tokens (access + refresh)
+ * - Fetches the current user from the backend
+ * - Provides authentication state to the entire app via AuthContext
+ *
+ * Usage:
+ * - Wrap the application with <AuthProvider> in main.jsx or App.jsx
+ * - Access auth state using the useAuth hook
+ *
+ * Example:
+ * <AuthProvider>
+ *   <App />
+ * </AuthProvider>
+ */
+
 import { useEffect, useState } from "react";
 import api from "../../../api";
 import { AuthContext } from "./auth-context";
@@ -100,6 +122,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
+    // Value passed to all consumers via AuthContext
     <AuthContext.Provider
       value={{
         isAuthorized,
