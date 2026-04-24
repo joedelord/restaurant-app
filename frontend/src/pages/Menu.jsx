@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import MenuSection from "../features/menu/MenuSection";
+import { MenuSection } from "../features/menu";
 import { getCategories, getMenuItems } from "../services/menuService";
 import PageLoader from "../components/ui/PageLoader";
 

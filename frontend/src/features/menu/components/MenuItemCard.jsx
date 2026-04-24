@@ -1,22 +1,30 @@
+/**
+ * MenuItemCard
+ *
+ * Displays a single menu item in the public menu view.
+ *
+ * Responsibilities:
+ * - Shows the localized menu item name and description
+ * - Displays the item image when available
+ * - Formats and displays the item price
+ * - Shows fallback text when description is missing
+ */
+
 import { useTranslation } from "react-i18next";
-import { formatCurrency } from "../../utils/currency";
+
+import { formatCurrency } from "../../../utils/currency";
+import {
+  getLocalizedMenuItemDescription,
+  getLocalizedMenuItemName,
+} from "../utils/menuHelpers";
 
 const MenuItemCard = ({ item }) => {
   const { t, i18n } = useTranslation();
 
-  const localizedName =
-    item.name ||
-    (i18n.language === "fi"
-      ? item.name_fi || item.name_en
-      : item.name_en || item.name_fi) ||
-    "";
+  const language = i18n.language?.startsWith("fi") ? "fi" : "en";
 
-  const localizedDescription =
-    item.description ||
-    (i18n.language === "fi"
-      ? item.description_fi || item.description_en
-      : item.description_en || item.description_fi) ||
-    "";
+  const localizedName = getLocalizedMenuItemName(item, language);
+  const localizedDescription = getLocalizedMenuItemDescription(item, language);
 
   return (
     <article className="py-5 first:pt-0 last:pb-0">

@@ -1,3 +1,14 @@
+/**
+ * MenuSection
+ *
+ * Displays a menu category section with its menu items.
+ *
+ * Responsibilities:
+ * - Shows the localized category name and description
+ * - Groups menu items under the selected category
+ * - Renders each menu item using MenuItemCard
+ */
+
 import MenuItemCard from "./MenuItemCard";
 
 const MenuSection = ({ category, items }) => {
