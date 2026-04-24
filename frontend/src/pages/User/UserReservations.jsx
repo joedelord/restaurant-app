@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/ui/Button";
 import PageLoader from "../../components/ui/PageLoader";
-import UserReservationList from "../../features/user/UserReservationList";
+import UserReservationList from "../../features/user/components/UserReservationList";
 import useUserReservations from "../../hooks/useUserReservations";
 
 const UserReservations = () => {

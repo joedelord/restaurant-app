@@ -1,5 +1,16 @@
+/**
+ * UserOrderList
+ *
+ * Displays the current user's orders.
+ *
+ * Responsibilities:
+ * - Shows the user's order history
+ * - Displays order status, related reservation and order items
+ * - Provides a clear empty state when there are no orders
+ */
+
 import { useTranslation } from "react-i18next";
-import { formatCurrency } from "../../utils/currency";
+import { formatCurrency } from "../../../utils/currency";
 
 const formatDateTime = (value) => {
   if (!value) return "-";

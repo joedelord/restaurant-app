@@ -1,5 +1,16 @@
+/**
+ * UserReservationList
+ *
+ * Displays the current user's reservations.
+ *
+ * Responsibilities:
+ * - Shows upcoming and past reservations
+ * - Displays reservation date, time, table and status information
+ * - Provides a clear empty state when there are no reservations
+ */
+
 import { useTranslation } from "react-i18next";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 
 const formatDateTime = (value) => {
   if (!value) return "-";
