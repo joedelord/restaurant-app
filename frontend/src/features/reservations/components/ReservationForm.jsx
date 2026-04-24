@@ -35,7 +35,7 @@ import {
 import TimeSlotPicker from "./TimeSlotPicker";
 import TablePicker from "./TablePicker";
 import ReservationConfirmModal from "./ReservationConfirmModal";
-import AuthSubmitButton from "../../auth/AuthSubmitButton";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
 
 const ReservationForm = () => {
   const { t } = useTranslation();

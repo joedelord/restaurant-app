@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../auth/AuthSubmitButton";
+import AuthSubmitButton from "../auth/components/AuthSubmitButton";
 import Button from "../../components/ui/Button";
 
 const getFormValues = (initialData) => ({

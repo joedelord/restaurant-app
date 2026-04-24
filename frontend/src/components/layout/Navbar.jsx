@@ -21,7 +21,7 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import useAuth from "../../hooks/useAuth";
-import LogoutButton from "../../features/auth/LogoutButton";
+import LogoutButton from "../../features/auth/components/LogoutButton";
 import NavbarSection from "./NavbarSection";
 import NavbarItem from "./NavbarItem";
 import LanguageToggle from "./LanguageToggle";
