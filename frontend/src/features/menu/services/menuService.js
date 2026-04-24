@@ -9,14 +9,14 @@
  * - Provides data for the public menu view
  */
 
-import api from "../../../api";
+import api from "@/api";
 
 export const getMenuItems = async () => {
-  const response = await api.get("/menu-items/");
-  return response.data;
+  const { data } = await api.get("/menu-items/");
+  return data;
 };
 
 export const getMenuCategories = async () => {
-  const response = await api.get("/categories/");
-  return response.data;
+  const { data } = await api.get("/categories/");
+  return data;
 };

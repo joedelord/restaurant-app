@@ -8,7 +8,7 @@
  * - Provides aggregated sales insights (e.g. popular items, category sales)
  */
 
-import api from "../../../api";
+import api from "@/api";
 
 export const getSalesStats = async () => {
   const { data } = await api.get("/admin/sales/");

@@ -14,37 +14,37 @@
 import api from "@/api";
 
 export const getReservationAvailability = async ({ date, partySize }) => {
-  const response = await api.get("/reservations/availability/", {
+  const { data } = await api.get("/reservations/availability/", {
     params: {
       date,
       party_size: partySize,
     },
   });
 
-  return response.data;
+  return data;
 };
 
 export const getTables = async () => {
-  const response = await api.get("/tables/");
-  return response.data;
+  const { data } = await api.get("/tables/");
+  return data;
 };
 
 export const createReservation = async (payload) => {
-  const response = await api.post("/reservations/", payload);
-  return response.data;
+  const { data } = await api.post("/reservations/", payload);
+  return data;
 };
 
 export const getReservations = async () => {
-  const response = await api.get("/reservations/");
-  return response.data;
+  const { data } = await api.get("/reservations/");
+  return data;
 };
 
 export const updateReservation = async (id, payload) => {
-  const response = await api.patch(`/reservations/${id}/`, payload);
-  return response.data;
+  const { data } = await api.patch(`/reservations/${id}/`, payload);
+  return data;
 };
 
 export const updateReservationStatus = async (id, status) => {
-  const response = await api.patch(`/reservations/${id}/status/`, { status });
-  return response.data;
+  const { data } = await api.patch(`/reservations/${id}/status/`, { status });
+  return data;
 };

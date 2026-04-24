@@ -10,7 +10,7 @@
  * - Deletes menu items
  */
 
-import api from "../../../api";
+import api from "@/api";
 
 export const getMenuItems = async () => {
   const { data } = await api.get("/admin/menu-items/");

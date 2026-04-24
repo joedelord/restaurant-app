@@ -9,7 +9,7 @@
  * - Handles password change requests
  */
 
-import api from "../../../api";
+import api from "@/api";
 
 export const getMyProfile = async () => {
   const { data } = await api.get("/users/me/");

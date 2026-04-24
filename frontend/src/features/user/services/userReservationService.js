@@ -8,7 +8,7 @@
  * - Allows cancelling a reservation by updating its status
  */
 
-import api from "../../../api";
+import api from "@/api";
 
 export const getMyReservations = async () => {
   const { data } = await api.get("/reservations/");

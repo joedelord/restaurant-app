@@ -7,7 +7,7 @@
  * - Fetches all orders belonging to the current user
  */
 
-import api from "../../../api";
+import api from "@/api";
 
 export const getMyOrders = async () => {
   const { data } = await api.get("/orders/");
