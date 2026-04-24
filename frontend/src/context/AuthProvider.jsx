@@ -6,7 +6,7 @@ import {
   getRefreshToken,
   isAuthenticated,
   setTokens,
-} from "../services/authService";
+} from "../features/auth/services/authService";
 
 const AuthProvider = ({ children }) => {
   const [isAuthorized, setIsAuthorized] = useState(null);

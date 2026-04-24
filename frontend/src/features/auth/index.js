@@ -12,3 +12,14 @@ export { default as AuthCard } from "./components/AuthCard";
 export { default as AuthField } from "./components/AuthField";
 export { default as AuthSubmitButton } from "./components/AuthSubmitButton";
 export { default as LogoutButton } from "./components/LogoutButton";
+
+export {
+  getAccessToken,
+  getRefreshToken,
+  setTokens,
+  clearTokens,
+  isTokenExpired,
+  refreshAccessToken,
+  getValidAccessToken,
+  isAuthenticated,
+} from "./services/authService";

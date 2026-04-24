@@ -1,10 +1,25 @@
+/**
+ * authService
+ *
+ * Authentication helper service for token handling.
+ *
+ * Responsibilities:
+ * - Reads and stores JWT access and refresh tokens
+ * - Clears authentication tokens on logout or failed refresh
+ * - Checks whether a token has expired
+ * - Refreshes the access token using the refresh token
+ * - Provides a valid access token for authenticated API requests
+ */
+
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../constants";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
+
 export const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN);
 
 export const setTokens = ({ access, refresh }) => {
@@ -23,6 +38,7 @@ export const isTokenExpired = (token) => {
   try {
     const decoded = jwtDecode(token);
     const now = Date.now() / 1000;
+
     return decoded.exp <= now;
   } catch (error) {
     console.error("Failed to decode token:", error);
@@ -39,7 +55,7 @@ export const refreshAccessToken = async () => {
   }
 
   try {
-    const res = await axios.post(
+    const response = await axios.post(
       `${API_BASE_URL}/token/refresh/`,
       { refresh },
       {
@@ -49,9 +65,9 @@ export const refreshAccessToken = async () => {
       },
     );
 
-    if (res.status === 200 && res.data.access) {
-      localStorage.setItem(ACCESS_TOKEN, res.data.access);
-      return res.data.access;
+    if (response.status === 200 && response.data.access) {
+      setTokens({ access: response.data.access });
+      return response.data.access;
     }
 
     clearTokens();
@@ -73,7 +89,7 @@ export const getValidAccessToken = async () => {
     return access;
   }
 
-  return await refreshAccessToken();
+  return refreshAccessToken();
 };
 
 export const isAuthenticated = async () => {
