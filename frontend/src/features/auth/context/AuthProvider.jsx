@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import api from "../api";
+import api from "../../../api";
 import { AuthContext } from "./auth-context";
 import {
   clearTokens,
   getRefreshToken,
   isAuthenticated,
   setTokens,
-} from "../features/auth/services/authService";
+} from "../services/authService";
 
 const AuthProvider = ({ children }) => {
   const [isAuthorized, setIsAuthorized] = useState(null);
