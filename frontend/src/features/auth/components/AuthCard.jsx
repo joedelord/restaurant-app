@@ -1,3 +1,14 @@
+/**
+ * AuthCard
+ *
+ * Layout wrapper for authentication pages.
+ *
+ * Responsibilities:
+ * - Displays the authentication page title
+ * - Wraps auth forms inside a consistent card layout
+ * - Shows optional footer text and navigation link
+ */
+
 import { Link } from "react-router-dom";
 
 const AuthCard = ({
@@ -9,9 +20,9 @@ const AuthCard = ({
 }) => {
   return (
     <div className="px-4 py-0">
-      <h1 className="text-3xl font-bold text-center p-6">{title}</h1>
+      <h1 className="p-6 text-center text-3xl font-bold">{title}</h1>
 
-      <div className="mx-auto w-full max-w-xl rounded-2xl border bg-white border-gray-200 p-5 shadow-sm">
+      <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="mx-auto max-w-sm">
           {children}
 

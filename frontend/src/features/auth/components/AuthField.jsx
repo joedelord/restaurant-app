@@ -1,3 +1,15 @@
+/**
+ * AuthField
+ *
+ * Reusable input field for authentication forms.
+ *
+ * Responsibilities:
+ * - Renders a labeled input field
+ * - Supports validation error messages
+ * - Adds accessibility attributes for invalid fields
+ * - Handles disabled and required states
+ */
+
 const AuthField = ({
   id,
   label,

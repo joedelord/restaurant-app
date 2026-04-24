@@ -1,3 +1,14 @@
+/**
+ * AuthSubmitButton
+ *
+ * Reusable submit button for authentication forms.
+ *
+ * Responsibilities:
+ * - Displays loading and idle button text
+ * - Disables the button while a request is loading
+ * - Uses the shared Button component for consistent styling
+ */
+
 import Button from "../../../components/ui/Button";
 
 const AuthSubmitButton = ({
