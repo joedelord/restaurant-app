@@ -1,4 +1,14 @@
-import api from "../api";
+/**
+ * userReservationService
+ *
+ * API helpers for managing the current user's reservations.
+ *
+ * Responsibilities:
+ * - Fetches all reservations belonging to the current user
+ * - Allows cancelling a reservation by updating its status
+ */
+
+import api from "../../../api";
 
 export const getMyReservations = async () => {
   const { data } = await api.get("/reservations/");

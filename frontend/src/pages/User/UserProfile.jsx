@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 import PageLoader from "../../components/ui/PageLoader";
 import AuthSubmitButton from "../../features/auth/components/AuthSubmitButton";
 import Button from "../../components/ui/Button";
-import {
-  getMyProfile,
-  updateMyProfile,
-} from "../../services/userProfileService";
+import { getMyProfile, updateMyProfile } from "@/features/user";
 
 const UserProfile = () => {
   const { t } = useTranslation();

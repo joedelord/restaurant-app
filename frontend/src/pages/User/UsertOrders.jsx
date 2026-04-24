@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/ui/Button";
 import PageLoader from "../../components/ui/PageLoader";
 import UserOrderList from "../../features/user/components/UserOrderList";
-import useUserOrders from "../../hooks/useUserOrders";
+import useUserOrders from "../../features/user/hooks/useUserOrders";
 
 const UserOrders = () => {
   const { t } = useTranslation();

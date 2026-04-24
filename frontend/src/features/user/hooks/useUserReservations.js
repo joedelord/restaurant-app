@@ -1,3 +1,15 @@
+/**
+ * useUserReservations
+ *
+ * Custom hook for managing the current user's reservations.
+ *
+ * Responsibilities:
+ * - Fetches user reservations from the backend
+ * - Splits reservations into upcoming and past
+ * - Handles reservation cancellation
+ * - Provides loading, error, and success state
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -87,8 +99,10 @@ const useUserReservations = () => {
         ),
       );
 
-      setMessage(t("user.reservations.messages.cancelled"));
-      setError("");
+      setTimeout(
+        () => setMessage(t("user.reservations.messages.cancelled")),
+        3000,
+      );
     } catch (err) {
       console.error(err);
       setError(t("user.reservations.messages.cancelError"));

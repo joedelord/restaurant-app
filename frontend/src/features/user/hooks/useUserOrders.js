@@ -1,3 +1,14 @@
+/**
+ * useUserOrders
+ *
+ * Custom hook for managing the current user's orders.
+ *
+ * Responsibilities:
+ * - Fetches user orders from the backend
+ * - Splits orders into active and past
+ * - Provides loading and error state
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getMyOrders } from "../services/userOrderService";
@@ -22,7 +33,6 @@ const useUserOrders = () => {
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -56,7 +66,6 @@ const useUserOrders = () => {
 
   return {
     loading,
-    message,
     error,
     activeOrders,
     pastOrders,

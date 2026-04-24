@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import AuthSubmitButton from "../../features/auth/components/AuthSubmitButton";
 import Button from "../../components/ui/Button";
-import { changeMyPassword } from "../../services/userProfileService";
+import { changeMyPassword } from "@/features/user";
 
 const ChangePassword = () => {
   const { t } = useTranslation();

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/ui/Button";
 import PageLoader from "../../components/ui/PageLoader";
 import UserReservationList from "../../features/user/components/UserReservationList";
-import useUserReservations from "../../hooks/useUserReservations";
+import useUserReservations from "../../features/user/hooks/useUserReservations";
 
 const UserReservations = () => {
   const { t } = useTranslation();
