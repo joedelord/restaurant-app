@@ -1,7 +1,19 @@
-import { useState } from "react";
+/**
+ * TableForm
+ *
+ * Form component for creating and editing restaurant tables.
+ *
+ * Responsibilities:
+ * - Handles table form state
+ * - Validates input before submission
+ * - Supports both create and edit modes
+ * - Submits data via provided onSubmit handler
+ */
+
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   table_number: initialData?.table_number ?? "",
@@ -15,6 +27,11 @@ const TableForm = ({ onSubmit, initialData = null, submitText, onCancel }) => {
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFormData(getFormValues(initialData));
+    setError("");
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -131,7 +148,7 @@ const TableForm = ({ onSubmit, initialData = null, submitText, onCancel }) => {
           <div className="flex gap-3">
             <AuthSubmitButton
               loading={loading}
-              idleText={submitText}
+              idleText={submitText || t("admin.tables.actions.save")}
               loadingText={
                 initialData
                   ? t("admin.tables.actions.update") + "..."

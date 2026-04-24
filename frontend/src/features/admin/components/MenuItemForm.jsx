@@ -1,7 +1,19 @@
-import { useState } from "react";
+/**
+ * MenuItemForm
+ *
+ * Form component for creating and editing menu items.
+ *
+ * Responsibilities:
+ * - Handles menu item form state
+ * - Validates input before submission
+ * - Supports both create and edit modes
+ * - Submits data via provided onSubmit handler
+ */
+
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   name_en: initialData?.name_en ?? "",
@@ -25,6 +37,10 @@ const MenuItemForm = ({
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFormData(getFormValues(initialData));
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

@@ -4,7 +4,7 @@ import Button from "../../components/ui/Button";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../components/ui/PageLoader";
-import { getSalesStats } from "../../services/salesStatsService";
+import { getSalesStats } from "../../features/admin/services/salesStatsService";
 import { formatCurrency } from "../../utils/currency";
 
 const AdminSales = () => {

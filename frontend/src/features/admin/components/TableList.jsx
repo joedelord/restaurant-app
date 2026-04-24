@@ -1,5 +1,22 @@
+/**
+ * TableList
+ *
+ * Displays restaurant tables in the admin dashboard.
+ *
+ * Responsibilities:
+ * - Renders tables using AdminResponsiveList
+ * - Shows table number, seat capacity and active status
+ * - Provides edit and delete actions for each table
+ */
+
 import { useTranslation } from "react-i18next";
 import AdminResponsiveList from "./AdminResponsiveList";
+
+const getTableStatusLabel = (item, t) => {
+  return item.is_active
+    ? t("admin.tables.values.active")
+    : t("admin.tables.values.inactive");
+};
 
 const TableList = ({ items, onEdit, onDelete }) => {
   const { t } = useTranslation();
@@ -22,9 +39,7 @@ const TableList = ({ items, onEdit, onDelete }) => {
       renderTableRow={(item) => [
         <span className="font-medium">{item.table_number}</span>,
         item.seats,
-        item.is_active
-          ? t("admin.tables.values.active")
-          : t("admin.tables.values.inactive"),
+        getTableStatusLabel(item, t),
       ]}
       renderMobileCard={(item) => (
         <div className="space-y-1 text-sm">
@@ -37,9 +52,7 @@ const TableList = ({ items, onEdit, onDelete }) => {
           </p>
           <p>
             <strong>{t("admin.tables.fields.status")}:</strong>{" "}
-            {item.is_active
-              ? t("admin.tables.values.active")
-              : t("admin.tables.values.inactive")}
+            {getTableStatusLabel(item, t)}
           </p>
         </div>
       )}

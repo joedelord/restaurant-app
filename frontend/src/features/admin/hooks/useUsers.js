@@ -1,3 +1,15 @@
+/**
+ * useUsers
+ *
+ * Manages users for the admin dashboard.
+ *
+ * Responsibilities:
+ * - Fetches and sorts users
+ * - Handles creating, updating and deleting users
+ * - Manages editing state
+ * - Provides loading, success and error state
+ */
+
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -16,6 +28,10 @@ const sortUsers = (items) =>
 
     return (a.first_name || "").localeCompare(b.first_name || "");
   });
+
+const getUserLabel = (user) => {
+  return user.email || "-";
+};
 
 const useUsers = () => {
   const { t } = useTranslation();
@@ -44,33 +60,47 @@ const useUsers = () => {
   }, [t]);
 
   const handleCreate = async (payload) => {
-    const created = await createUser(payload);
+    try {
+      const created = await createUser(payload);
 
-    setUsers((prev) => sortUsers([...prev, created]));
-    setMessage(t("admin.users.messages.created"));
-    setError("");
-    setEditingUser(null);
+      setUsers((prev) => sortUsers([...prev, created]));
+      setMessage(t("admin.users.messages.created"));
+      setError("");
+      setEditingUser(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("admin.users.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleUpdate = async (payload) => {
     if (!editingUser) return;
 
-    const updated = await updateUser(editingUser.id, payload);
+    try {
+      const updated = await updateUser(editingUser.id, payload);
 
-    setUsers((prev) =>
-      sortUsers(
-        prev.map((item) => (item.id === editingUser.id ? updated : item)),
-      ),
-    );
+      setUsers((prev) =>
+        sortUsers(
+          prev.map((item) => (item.id === editingUser.id ? updated : item)),
+        ),
+      );
 
-    setMessage(t("admin.users.messages.updated"));
-    setError("");
-    setEditingUser(null);
+      setMessage(t("admin.users.messages.updated"));
+      setError("");
+      setEditingUser(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("admin.users.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      t("admin.users.messages.confirmDelete", { email: item.email }),
+      t("admin.users.messages.confirmDelete", {
+        email: getUserLabel(item),
+      }),
     );
 
     if (!confirmed) return;
@@ -103,6 +133,11 @@ const useUsers = () => {
     setEditingUser(null);
   };
 
+  const clearMessages = () => {
+    setMessage("");
+    setError("");
+  };
+
   return {
     users,
     editingUser,
@@ -114,6 +149,7 @@ const useUsers = () => {
     handleDelete,
     startEditing,
     cancelEditing,
+    clearMessages,
   };
 };
 

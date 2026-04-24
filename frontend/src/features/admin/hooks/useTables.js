@@ -1,3 +1,15 @@
+/**
+ * useTables
+ *
+ * Manages restaurant tables for the admin dashboard.
+ *
+ * Responsibilities:
+ * - Fetches and sorts tables
+ * - Handles creating, updating and deleting tables
+ * - Manages editing state
+ * - Provides loading, success and error state
+ */
+
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -37,28 +49,40 @@ const useTables = () => {
   }, [t]);
 
   const handleCreate = async (payload) => {
-    const created = await createTable(payload);
+    try {
+      const created = await createTable(payload);
 
-    setTables((prev) => sortTables([...prev, created]));
-    setMessage(t("admin.tables.messages.created"));
-    setError("");
-    setEditingTable(null);
+      setTables((prev) => sortTables([...prev, created]));
+      setMessage(t("admin.tables.messages.created"));
+      setError("");
+      setEditingTable(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("admin.tables.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleUpdate = async (payload) => {
     if (!editingTable) return;
 
-    const updated = await updateTable(editingTable.id, payload);
+    try {
+      const updated = await updateTable(editingTable.id, payload);
 
-    setTables((prev) =>
-      sortTables(
-        prev.map((item) => (item.id === editingTable.id ? updated : item)),
-      ),
-    );
+      setTables((prev) =>
+        sortTables(
+          prev.map((item) => (item.id === editingTable.id ? updated : item)),
+        ),
+      );
 
-    setMessage(t("admin.tables.messages.updated"));
-    setError("");
-    setEditingTable(null);
+      setMessage(t("admin.tables.messages.updated"));
+      setError("");
+      setEditingTable(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("admin.tables.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleDelete = async (item) => {
@@ -72,6 +96,7 @@ const useTables = () => {
 
     try {
       await deleteTable(item.id);
+
       setTables((prev) => prev.filter((table) => table.id !== item.id));
 
       if (editingTable?.id === item.id) {
@@ -97,6 +122,11 @@ const useTables = () => {
     setEditingTable(null);
   };
 
+  const clearMessages = () => {
+    setMessage("");
+    setError("");
+  };
+
   return {
     tables,
     editingTable,
@@ -108,6 +138,7 @@ const useTables = () => {
     handleDelete,
     startEditing,
     cancelEditing,
+    clearMessages,
   };
 };
 

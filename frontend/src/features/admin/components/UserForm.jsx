@@ -1,7 +1,19 @@
-import { useState } from "react";
+/**
+ * UserForm
+ *
+ * Form component for creating and editing users in the admin dashboard.
+ *
+ * Responsibilities:
+ * - Handles user form state
+ * - Supports both create and edit modes
+ * - Validates required user fields before submission
+ * - Submits user data through the provided onSubmit handler
+ */
+
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   email: initialData?.email ?? "",
@@ -25,6 +37,11 @@ const UserForm = ({
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFormData(getFormValues(initialData));
+    setError("");
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -66,7 +83,12 @@ const UserForm = ({
       is_active: formData.is_active,
     };
 
-    if (!initialData && formData.password.trim()) {
+    if (!initialData && !formData.password.trim()) {
+      setError(t("admin.users.validation.passwordRequired"));
+      return;
+    }
+
+    if (!initialData) {
       payload.password = formData.password.trim();
     }
 
@@ -238,7 +260,11 @@ const UserForm = ({
             <AuthSubmitButton
               loading={loading}
               idleText={submitText}
-              loadingText={submitText}
+              loadingText={
+                initialData
+                  ? `${t("admin.users.actions.update")}...`
+                  : `${t("admin.users.actions.add")}...`
+              }
             />
 
             {onCancel && (

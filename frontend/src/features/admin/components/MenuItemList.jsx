@@ -1,5 +1,16 @@
+/**
+ * MenuItemList
+ *
+ * Displays menu items in the admin dashboard.
+ *
+ * Responsibilities:
+ * - Renders menu items using AdminResponsiveList
+ * - Shows name, price and category
+ * - Provides edit and delete actions
+ */
+
 import { useTranslation } from "react-i18next";
-import { formatCurrency } from "../../utils/currency";
+import { formatCurrency } from "../../../utils/currency";
 import AdminResponsiveList from "./AdminResponsiveList";
 
 const MenuItemList = ({ items, onEdit, onDelete }) => {

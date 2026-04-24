@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Button from "../../components/ui/Button";
-import MenuItemForm from "../../features/admin/MenuItemForm";
-import MenuItemList from "../../features/admin/MenuItemList";
-import useMenuItems from "../../hooks/useMenuItems";
-import { getCategories } from "../../services/categoryService";
+import MenuItemForm from "../../features/admin/components/MenuItemForm";
+import MenuItemList from "../../features/admin/components/MenuItemList";
+import useMenuItems from "../../features/admin/hooks/useMenuItems";
+import { getCategories } from "../../features/admin/services/categoryService";
 import PageLoader from "../../components/ui/PageLoader";
 
 const AdminMenuItems = () => {

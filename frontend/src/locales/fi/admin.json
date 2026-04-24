@@ -166,7 +166,13 @@
       "categoryRequired": "Kategoria on pakollinen."
     },
     "messages": {
-      "saveError": "Annoksen tallentaminen epäonnistui."
+      "fetchError": "Ruokien hakeminen epäonnistui.",
+      "created": "Ruoka lisätty onnistuneesti.",
+      "updated": "Ruoka päivitetty onnistuneesti.",
+      "deleted": "Ruoka poistettu onnistuneesti.",
+      "saveError": "Ruoan tallentaminen epäonnistui.",
+      "deleteError": "Ruoan poistaminen epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa ruoan \"{{name}}\"?"
     },
     "empty": "Ei ruokalistan tuotteita."
   },
@@ -204,7 +210,13 @@
       "displayOrderRequired": "Järjestyksen on oltava 0 tai suurempi."
     },
     "messages": {
-      "saveError": "Kategorian tallentaminen epäonnistui."
+      "fetchError": "Kategorioiden hakeminen epäonnistui.",
+      "created": "Kategoria luotu onnistuneesti.",
+      "updated": "Kategoria päivitetty onnistuneesti.",
+      "deleted": "Kategoria poistettu onnistuneesti.",
+      "saveError": "Kategorian tallentaminen epäonnistui.",
+      "deleteError": "Kategorian poistaminen epäonnistui.",
+      "confirmDelete": "Haluatko varmasti poistaa kategorian \"{{name}}\"?"
     },
     "empty": "Ei kategorioita."
   },

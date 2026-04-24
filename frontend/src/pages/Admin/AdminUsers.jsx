@@ -2,9 +2,9 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { useTranslation } from "react-i18next";
-import UserForm from "../../features/admin/UserForm";
-import UserList from "../../features/admin/UserList";
-import useUsers from "../../hooks/useUsers";
+import UserForm from "../../features/admin/components/UserForm";
+import UserList from "../../features/admin/components/UserList";
+import useUsers from "../../features/admin/hooks/useUsers";
 
 const AdminUsers = () => {
   const { t } = useTranslation();

@@ -1,7 +1,19 @@
-import { useState } from "react";
+/**
+ * CategoryForm
+ *
+ * Form component for creating and editing menu categories.
+ *
+ * Responsibilities:
+ * - Handles category form input fields
+ * - Supports both create and edit modes
+ * - Validates input before submission
+ * - Calls provided onSubmit handler
+ */
+
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
 
 const getFormValues = (initialData) => ({
   name_en: initialData?.name_en ?? "",
@@ -21,6 +33,11 @@ const CategoryForm = ({
   const [formData, setFormData] = useState(() => getFormValues(initialData));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFormData(getFormValues(initialData));
+    setError("");
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,4 +1,17 @@
+/**
+ * useMenuItems
+ *
+ * Manages menu items for the admin dashboard.
+ *
+ * Responsibilities:
+ * - Fetches and sorts menu items
+ * - Handles creating, updating and deleting menu items
+ * - Manages editing state
+ * - Provides loading, success and error state
+ */
+
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   createMenuItem,
   deleteMenuItem,
@@ -13,7 +26,13 @@ const sortMenuItems = (items) =>
       (a.name_en || "").localeCompare(b.name_en || ""),
   );
 
+const getMenuItemLabel = (item) => {
+  return [item.name_en, item.name_fi].filter(Boolean).join(" / ");
+};
+
 const useMenuItems = () => {
+  const { t } = useTranslation();
+
   const [menuItems, setMenuItems] = useState([]);
   const [editingMenuItem, setEditingMenuItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,43 +47,57 @@ const useMenuItems = () => {
         setMenuItems(sortMenuItems(data));
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch menu items.");
+        setError(t("admin.menuItems.messages.fetchError"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchMenuItems();
-  }, []);
+  }, [t]);
 
   const handleCreate = async (payload) => {
-    const created = await createMenuItem(payload);
+    try {
+      const created = await createMenuItem(payload);
 
-    setMenuItems((prev) => sortMenuItems([...prev, created]));
-    setMessage("Menu item created successfully.");
-    setError("");
-    setEditingMenuItem(null);
+      setMenuItems((prev) => sortMenuItems([...prev, created]));
+      setMessage(t("admin.menuItems.messages.created"));
+      setError("");
+      setEditingMenuItem(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("admin.menuItems.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleUpdate = async (payload) => {
     if (!editingMenuItem) return;
 
-    const updated = await updateMenuItem(editingMenuItem.id, payload);
+    try {
+      const updated = await updateMenuItem(editingMenuItem.id, payload);
 
-    setMenuItems((prev) =>
-      sortMenuItems(
-        prev.map((item) => (item.id === editingMenuItem.id ? updated : item)),
-      ),
-    );
+      setMenuItems((prev) =>
+        sortMenuItems(
+          prev.map((item) => (item.id === editingMenuItem.id ? updated : item)),
+        ),
+      );
 
-    setMessage("Menu item updated successfully.");
-    setError("");
-    setEditingMenuItem(null);
+      setMessage(t("admin.menuItems.messages.updated"));
+      setError("");
+      setEditingMenuItem(null);
+    } catch (err) {
+      console.error(err);
+      setError(t("admin.menuItems.messages.saveError"));
+      throw err;
+    }
   };
 
   const handleDelete = async (item) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete menu item "${item.name_en} / ${item.name_fi}"?`,
+      t("admin.menuItems.messages.confirmDelete", {
+        name: getMenuItemLabel(item),
+      }),
     );
 
     if (!confirmed) return;
@@ -80,11 +113,11 @@ const useMenuItems = () => {
         setEditingMenuItem(null);
       }
 
-      setMessage("Menu item deleted successfully.");
+      setMessage(t("admin.menuItems.messages.deleted"));
       setError("");
     } catch (err) {
       console.error(err);
-      setError("Failed to delete menu item.");
+      setError(t("admin.menuItems.messages.deleteError"));
     }
   };
 
@@ -99,6 +132,11 @@ const useMenuItems = () => {
     setEditingMenuItem(null);
   };
 
+  const clearMessages = () => {
+    setMessage("");
+    setError("");
+  };
+
   return {
     menuItems,
     editingMenuItem,
@@ -110,6 +148,7 @@ const useMenuItems = () => {
     handleDelete,
     startEditing,
     cancelEditing,
+    clearMessages,
   };
 };
 

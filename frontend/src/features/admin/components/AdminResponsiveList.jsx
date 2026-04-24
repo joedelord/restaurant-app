@@ -1,4 +1,16 @@
-import Button from "../../components/ui/Button";
+/**
+ * AdminResponsiveList
+ *
+ * Reusable responsive list component for admin views.
+ *
+ * Responsibilities:
+ * - Displays items in a table layout on desktop
+ * - Displays items as cards on mobile
+ * - Accepts dynamic columns and render functions
+ * - Keeps admin UI consistent across different resources
+ */
+
+import Button from "../../../components/ui/Button";
 
 const AdminResponsiveList = ({
   items = [],
