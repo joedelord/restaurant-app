@@ -1,3 +1,14 @@
+/**
+ * StaffReservationList
+ *
+ * Displays reservations for staff users.
+ *
+ * Responsibilities:
+ * - Shows reservation customer, table, party size, time and status
+ * - Provides edit and delete actions
+ * - Displays an empty state when there are no reservations
+ */
+
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/ui/Button";
 
@@ -8,6 +19,14 @@ const formatDateTime = (value) => {
     dateStyle: "short",
     timeStyle: "short",
   });
+};
+
+const getCustomerName = (user) => {
+  if (!user) return "-";
+
+  return (
+    `${user.first_name || ""} ${user.last_name || ""}`.trim() || user.email
+  );
 };
 
 const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
@@ -57,10 +76,7 @@ const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
                 className="border-b border-default-medium last:border-b-0"
               >
                 <td className="px-3 py-4 text-body">
-                  {item.user
-                    ? `${item.user.first_name || ""} ${item.user.last_name || ""}`.trim() ||
-                      item.user.email
-                    : "-"}
+                  {getCustomerName(item.user)}
                 </td>
 
                 <td className="px-3 py-4 text-body">

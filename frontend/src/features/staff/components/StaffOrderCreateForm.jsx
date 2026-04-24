@@ -1,38 +1,42 @@
+/**
+ * StaffOrderCreateForm
+ *
+ * Form component for creating staff orders from reservations or walk-in tables.
+ *
+ * Responsibilities:
+ * - Supports reservation-based and walk-in order creation
+ * - Fetches reservations, tables, orders and available menu items
+ * - Prevents duplicate orders for the same reservation
+ * - Handles dynamic order item rows
+ * - Calculates order total preview
+ * - Submits new orders through staffOrderService
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
 import Button from "../../../components/ui/Button";
 import api from "../../../api";
 import { createOrder } from "../services/staffOrderService";
 import { formatCurrency } from "../../../utils/currency";
 
-const emptyRow = {
-  menu_item_id: "",
-  quantity: 1,
-};
+import {
+  emptyOrderItemRow,
+  formatReservationDateTime,
+  getLocalizedMenuItemCategoryName,
+  getLocalizedMenuItemName,
+  getStaffOrderErrorMessage,
+  getTodayDate,
+  toLocalDateString,
+} from "../utils/staffOrderHelpers";
 
-const getTodayDate = () => {
-  const now = new Date();
-  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-  return local.toISOString().slice(0, 10);
-};
-
-const toLocalDateString = (value) => {
-  if (!value) return "";
-
-  const date = new Date(value);
-  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  return local.toISOString().slice(0, 10);
-};
-
-const formatReservationDateTime = (value) => {
-  if (!value) return "-";
-
-  return new Date(value).toLocaleString("fi-FI", {
-    dateStyle: "short",
-    timeStyle: "short",
-  });
-};
+const getInitialFormData = () => ({
+  reservation_id: "",
+  table_id: "",
+  status: "pending",
+  items: [{ ...emptyOrderItemRow }],
+});
 
 const StaffOrderCreateForm = ({
   onCreated,
@@ -48,41 +52,21 @@ const StaffOrderCreateForm = ({
   const [tables, setTables] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
 
-  const [formData, setFormData] = useState({
-    reservation_id: "",
-    table_id: "",
-    status: "pending",
-    items: [{ ...emptyRow }],
-  });
+  const [formData, setFormData] = useState(getInitialFormData);
 
   const [loadingData, setLoadingData] = useState(true);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  const language = i18n.language?.startsWith("fi") ? "fi" : "en";
+
   useEffect(() => {
     setMode(initialMode);
-    setFormData({
-      reservation_id: "",
-      table_id: "",
-      status: "pending",
-      items: [{ ...emptyRow }],
-    });
+    setFormData(getInitialFormData());
     setError("");
     setMessage("");
   }, [initialMode]);
-
-  const getLocalizedName = (item) => {
-    return i18n.language === "fi"
-      ? item.name_fi || item.name_en
-      : item.name_en || item.name_fi;
-  };
-
-  const getLocalizedCategoryName = (item) => {
-    return i18n.language === "fi"
-      ? item.category_name_fi || item.category_name_en
-      : item.category_name_en || item.category_name_fi;
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,6 +128,18 @@ const StaffOrderCreateForm = ({
     );
   }, [filteredReservations, formData.reservation_id]);
 
+  const totalPreview = useMemo(() => {
+    return formData.items.reduce((sum, row) => {
+      const menuItem = menuItems.find(
+        (item) => String(item.id) === String(row.menu_item_id),
+      );
+
+      if (!menuItem || !row.quantity) return sum;
+
+      return sum + Number(menuItem.price) * Number(row.quantity);
+    }, 0);
+  }, [formData.items, menuItems]);
+
   useEffect(() => {
     if (mode === "reservation" && selectedReservation?.table?.id) {
       setFormData((prev) => ({
@@ -170,18 +166,22 @@ const StaffOrderCreateForm = ({
     }
   }, [filteredReservations, formData.reservation_id, mode]);
 
+  const clearFeedback = () => {
+    setError("");
+    setMessage("");
+  };
+
   const handleModeChange = (nextMode) => {
     if (modeLocked) return;
 
     setMode(nextMode);
-    setError("");
-    setMessage("");
+    clearFeedback();
 
     setFormData((prev) => ({
       ...prev,
       reservation_id: "",
       table_id: "",
-      items: prev.items.length ? prev.items : [{ ...emptyRow }],
+      items: prev.items.length ? prev.items : [{ ...emptyOrderItemRow }],
     }));
   };
 
@@ -193,8 +193,7 @@ const StaffOrderCreateForm = ({
       [name]: value,
     }));
 
-    setError("");
-    setMessage("");
+    clearFeedback();
   };
 
   const handleItemChange = (index, field, value) => {
@@ -210,14 +209,13 @@ const StaffOrderCreateForm = ({
       ),
     }));
 
-    setError("");
-    setMessage("");
+    clearFeedback();
   };
 
   const handleAddRow = () => {
     setFormData((prev) => ({
       ...prev,
-      items: [...prev.items, { ...emptyRow }],
+      items: [...prev.items, { ...emptyOrderItemRow }],
     }));
   };
 
@@ -226,58 +224,66 @@ const StaffOrderCreateForm = ({
       ...prev,
       items:
         prev.items.length === 1
-          ? [{ ...emptyRow }]
+          ? [{ ...emptyOrderItemRow }]
           : prev.items.filter((_, itemIndex) => itemIndex !== index),
     }));
   };
 
-  const totalPreview = useMemo(() => {
-    return formData.items.reduce((sum, row) => {
-      const menuItem = menuItems.find(
-        (item) => String(item.id) === String(row.menu_item_id),
-      );
-
-      if (!menuItem || !row.quantity) return sum;
-      return sum + Number(menuItem.price) * Number(row.quantity);
-    }, 0);
-  }, [formData.items, menuItems]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (loadingSubmit) return;
-
-    setError("");
-    setMessage("");
-
-    const cleanedItems = formData.items
+  const getCleanedItems = () => {
+    return formData.items
       .filter((row) => row.menu_item_id && Number(row.quantity) > 0)
       .map((row) => ({
         menu_item_id: Number(row.menu_item_id),
         quantity: Number(row.quantity),
       }));
+  };
 
+  const hasDuplicateMenuItems = (items) => {
+    const itemIds = new Set();
+
+    for (const item of items) {
+      if (itemIds.has(item.menu_item_id)) {
+        return true;
+      }
+
+      itemIds.add(item.menu_item_id);
+    }
+
+    return false;
+  };
+
+  const validateForm = (cleanedItems) => {
     if (mode === "reservation" && !formData.reservation_id) {
-      setError(t("staff.orders.validation.reservationRequired"));
-      return;
+      return t("staff.orders.validation.reservationRequired");
     }
 
     if (!formData.table_id) {
-      setError(t("staff.orders.validation.tableRequired"));
-      return;
+      return t("staff.orders.validation.tableRequired");
     }
 
     if (!cleanedItems.length) {
-      setError(t("staff.orders.validation.itemsRequired"));
-      return;
+      return t("staff.orders.validation.itemsRequired");
     }
 
-    const duplicateIds = new Set();
-    for (const item of cleanedItems) {
-      if (duplicateIds.has(item.menu_item_id)) {
-        setError(t("staff.orders.validation.duplicateItems"));
-        return;
-      }
-      duplicateIds.add(item.menu_item_id);
+    if (hasDuplicateMenuItems(cleanedItems)) {
+      return t("staff.orders.validation.duplicateItems");
+    }
+
+    return "";
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (loadingSubmit) return;
+
+    clearFeedback();
+
+    const cleanedItems = getCleanedItems();
+    const validationError = validateForm(cleanedItems);
+
+    if (validationError) {
+      setError(validationError);
+      return;
     }
 
     try {
@@ -294,32 +300,14 @@ const StaffOrderCreateForm = ({
       const createdOrder = await createOrder(payload);
 
       setMessage(t("staff.orders.messages.created"));
-      setFormData({
-        reservation_id: "",
-        table_id: "",
-        status: "pending",
-        items: [{ ...emptyRow }],
-      });
+      setFormData(getInitialFormData());
 
       onCreated?.(createdOrder);
     } catch (err) {
       console.error(err);
-
-      const data = err?.response?.data;
-
-      if (data?.table_id?.[0]) {
-        setError(data.table_id[0]);
-      } else if (data?.reservation_id?.[0]) {
-        setError(data.reservation_id[0]);
-      } else if (data?.items?.[0]) {
-        setError(data.items[0]);
-      } else if (data?.status?.[0]) {
-        setError(data.status[0]);
-      } else if (data?.detail) {
-        setError(data.detail);
-      } else {
-        setError(t("staff.orders.messages.saveError"));
-      }
+      setError(
+        getStaffOrderErrorMessage(err, t("staff.orders.messages.saveError")),
+      );
     } finally {
       setLoadingSubmit(false);
     }
@@ -419,7 +407,9 @@ const StaffOrderCreateForm = ({
 
                   {filteredReservations.map((reservation) => {
                     const customerName =
-                      `${reservation.user?.first_name || ""} ${reservation.user?.last_name || ""}`.trim() ||
+                      `${reservation.user?.first_name || ""} ${
+                        reservation.user?.last_name || ""
+                      }`.trim() ||
                       reservation.user?.email ||
                       `#${reservation.id}`;
 
@@ -427,7 +417,9 @@ const StaffOrderCreateForm = ({
                       <option key={reservation.id} value={reservation.id}>
                         #{reservation.id} · {customerName} ·{" "}
                         {reservation.table?.table_number
-                          ? `${t("staff.orders.values.table")} ${reservation.table.table_number}`
+                          ? `${t("staff.orders.values.table")} ${
+                              reservation.table.table_number
+                            }`
                           : "-"}{" "}
                         ·{" "}
                         {formatReservationDateTime(
@@ -470,6 +462,7 @@ const StaffOrderCreateForm = ({
                 <option value="">
                   {t("staff.orders.placeholders.selectTable")}
                 </option>
+
                 {tables.map((table) => (
                   <option key={table.id} value={table.id}>
                     {t("staff.orders.values.table")} {table.table_number} (
@@ -552,8 +545,8 @@ const StaffOrderCreateForm = ({
 
                       {menuItems.map((item) => (
                         <option key={item.id} value={item.id}>
-                          {getLocalizedName(item)} ·{" "}
-                          {getLocalizedCategoryName(item)} ·{" "}
+                          {getLocalizedMenuItemName(item, language)} ·{" "}
+                          {getLocalizedMenuItemCategoryName(item, language)} ·{" "}
                           {formatCurrency(item.price)}
                         </option>
                       ))}
@@ -590,7 +583,7 @@ const StaffOrderCreateForm = ({
                   </div>
 
                   {selectedItem && (
-                    <div className="md:col-span-3 text-sm text-body">
+                    <div className="text-sm text-body md:col-span-3">
                       {t("staff.orders.fields.rowTotal")}:{" "}
                       {formatCurrency(
                         Number(selectedItem.price) * Number(row.quantity),

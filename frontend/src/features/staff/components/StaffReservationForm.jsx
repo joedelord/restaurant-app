@@ -1,4 +1,16 @@
-import { useState } from "react";
+/**
+ * StaffReservationForm
+ *
+ * Form component for editing staff reservation details.
+ *
+ * Responsibilities:
+ * - Handles reservation edit form state
+ * - Supports updating reservation time, party size, status and notes
+ * - Validates required fields before submission
+ * - Submits reservation changes through the provided onSubmit handler
+ */
+
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
 import Button from "../../../components/ui/Button";
@@ -30,6 +42,11 @@ const StaffReservationForm = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setFormData(getFormValues(initialData));
+    setError("");
+  }, [initialData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -37,6 +54,8 @@ const StaffReservationForm = ({
       ...prev,
       [name]: name === "party_size" ? Number(value) : value,
     }));
+
+    setError("");
   };
 
   const handleSubmit = async (e) => {

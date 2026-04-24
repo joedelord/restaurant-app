@@ -6,6 +6,7 @@
  * Responsibilities:
  * - Shows pending reservations
  * - Allows staff to confirm or reject reservations
+ * - Displays responsive desktop table and mobile cards
  */
 
 import { useTranslation } from "react-i18next";
@@ -18,6 +19,14 @@ const formatDateTime = (value) => {
     dateStyle: "short",
     timeStyle: "short",
   });
+};
+
+const getCustomerName = (user) => {
+  if (!user) return "-";
+
+  return (
+    `${user.first_name || ""} ${user.last_name || ""}`.trim() || user.email
+  );
 };
 
 const StaffPendingReservationList = ({
@@ -75,10 +84,7 @@ const StaffPendingReservationList = ({
                   className="border-b border-default-medium last:border-b-0"
                 >
                   <td className="px-3 py-4 text-body">
-                    {item.user
-                      ? `${item.user.first_name || ""} ${item.user.last_name || ""}`.trim() ||
-                        item.user.email
-                      : "-"}
+                    {getCustomerName(item.user)}
                   </td>
 
                   <td className="px-3 py-4 text-body">
@@ -135,10 +141,7 @@ const StaffPendingReservationList = ({
               className="rounded-lg border border-default-medium p-4 text-sm"
             >
               <p className="font-medium text-heading">
-                {item.user
-                  ? `${item.user.first_name || ""} ${item.user.last_name || ""}`.trim() ||
-                    item.user.email
-                  : "-"}
+                {getCustomerName(item.user)}
               </p>
 
               <p className="mt-2">

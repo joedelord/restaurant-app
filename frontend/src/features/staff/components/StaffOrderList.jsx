@@ -5,8 +5,9 @@
  *
  * Responsibilities:
  * - Shows list of orders
- * - Allows updating order status
- * - Displays reservation linkage when available
+ * - Displays table, item count, total price and status
+ * - Provides edit and delete actions
+ * - Uses AdminResponsiveList for responsive layout
  */
 
 import { useTranslation } from "react-i18next";
@@ -22,7 +23,7 @@ const formatDateTime = (value) => {
   });
 };
 
-const getStatusClass = (status) => {
+const getStatusStyles = (status) => {
   switch (status) {
     case "confirmed":
       return "bg-green-100 text-green-700";
@@ -45,13 +46,19 @@ const getStatusClass = (status) => {
 
 const OrderStatusBadge = ({ status, label }) => (
   <span
-    className={`inline-flex rounded-md px-2 py-1 text-xs font-medium ${getStatusClass(
+    className={`inline-flex rounded-md px-2 py-1 text-xs font-medium ${getStatusStyles(
       status,
     )}`}
   >
     {label}
   </span>
 );
+
+const getTableLabel = (item, t) => {
+  return item.table?.table_number
+    ? `${t("staff.orders.values.table")} ${item.table.table_number}`
+    : "-";
+};
 
 const StaffOrderList = ({ items, onEdit, onDelete }) => {
   const { t } = useTranslation();
@@ -76,41 +83,43 @@ const StaffOrderList = ({ items, onEdit, onDelete }) => {
       deleteLabel={t("staff.orders.actions.delete")}
       renderTableRow={(item) => [
         `#${item.id}`,
-        item.table?.table_number
-          ? `${t("staff.orders.values.table")} ${item.table.table_number}`
-          : "-",
-        item.items?.length ?? 0,
-        formatCurrency(item.total_price),
+        getTableLabel(item, t),
+        item.items?.length || 0,
+        formatCurrency(item.total_price || 0),
         <OrderStatusBadge
+          key={`status-${item.id}`}
           status={item.status}
-          label={t(`staff.orders.statuses.${item.status}`)}
+          label={t(`staff.orders.statuses.${item.status || "pending"}`)}
         />,
         formatDateTime(item.created_at),
       ]}
       renderMobileCard={(item) => (
         <div className="space-y-2 text-sm">
           <p className="font-medium text-heading">#{item.id}</p>
+
           <p>
             <strong>{t("staff.orders.fields.table")}:</strong>{" "}
-            {item.table?.table_number
-              ? `${t("staff.orders.values.table")} ${item.table.table_number}`
-              : "-"}
+            {getTableLabel(item, t)}
           </p>
+
           <p>
             <strong>{t("staff.orders.fields.items")}:</strong>{" "}
-            {item.items?.length ?? 0}
+            {item.items?.length || 0}
           </p>
+
           <p>
             <strong>{t("staff.orders.fields.total")}:</strong>{" "}
-            {formatCurrency(item.total_price)}
+            {formatCurrency(item.total_price || 0)}
           </p>
+
           <p>
             <strong>{t("staff.orders.fields.status")}:</strong>{" "}
             <OrderStatusBadge
               status={item.status}
-              label={t(`staff.orders.statuses.${item.status}`)}
+              label={t(`staff.orders.statuses.${item.status || "pending"}`)}
             />
           </p>
+
           <p>
             <strong>{t("staff.orders.fields.createdAt")}:</strong>{" "}
             {formatDateTime(item.created_at)}

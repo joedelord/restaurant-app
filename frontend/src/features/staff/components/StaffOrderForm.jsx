@@ -1,18 +1,35 @@
+/**
+ * StaffOrderForm
+ *
+ * Form component for editing existing staff orders.
+ *
+ * Responsibilities:
+ * - Displays order type, table and reservation details
+ * - Allows updating order status and order items
+ * - Locks item editing for paid or cancelled orders
+ * - Calculates order total preview
+ * - Submits updated order data through the provided onSubmit handler
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
 import Button from "../../../components/ui/Button";
 import api from "../../../api";
 import { formatCurrency } from "../../../utils/currency";
 
-const emptyRow = {
-  menu_item_id: "",
-  quantity: 1,
-};
+import {
+  emptyOrderItemRow,
+  formatReservationDateTime,
+  getLocalizedMenuItemCategoryName,
+  getLocalizedMenuItemName,
+  getStaffOrderErrorMessage,
+} from "../utils/staffOrderHelpers";
 
 const getInitialItems = (initialData) => {
   if (!initialData?.items?.length) {
-    return [{ ...emptyRow }];
+    return [{ ...emptyOrderItemRow }];
   }
 
   return initialData.items.map((item) => ({
@@ -25,15 +42,6 @@ const getFormValues = (initialData) => ({
   status: initialData?.status ?? "pending",
   items: getInitialItems(initialData),
 });
-
-const formatReservationDateTime = (value) => {
-  if (!value) return "-";
-
-  return new Date(value).toLocaleString("fi-FI", {
-    dateStyle: "short",
-    timeStyle: "short",
-  });
-};
 
 const StaffOrderForm = ({
   onSubmit,
@@ -49,15 +57,7 @@ const StaffOrderForm = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const getLocalizedName = (item) =>
-    i18n.language === "fi"
-      ? item.name_fi || item.name_en
-      : item.name_en || item.name_fi;
-
-  const getLocalizedCategoryName = (item) =>
-    i18n.language === "fi"
-      ? item.category_name_fi || item.category_name_en
-      : item.category_name_en || item.category_name_fi;
+  const language = i18n.language?.startsWith("fi") ? "fi" : "en";
 
   useEffect(() => {
     setFormData(getFormValues(initialData));
@@ -83,52 +83,6 @@ const StaffOrderForm = ({
     fetchMenuItems();
   }, [t]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    setError("");
-  };
-
-  const handleItemChange = (index, field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      items: prev.items.map((item, itemIndex) =>
-        itemIndex === index
-          ? {
-              ...item,
-              [field]: field === "quantity" ? Number(value) : value,
-            }
-          : item,
-      ),
-    }));
-
-    setError("");
-  };
-
-  const handleAddRow = () => {
-    setFormData((prev) => ({
-      ...prev,
-      items: [...prev.items, { ...emptyRow }],
-    }));
-  };
-
-  const handleRemoveRow = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      items:
-        prev.items.length === 1
-          ? [{ ...emptyRow }]
-          : prev.items.filter((_, itemIndex) => itemIndex !== index),
-    }));
-
-    setError("");
-  };
-
   const totalPreview = useMemo(() => {
     return formData.items.reduce((sum, row) => {
       const menuItem = menuItems.find(
@@ -147,18 +101,73 @@ const StaffOrderForm = ({
 
   const isItemsLocked = ["paid", "cancelled"].includes(initialData?.status);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (loading || loadingMenu) return;
-
+  const clearFeedback = () => {
     setError("");
+  };
 
-    const cleanedItems = formData.items
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    clearFeedback();
+  };
+
+  const handleItemChange = (index, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      items: prev.items.map((item, itemIndex) =>
+        itemIndex === index
+          ? {
+              ...item,
+              [field]: field === "quantity" ? Number(value) : value,
+            }
+          : item,
+      ),
+    }));
+
+    clearFeedback();
+  };
+
+  const handleAddRow = () => {
+    setFormData((prev) => ({
+      ...prev,
+      items: [...prev.items, { ...emptyOrderItemRow }],
+    }));
+  };
+
+  const handleRemoveRow = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      items:
+        prev.items.length === 1
+          ? [{ ...emptyOrderItemRow }]
+          : prev.items.filter((_, itemIndex) => itemIndex !== index),
+    }));
+
+    clearFeedback();
+  };
+
+  const getCleanedItems = () => {
+    return formData.items
       .filter((item) => item.menu_item_id && Number(item.quantity) > 0)
       .map((item) => ({
         menu_item_id: Number(item.menu_item_id),
         quantity: Number(item.quantity),
       }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (loading || loadingMenu) return;
+
+    clearFeedback();
+
+    const cleanedItems = getCleanedItems();
 
     if (!cleanedItems.length) {
       setError(t("staff.orders.validation.itemsRequired"));
@@ -174,18 +183,9 @@ const StaffOrderForm = ({
       });
     } catch (err) {
       console.error(err);
-
-      const data = err?.response?.data;
-
-      if (data?.items?.[0]) {
-        setError(data.items[0]);
-      } else if (data?.status?.[0]) {
-        setError(data.status[0]);
-      } else if (data?.detail) {
-        setError(data.detail);
-      } else {
-        setError(t("staff.orders.messages.saveError"));
-      }
+      setError(
+        getStaffOrderErrorMessage(err, t("staff.orders.messages.saveError")),
+      );
     } finally {
       setLoading(false);
     }
@@ -309,8 +309,8 @@ const StaffOrderForm = ({
 
                       {menuItems.map((item) => (
                         <option key={item.id} value={item.id}>
-                          {getLocalizedName(item)} ·{" "}
-                          {getLocalizedCategoryName(item)} ·{" "}
+                          {getLocalizedMenuItemName(item, language)} ·{" "}
+                          {getLocalizedMenuItemCategoryName(item, language)} ·{" "}
                           {formatCurrency(item.price)}
                         </option>
                       ))}
