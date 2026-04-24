@@ -1,6 +1,25 @@
+/**
+ * api
+ *
+ * Central Axios client for backend API requests.
+ *
+ * Responsibilities:
+ * - Defines the base API URL
+ * - Adds the current language to outgoing requests
+ * - Adds JWT access token to authenticated requests
+ * - Refreshes expired access tokens and retries failed requests
+ * - Clears tokens and redirects to login when authentication fails
+ */
+
 import axios from "axios";
+
 import i18n from "./i18n";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
+import {
+  clearTokens,
+  getAccessToken,
+  getRefreshToken,
+  setTokens,
+} from "./features/auth";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -11,21 +30,9 @@ const api = axios.create({
   },
 });
 
-const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
-const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN);
-
 const getCurrentLanguage = () => {
   const lang = i18n.language || localStorage.getItem("language") || "fi";
   return lang.toLowerCase().includes("fi") ? "fi" : "en";
-};
-
-const setAccessToken = (token) => {
-  localStorage.setItem(ACCESS_TOKEN, token);
-};
-
-const clearTokens = () => {
-  localStorage.removeItem(ACCESS_TOKEN);
-  localStorage.removeItem(REFRESH_TOKEN);
 };
 
 const redirectToLogin = () => {
@@ -58,11 +65,10 @@ const refreshAccessToken = async () => {
     throw new Error("No access token returned from refresh endpoint.");
   }
 
-  setAccessToken(newAccessToken);
+  setTokens({ access: newAccessToken });
   return newAccessToken;
 };
 
-// Lisää access token ja kieli kaikkiin pyyntöihin automaattisesti
 api.interceptors.request.use(
   (config) => {
     const token = getAccessToken();
@@ -79,7 +85,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// Jos access token on vanhentunut, yritä refreshata se ja aja pyyntö uudelleen
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
