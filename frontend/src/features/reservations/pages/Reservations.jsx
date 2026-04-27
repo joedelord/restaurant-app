@@ -1,3 +1,17 @@
+/**
+ * Reservations
+ *
+ * Page for creating a new table reservation.
+ *
+ * Responsibilities:
+ * - Displays page-level layout and headings
+ * - Provides localized title and description
+ * - Renders the ReservationForm component
+ *
+ * Notes:
+ * - All reservation logic (state, validation, API calls) is handled inside ReservationForm
+ */
+
 import { useTranslation } from "react-i18next";
 import ReservationForm from "../components/ReservationForm";
 

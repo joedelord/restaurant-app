@@ -1,3 +1,17 @@
+/**
+ * Login
+ *
+ * Displays the login form for existing users.
+ *
+ * Responsibilities:
+ * - Handles email and password input state
+ * - Validates required fields before submit
+ * - Sends login request through the auth context
+ * - Shows field-specific and general login errors
+ * - Redirects the user back to the intended page or to a role-based dashboard
+ * - Shows success messages passed from other auth flows, such as registration
+ */
+
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

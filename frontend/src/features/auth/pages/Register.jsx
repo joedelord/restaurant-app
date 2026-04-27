@@ -1,3 +1,17 @@
+/**
+ * Register
+ *
+ * Displays the user registration form.
+ *
+ * Responsibilities:
+ * - Handles form state for user registration fields
+ * - Validates input values before submission (e.g. required fields, password rules)
+ * - Sends registration request to the backend
+ * - Displays field-specific and general error messages
+ * - Redirects the user to the login page after successful registration
+ * - Optionally passes success feedback to the login page (e.g. "Account created")
+ */
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

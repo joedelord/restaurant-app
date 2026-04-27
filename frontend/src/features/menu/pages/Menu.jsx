@@ -4,10 +4,11 @@
  * Public menu page for browsing restaurant categories and menu items.
  *
  * Responsibilities:
- * - Fetches menu categories and menu items
- * - Groups available menu items by category
- * - Displays localized menu content
- * - Handles loading and error states
+ * - Fetches menu categories and menu items from the API
+ * - Manages loading and error states during data fetching
+ * - Determines active language (fi/en) for content localization
+ * - Groups menu items under their corresponding categories
+ * - Displays categorized menu sections using reusable components
  */
 
 import { useEffect, useMemo, useState } from "react";
