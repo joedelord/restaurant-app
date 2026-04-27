@@ -19,6 +19,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/ui/Button";
+import FormMessage from "../../../components/ui/FormMessage";
 import StaffReservationForm from "../components/StaffReservationForm";
 import StaffReservationList from "../components/StaffReservationList";
 import useStaffReservations from "../hooks/useStaffReservations";
@@ -64,17 +65,8 @@ const StaffReservations = () => {
           {t("staff.reservations.subtitle")}
         </p>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        <FormMessage message={message} variant="success" />
+        <FormMessage message={error} variant="error" />
 
         <section className="space-y-6">
           {editingReservation && (

@@ -7,9 +7,11 @@ const stylesByVariant = {
 const FormMessage = ({ message, variant = "error" }) => {
   if (!message) return null;
 
+  const styles = stylesByVariant[variant] || stylesByVariant.error;
+
   return (
     <div
-      className={`mb-5 rounded-base border px-4 py-3 text-sm ${stylesByVariant[variant]}`}
+      className={`mb-5 rounded-base border px-4 py-3 text-sm ${styles}`}
       role={variant === "error" ? "alert" : "status"}
       aria-live="polite"
     >

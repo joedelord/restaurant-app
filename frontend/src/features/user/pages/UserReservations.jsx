@@ -1,8 +1,27 @@
+/**
+ * UserReservations
+ *
+ * User page for viewing and managing the authenticated user's reservations.
+ *
+ * Responsibilities:
+ * - Displays upcoming and past reservations in separate sections
+ * - Uses useUserReservations to load reservation data and actions
+ * - Allows users to cancel eligible upcoming reservations
+ * - Prevents actions for past reservations
+ * - Handles loading, success and error states
+ * - Provides navigation back to the user dashboard
+ *
+ * Notes:
+ * - Reservation API logic and cancel rules are handled in useUserReservations
+ * - List rendering is delegated to UserReservationList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/ui/Button";
 import PageLoader from "../../../components/ui/PageLoader";
+import FormMessage from "../../../components/ui/FormMessage";
 import UserReservationList from "../components/UserReservationList";
 import useUserReservations from "../hooks/useUserReservations";
 
@@ -45,17 +64,8 @@ const UserReservations = () => {
           </p>
         </div>
 
-        {message && (
-          <div className="mb-6 rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="mb-6 rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        <FormMessage message={message} variant="success" />
+        <FormMessage message={error} variant="error" />
 
         {loading ? (
           <div className="mx-auto w-full rounded-md border border-black p-5">

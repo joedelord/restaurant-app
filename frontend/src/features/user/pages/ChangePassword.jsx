@@ -1,9 +1,29 @@
+/**
+ * ChangePassword
+ *
+ * User page for changing the authenticated user's password.
+ *
+ * Responsibilities:
+ * - Manages password form state
+ * - Validates required fields before submission
+ * - Checks that new password and confirmation match
+ * - Sends password change request to the user feature service
+ * - Displays success and error messages
+ * - Disables inputs while the request is being submitted
+ * - Provides navigation back to the user dashboard
+ *
+ * Notes:
+ * - Backend still performs the final password validation
+ * - Profile updates are handled on a separate UserProfile page
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
 import Button from "../../../components/ui/Button";
+import FormMessage from "../../../components/ui/FormMessage";
 import { changeMyPassword } from "@/features/user";
 
 const ChangePassword = () => {
@@ -110,17 +130,8 @@ const ChangePassword = () => {
           <p className="mt-2 text-gray-500">{t("user.password.subtitle")}</p>
         </div>
 
-        {message && (
-          <div className="mb-6 rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="mb-6 rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        <FormMessage message={message} variant="success" />
+        <FormMessage message={error} variant="error" />
 
         <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
           <div className="mx-auto max-w-sm">

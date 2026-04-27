@@ -1,8 +1,26 @@
+/**
+ * UserOrders
+ *
+ * User page for viewing the authenticated user's orders.
+ *
+ * Responsibilities:
+ * - Displays active and past orders in separate sections
+ * - Uses useUserOrders to load order data
+ * - Handles loading, success and error states
+ * - Shows empty states for both order sections
+ * - Provides navigation back to the user dashboard
+ *
+ * Notes:
+ * - Order API logic and grouping are handled in useUserOrders
+ * - List rendering is delegated to UserOrderList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/ui/Button";
 import PageLoader from "../../../components/ui/PageLoader";
+import FormMessage from "../../../components/ui/FormMessage";
 import UserOrderList from "../components/UserOrderList";
 import useUserOrders from "../hooks/useUserOrders";
 
@@ -35,17 +53,8 @@ const UserOrders = () => {
           <p className="mt-2 text-gray-500">{t("user.orders.subtitle")}</p>
         </div>
 
-        {message && (
-          <div className="mb-6 rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="mb-6 rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        <FormMessage message={message} variant="success" />
+        <FormMessage message={error} variant="error" />
 
         {loading ? (
           <div className="mx-auto w-full rounded-md border border-black p-5">

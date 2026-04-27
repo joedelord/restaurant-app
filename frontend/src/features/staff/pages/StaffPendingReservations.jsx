@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/ui/Button";
 import PageLoader from "../../../components/ui/PageLoader";
+import FormMessage from "../../../components/ui/FormMessage";
 import StaffPendingReservationList from "../components/StaffPendingReservationList";
 import useStaffPendingReservations from "../hooks/useStaffPendingReservations";
 
@@ -66,17 +67,8 @@ const StaffPendingReservations = () => {
           </p>
         </div>
 
-        {message && (
-          <div className="mb-6 rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="mb-6 rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        <FormMessage message={message} variant="success" />
+        <FormMessage message={error} variant="error" />
 
         {loading ? (
           <div className="mx-auto w-full rounded-md border border-black p-5">

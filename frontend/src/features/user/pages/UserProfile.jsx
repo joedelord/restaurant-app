@@ -1,3 +1,21 @@
+/**
+ * UserProfile
+ *
+ * User page for viewing and updating personal profile information.
+ *
+ * Responsibilities:
+ * - Fetches the authenticated user's profile data
+ * - Manages profile form state
+ * - Allows updating editable profile fields
+ * - Keeps email as read-only account data
+ * - Handles loading, saving, success and error states
+ * - Provides navigation back to the user dashboard
+ *
+ * Notes:
+ * - Profile API calls are handled through the user feature service
+ * - Password changes are handled on a separate page
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -5,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import PageLoader from "../../../components/ui/PageLoader";
 import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
 import Button from "../../../components/ui/Button";
+import FormMessage from "../../../components/ui/FormMessage";
 import { getMyProfile, updateMyProfile } from "@/features/user";
 
 const UserProfile = () => {
@@ -17,7 +36,6 @@ const UserProfile = () => {
     last_name: "",
     phone_number: "",
     marketing_consent: false,
-    role: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -37,7 +55,6 @@ const UserProfile = () => {
           last_name: data.last_name || "",
           phone_number: data.phone_number || "",
           marketing_consent: data.marketing_consent || false,
-          role: data.role || "",
         });
       } catch (err) {
         console.error(err);
@@ -119,17 +136,8 @@ const UserProfile = () => {
         <div className="mx-auto mt-6 w-full max-w-3xl space-y-6">
           <p className="text-center text-gray-500">{t("profile.subtitle")}</p>
 
-          {message && (
-            <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-              {message}
-            </div>
-          )}
-
-          {error && (
-            <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
-          )}
+          <FormMessage message={message} variant="success" />
+          <FormMessage message={error} variant="error" />
 
           <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
             <div className="mx-auto max-w-sm">
