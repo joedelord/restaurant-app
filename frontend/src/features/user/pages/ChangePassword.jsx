@@ -2,8 +2,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import AuthSubmitButton from "../../features/auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
 import { changeMyPassword } from "@/features/user";
 
 const ChangePassword = () => {

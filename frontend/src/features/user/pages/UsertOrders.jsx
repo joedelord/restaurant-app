@@ -1,24 +1,16 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../../components/ui/Button";
-import PageLoader from "../../components/ui/PageLoader";
-import UserReservationList from "../../features/user/components/UserReservationList";
-import useUserReservations from "../../features/user/hooks/useUserReservations";
+import Button from "../../../components/ui/Button";
+import PageLoader from "../../../components/ui/PageLoader";
+import UserOrderList from "../components/UserOrderList";
+import useUserOrders from "../hooks/useUserOrders";
 
-const UserReservations = () => {
+const UserOrders = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const {
-    loading,
-    message,
-    error,
-    upcomingReservations,
-    pastReservations,
-    handleCancel,
-    canCancelReservation,
-  } = useUserReservations();
+  const { loading, message, error, activeOrders, pastOrders } = useUserOrders();
 
   return (
     <div className="px-4 py-6">
@@ -38,11 +30,9 @@ const UserReservations = () => {
 
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-heading">
-            {t("user.reservations.title")}
+            {t("user.orders.title")}
           </h1>
-          <p className="mt-2 text-gray-500">
-            {t("user.reservations.subtitle")}
-          </p>
+          <p className="mt-2 text-gray-500">{t("user.orders.subtitle")}</p>
         </div>
 
         {message && (
@@ -65,31 +55,27 @@ const UserReservations = () => {
           <div className="space-y-8">
             <section>
               <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-                {t("user.reservations.sections.upcoming", {
-                  count: upcomingReservations.length,
+                {t("user.orders.sections.active", {
+                  count: activeOrders.length,
                 })}
               </h2>
 
-              <UserReservationList
-                items={upcomingReservations}
-                emptyText={t("user.reservations.emptyUpcoming")}
-                onCancel={handleCancel}
-                canCancel={canCancelReservation}
+              <UserOrderList
+                items={activeOrders}
+                emptyText={t("user.orders.emptyActive")}
               />
             </section>
 
             <section>
               <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-                {t("user.reservations.sections.past", {
-                  count: pastReservations.length,
+                {t("user.orders.sections.past", {
+                  count: pastOrders.length,
                 })}
               </h2>
 
-              <UserReservationList
-                items={pastReservations}
-                emptyText={t("user.reservations.emptyPast")}
-                onCancel={handleCancel}
-                canCancel={() => false}
+              <UserOrderList
+                items={pastOrders}
+                emptyText={t("user.orders.emptyPast")}
               />
             </section>
           </div>
@@ -99,4 +85,4 @@ const UserReservations = () => {
   );
 };
 
-export default UserReservations;
+export default UserOrders;

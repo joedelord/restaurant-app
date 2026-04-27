@@ -2,9 +2,9 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import PageLoader from "../../components/ui/PageLoader";
-import AuthSubmitButton from "../../features/auth/components/AuthSubmitButton";
-import Button from "../../components/ui/Button";
+import PageLoader from "../../../components/ui/PageLoader";
+import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import Button from "../../../components/ui/Button";
 import { getMyProfile, updateMyProfile } from "@/features/user";
 
 const UserProfile = () => {
