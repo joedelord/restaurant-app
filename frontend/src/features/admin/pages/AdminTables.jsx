@@ -1,6 +1,26 @@
+/**
+ * AdminTables
+ *
+ * Admin page for managing restaurant tables.
+ *
+ * Responsibilities:
+ * - Displays the table management layout
+ * - Uses useTables to handle table data and actions
+ * - Shows create and edit form states
+ * - Displays table list with edit and delete actions
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the admin dashboard
+ *
+ * Notes:
+ * - Table API logic and state management are handled in useTables
+ * - Form and list rendering are delegated to TableForm and TableList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
+import PageLoader from "../../../components/ui/PageLoader";
+import FormMessage from "../../../components/ui/FormMessage";
 import { useTranslation } from "react-i18next";
 import TableForm from "../components/TableForm";
 import TableList from "../components/TableList";
@@ -34,7 +54,7 @@ const AdminTables = () => {
           className="inline-flex items-center gap-2"
         >
           <ArrowLeftIcon className="h-4 w-4" />
-          {t("staff.navigation.backToDashboard")}
+          {t("admin.navigation.backToDashboard")}
         </Button>
       </div>
       <h1 className="text-center text-3xl font-bold">
@@ -46,17 +66,8 @@ const AdminTables = () => {
           {t("admin.tables.subtitle")}
         </p>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        {message && <FormMessage type="success">{message}</FormMessage>}
+        {error && <FormMessage type="error">{error}</FormMessage>}
 
         <section className="space-y-6">
           <div>
@@ -86,7 +97,7 @@ const AdminTables = () => {
 
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
-                <p className="text-sm text-body">{t("admin.tables.loading")}</p>
+                <PageLoader />
               </div>
             ) : (
               <TableList

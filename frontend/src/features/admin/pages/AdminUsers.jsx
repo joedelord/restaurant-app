@@ -1,6 +1,26 @@
+/**
+ * AdminUsers
+ *
+ * Admin page for managing application users.
+ *
+ * Responsibilities:
+ * - Displays the user management layout
+ * - Uses useUsers to handle user data and actions
+ * - Shows create and edit form states
+ * - Displays user list with edit and delete actions
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the admin dashboard
+ *
+ * Notes:
+ * - User API logic and state management are handled in useUsers
+ * - Form and list rendering are delegated to UserForm and UserList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
+import PageLoader from "../../../components/ui/PageLoader";
+import FormMessage from "../../../components/ui/FormMessage";
 import { useTranslation } from "react-i18next";
 import UserForm from "../components/UserForm";
 import UserList from "../components/UserList";
@@ -34,7 +54,7 @@ const AdminUsers = () => {
           className="inline-flex items-center gap-2"
         >
           <ArrowLeftIcon className="h-4 w-4" />
-          {t("staff.navigation.backToDashboard")}
+          {t("admin.navigation.backToDashboard")}
         </Button>
       </div>
       <h1 className="text-3xl font-bold text-center">
@@ -46,17 +66,8 @@ const AdminUsers = () => {
           {t("admin.users.subtitle")}
         </p>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        {message && <FormMessage type="success">{message}</FormMessage>}
+        {error && <FormMessage type="error">{error}</FormMessage>}
 
         <section className="space-y-6">
           <div>
@@ -86,7 +97,7 @@ const AdminUsers = () => {
 
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
-                <p className="text-sm text-body">{t("admin.users.loading")}</p>
+                <PageLoader />
               </div>
             ) : (
               <UserList

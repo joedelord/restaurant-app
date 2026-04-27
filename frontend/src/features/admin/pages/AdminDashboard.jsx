@@ -1,3 +1,19 @@
+/**
+ * AdminDashboard
+ *
+ * Main dashboard page for administrator tools.
+ *
+ * Responsibilities:
+ * - Displays admin navigation cards
+ * - Provides quick links to user, menu, table and sales management
+ * - Uses localized dashboard labels and descriptions
+ * - Handles navigation to admin feature pages
+ *
+ * Notes:
+ * - This page only defines dashboard structure and navigation
+ * - Actual admin CRUD logic is handled in separate admin pages
+ */
+
 import {
   UsersIcon,
   BookOpenIcon,
@@ -47,10 +63,6 @@ const AdminDashboard = () => {
           label: t("admin.dashboard.tables.view"),
           path: "/admin/tables",
         },
-        {
-          label: t("admin.dashboard.tables.layout"),
-          path: "/admin/tables/layout",
-        },
       ],
     },
     {
@@ -80,12 +92,12 @@ const AdminDashboard = () => {
 
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {cards.map((card, index) => {
+        {cards.map((card) => {
           const Icon = card.icon;
 
           return (
             <div
-              key={index}
+              key={card.title}
               className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 p-6 flex flex-col"
             >
               <div className="flex items-center gap-3 mb-4">
@@ -104,9 +116,9 @@ const AdminDashboard = () => {
                   card.actions.length > 1 ? "mt-auto" : "mt-2"
                 }`}
               >
-                {card.actions.map((action, i) => (
+                {card.actions.map((action) => (
                   <button
-                    key={i}
+                    key={action.path}
                     onClick={() => navigate(action.path)}
                     className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition text-sm font-medium"
                   >

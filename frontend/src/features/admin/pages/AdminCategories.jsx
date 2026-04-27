@@ -1,7 +1,26 @@
+/**
+ * AdminCategories
+ *
+ * Admin page for managing menu categories.
+ *
+ * Responsibilities:
+ * - Displays the category management layout
+ * - Uses useCategories to handle category data and actions
+ * - Shows create and edit form states
+ * - Displays category list with edit and delete actions
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the admin dashboard
+ *
+ * Notes:
+ * - Category API logic and state management are handled in useCategories
+ * - Form and list rendering are delegated to CategoryForm and CategoryList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/ui/Button";
+import FormMessage from "../../../components/ui/FormMessage";
 import CategoryForm from "../components/CategoryForm";
 import CategoryList from "../components/CategoryList";
 import useCategories from "../hooks/useCategories";
@@ -48,17 +67,8 @@ const AdminCategories = () => {
           {t("admin.categories.subtitle")}
         </p>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        {message && <FormMessage type="success">{message}</FormMessage>}
+        {error && <FormMessage type="error">{error}</FormMessage>}
 
         <section className="space-y-6">
           <div>

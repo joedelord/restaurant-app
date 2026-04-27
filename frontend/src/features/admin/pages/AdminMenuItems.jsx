@@ -1,8 +1,29 @@
+/**
+ * AdminMenuItems
+ *
+ * Admin page for managing restaurant menu items.
+ *
+ * Responsibilities:
+ * - Displays the menu item management layout
+ * - Uses useMenuItems to handle menu item data and actions
+ * - Fetches categories for the menu item form
+ * - Shows create and edit form states
+ * - Displays menu item list with edit and delete actions
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the admin dashboard
+ *
+ * Notes:
+ * - Menu item CRUD logic is handled in useMenuItems
+ * - Category data is fetched separately because it is needed for the form select field
+ * - Form and list rendering are delegated to MenuItemForm and MenuItemList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Button from "../../../components/ui/Button";
+import FormMessage from "../../../components/ui/FormMessage";
 import MenuItemForm from "../components/MenuItemForm";
 import MenuItemList from "../components/MenuItemList";
 import useMenuItems from "../hooks/useMenuItems";
@@ -65,17 +86,8 @@ const AdminMenuItems = () => {
           {t("admin.menuItems.subtitle")}
         </p>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        {message && <FormMessage type="success">{message}</FormMessage>}
+        {error && <FormMessage type="error">{error}</FormMessage>}
 
         <section className="space-y-6">
           <div>

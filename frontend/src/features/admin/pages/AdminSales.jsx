@@ -1,6 +1,25 @@
+/**
+ * AdminSales
+ *
+ * Admin page for viewing restaurant sales statistics.
+ *
+ * Responsibilities:
+ * - Fetches sales statistics from the API
+ * - Displays top-selling menu items
+ * - Displays sales grouped by category
+ * - Handles loading and error states
+ * - Formats revenue values for display
+ * - Provides navigation back to the admin dashboard
+ *
+ * Notes:
+ * - Sales data is read-only on this page
+ * - Backend calculates the statistics and this page only presents them
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
+import FormMessage from "../../../components/ui/FormMessage";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../../components/ui/PageLoader";
@@ -46,7 +65,7 @@ const AdminSales = () => {
           className="inline-flex items-center gap-2"
         >
           <ArrowLeftIcon className="h-4 w-4" />
-          {t("staff.navigation.backToDashboard")}
+          {t("admin.navigation.backToDashboard")}
         </Button>
       </div>
       <h1 className="text-3xl font-bold text-center">
@@ -58,17 +77,8 @@ const AdminSales = () => {
           {t("admin.sales.subtitle")}
         </p>
 
-        {message && (
-          <div className="rounded-base border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        {error && (
-          <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        {message && <FormMessage type="success">{message}</FormMessage>}
+        {error && <FormMessage type="error">{error}</FormMessage>}
 
         {loading ? (
           <div className="mx-auto w-full rounded-md border border-black p-5">
