@@ -1,9 +1,9 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import StaffOrderCreateForm from "../../features/staff/components/StaffOrderCreateForm";
+import StaffOrderCreateForm from "../components/StaffOrderCreateForm";
 
 const StaffCreateOrder = () => {
   const { t } = useTranslation();

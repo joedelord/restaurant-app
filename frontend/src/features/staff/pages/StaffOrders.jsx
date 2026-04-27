@@ -1,11 +1,11 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { useTranslation } from "react-i18next";
-import PageLoader from "../../components/ui/PageLoader";
-import StaffOrderForm from "../../features/staff/components/StaffOrderForm";
-import StaffOrderList from "../../features/staff/components/StaffOrderList";
-import useStaffOrders from "../../features/staff/hooks/useStaffOrders";
+import PageLoader from "../../../components/ui/PageLoader";
+import StaffOrderForm from "../components/StaffOrderForm";
+import StaffOrderList from "../components/StaffOrderList";
+import useStaffOrders from "../hooks/useStaffOrders";
 
 const StaffOrders = () => {
   const { t } = useTranslation();

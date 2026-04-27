@@ -1,11 +1,11 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../../components/ui/Button";
-import StaffReservationForm from "../../features/staff/components/StaffReservationForm";
-import StaffReservationList from "../../features/staff/components/StaffReservationList";
-import useStaffReservations from "../../features/staff/hooks/useStaffReservations";
-import PageLoader from "../../components/ui/PageLoader";
+import Button from "../../../components/ui/Button";
+import StaffReservationForm from "../components/StaffReservationForm";
+import StaffReservationList from "../components/StaffReservationList";
+import useStaffReservations from "../hooks/useStaffReservations";
+import PageLoader from "../../../components/ui/PageLoader";
 
 const StaffReservations = () => {
   const { t } = useTranslation();
