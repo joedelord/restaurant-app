@@ -1,18 +1,18 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { useTranslation } from "react-i18next";
-import TableForm from "../../features/admin/components/TableForm";
-import TableList from "../../features/admin/components/TableList";
-import useTables from "../../features/admin/hooks/useTables";
+import UserForm from "../components/UserForm";
+import UserList from "../components/UserList";
+import useUsers from "../hooks/useUsers";
 
-const AdminTables = () => {
+const AdminUsers = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const {
-    tables,
-    editingTable,
+    users,
+    editingUser,
     loading,
     message,
     error,
@@ -21,7 +21,7 @@ const AdminTables = () => {
     handleDelete,
     startEditing,
     cancelEditing,
-  } = useTables();
+  } = useUsers();
 
   return (
     <div className="px-4 py-6">
@@ -37,13 +37,13 @@ const AdminTables = () => {
           {t("staff.navigation.backToDashboard")}
         </Button>
       </div>
-      <h1 className="text-center text-3xl font-bold">
-        {t("admin.tables.title")}
+      <h1 className="text-3xl font-bold text-center">
+        {t("admin.users.title")}
       </h1>
 
       <div className="mx-auto w-full max-w-4xl space-y-6">
         <p className="mt-2 text-center text-gray-500">
-          {t("admin.tables.subtitle")}
+          {t("admin.users.subtitle")}
         </p>
 
         {message && (
@@ -61,36 +61,36 @@ const AdminTables = () => {
         <section className="space-y-6">
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingTable
-                ? t("admin.tables.editTitle")
-                : t("admin.tables.addTitle")}
+              {editingUser
+                ? t("admin.users.editTitle")
+                : t("admin.users.addTitle")}
             </h2>
 
-            <TableForm
-              key={editingTable?.id ?? "new"}
-              initialData={editingTable}
+            <UserForm
+              key={editingUser?.id ?? "new"}
+              initialData={editingUser}
               submitText={
-                editingTable
-                  ? t("admin.tables.actions.update")
-                  : t("admin.tables.actions.add")
+                editingUser
+                  ? t("admin.users.actions.update")
+                  : t("admin.users.actions.add")
               }
-              onSubmit={editingTable ? handleUpdate : handleCreate}
-              onCancel={editingTable ? cancelEditing : undefined}
+              onSubmit={editingUser ? handleUpdate : handleCreate}
+              onCancel={editingUser ? cancelEditing : undefined}
             />
           </div>
 
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("admin.tables.listTitle", { count: tables.length })}
+              {t("admin.users.listTitle", { count: users.length })}
             </h2>
 
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
-                <p className="text-sm text-body">{t("admin.tables.loading")}</p>
+                <p className="text-sm text-body">{t("admin.users.loading")}</p>
               </div>
             ) : (
-              <TableList
-                items={tables}
+              <UserList
+                items={users}
                 onEdit={startEditing}
                 onDelete={handleDelete}
               />
@@ -102,4 +102,4 @@ const AdminTables = () => {
   );
 };
 
-export default AdminTables;
+export default AdminUsers;

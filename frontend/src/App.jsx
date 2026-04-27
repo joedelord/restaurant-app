@@ -4,7 +4,7 @@ import Login from "./features/auth/pages/Login";
 import Register from "./features/auth/pages/Register";
 import Menu from "./features/menu/pages/Menu";
 import Reservations from "./features/reservations/pages/Reservations";
-import AdminDashboard from "./pages/AdminDashboard";
+import AdminDashboard from "./features/admin/pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -15,16 +15,16 @@ import UserProfile from "./pages/User/UserProfile";
 import UserReservations from "./pages/User/UserReservations";
 import UserOrders from "./pages/User/UsertOrders";
 import ChangePassword from "./pages/User/ChangePassword";
-import AdminCategories from "./pages/Admin/AdminCategories";
-import AdminMenuItems from "./pages/Admin/AdminMenuItems";
-import AdminUsers from "./pages/Admin/AdminUsers";
-import AdminTables from "./pages/Admin/AdminTables";
+import AdminCategories from "./features/admin/pages/AdminCategories";
+import AdminMenuItems from "./features/admin/pages/AdminMenuItems";
+import AdminUsers from "./features/admin/pages/AdminUsers";
+import AdminTables from "./features/admin/pages/AdminTables";
 import StaffReservations from "./pages/Staff/StaffReservations";
 import StaffOrders from "./pages/staff/StaffOrders";
 import StaffCreateOrder from "./pages/Staff/StaffCreateOrder";
 import StaffPendingReservations from "./pages/Staff/StaffPendingReservations";
 import NotFound from "./pages/NotFound";
-import AdminSales from "./pages/Admin/AdminSales";
+import AdminSales from "./features/admin/pages/AdminSales";
 
 function App() {
   return (

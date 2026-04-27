@@ -1,19 +1,21 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../../components/ui/Button";
-import CategoryForm from "../../features/admin/components/CategoryForm";
-import CategoryList from "../../features/admin/components/CategoryList";
-import useCategories from "../../features/admin/hooks/useCategories";
-import PageLoader from "../../components/ui/PageLoader";
+import { useEffect, useState } from "react";
+import Button from "../../../components/ui/Button";
+import MenuItemForm from "../components/MenuItemForm";
+import MenuItemList from "../components/MenuItemList";
+import useMenuItems from "../hooks/useMenuItems";
+import { getCategories } from "../services/categoryService";
+import PageLoader from "../../../components/ui/PageLoader";
 
-const AdminCategories = () => {
+const AdminMenuItems = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const {
-    categories,
-    editingCategory,
+    menuItems,
+    editingMenuItem,
     loading,
     message,
     error,
@@ -22,7 +24,22 @@ const AdminCategories = () => {
     handleDelete,
     startEditing,
     cancelEditing,
-  } = useCategories();
+  } = useMenuItems();
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error("Failed to fetch categories for menu items form:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className="px-4 py-6">
@@ -40,12 +57,12 @@ const AdminCategories = () => {
       </div>
 
       <h1 className="text-3xl font-bold text-center">
-        {t("admin.categories.title")}
+        {t("admin.menuItems.title")}
       </h1>
 
       <div className="mx-auto w-full max-w-4xl space-y-6">
         <p className="mt-2 text-center text-gray-500">
-          {t("admin.categories.subtitle")}
+          {t("admin.menuItems.subtitle")}
         </p>
 
         {message && (
@@ -63,27 +80,28 @@ const AdminCategories = () => {
         <section className="space-y-6">
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingCategory
-                ? t("admin.categories.editTitle")
-                : t("admin.categories.addTitle")}
+              {editingMenuItem
+                ? t("admin.menuItems.editTitle")
+                : t("admin.menuItems.addTitle")}
             </h2>
 
-            <CategoryForm
-              key={editingCategory?.id ?? "new"}
-              initialData={editingCategory}
+            <MenuItemForm
+              key={editingMenuItem?.id ?? "new"}
+              categories={categories}
+              initialData={editingMenuItem}
               submitText={
-                editingCategory
-                  ? t("admin.categories.actions.update")
-                  : t("admin.categories.actions.add")
+                editingMenuItem
+                  ? t("admin.menuItems.actions.update")
+                  : t("admin.menuItems.actions.add")
               }
-              onSubmit={editingCategory ? handleUpdate : handleCreate}
-              onCancel={editingCategory ? cancelEditing : undefined}
+              onSubmit={editingMenuItem ? handleUpdate : handleCreate}
+              onCancel={editingMenuItem ? cancelEditing : undefined}
             />
           </div>
 
           <div>
             <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("admin.categories.listTitle", { count: categories.length })}
+              {t("admin.menuItems.listTitle", { count: menuItems.length })}
             </h2>
 
             {loading ? (
@@ -91,8 +109,8 @@ const AdminCategories = () => {
                 <PageLoader />
               </div>
             ) : (
-              <CategoryList
-                items={categories}
+              <MenuItemList
+                items={menuItems}
                 onEdit={startEditing}
                 onDelete={handleDelete}
               />
@@ -104,4 +122,4 @@ const AdminCategories = () => {
   );
 };
 
-export default AdminCategories;
+export default AdminMenuItems;

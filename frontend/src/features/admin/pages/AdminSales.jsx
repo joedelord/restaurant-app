@@ -1,11 +1,11 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import PageLoader from "../../components/ui/PageLoader";
-import { getSalesStats } from "../../features/admin/services/salesStatsService";
-import { formatCurrency } from "../../utils/currency";
+import PageLoader from "../../../components/ui/PageLoader";
+import { getSalesStats } from "../services/salesStatsService";
+import { formatCurrency } from "../../../utils/currency";
 
 const AdminSales = () => {
   const { t } = useTranslation();
