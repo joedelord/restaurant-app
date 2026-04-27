@@ -1,3 +1,18 @@
+/**
+ * Home
+ *
+ * Public landing page for the restaurant application.
+ *
+ * Responsibilities:
+ * - Displays the restaurant story and hero image
+ * - Provides primary navigation to menu and reservations
+ * - Uses localized homepage content
+ * - Adds a small entrance animation for the hero section
+ *
+ * Notes:
+ * - This page is public and does not require authentication
+ */
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

@@ -1,3 +1,18 @@
+/**
+ * NotFound
+ *
+ * Fallback page displayed when a route is not found (404).
+ *
+ * Responsibilities:
+ * - Displays a user-friendly error message
+ * - Provides navigation back to the previous page or home
+ * - Uses localized content for messages and actions
+ *
+ * Notes:
+ * - If browser history exists, user is navigated back
+ * - Otherwise, user is redirected to the home page
+ */
+
 import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import { useTranslation } from "react-i18next";
@@ -16,7 +31,7 @@ const NotFound = () => {
 
   return (
     <section className="flex min-h-[70vh] items-center justify-center px-4 py-12">
-      <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-8 text-center shadow-sm backdrop-blur-sm">
+      <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-sm">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-brand">
           404
         </p>
