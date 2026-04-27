@@ -1,3 +1,19 @@
+/**
+ * PublicRoute
+ *
+ * Route guard for pages that should only be available to unauthenticated users.
+ *
+ * Responsibilities:
+ * - Shows a loader while authentication state is being resolved
+ * - Redirects authenticated users away from public auth pages
+ * - Sends users back to the originally requested route when available
+ * - Falls back to a role-based dashboard route
+ *
+ * Notes:
+ * - Used mainly for login and register pages
+ * - Role-based dashboard paths are resolved with getDashboardByRole
+ */
+
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../features/auth/hooks/useAuth";
 import PageLoader from "../components/ui/PageLoader";
