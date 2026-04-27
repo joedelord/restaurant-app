@@ -13,13 +13,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  getMenuCategories,
-  getMenuItems,
-  groupMenuItemsByCategory,
-  MenuSection,
-} from "../features/menu";
-import PageLoader from "../components/ui/PageLoader";
+import { getMenuCategories, getMenuItems } from "../services/menuService";
+import { groupMenuItemsByCategory } from "../utils/menuHelpers";
+import MenuSection from "../components/MenuSection";
+import PageLoader from "../../../components/ui/PageLoader";
 
 const Menu = () => {
   const [categories, setCategories] = useState([]);

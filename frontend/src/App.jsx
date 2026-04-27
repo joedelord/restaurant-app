@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Menu from "./pages/Menu";
-import Reservations from "./pages/Reservations";
+import Login from "./features/auth/pages/Login";
+import Register from "./features/auth/pages/Register";
+import Menu from "./features/menu/pages/Menu";
+import Reservations from "./features/reservations/pages/Reservations";
 import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";

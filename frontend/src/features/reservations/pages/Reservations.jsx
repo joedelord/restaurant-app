@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import ReservationForm from "../features/reservations/components/ReservationForm";
+import ReservationForm from "../components/ReservationForm";
 
 const Reservations = () => {
   const { t } = useTranslation();

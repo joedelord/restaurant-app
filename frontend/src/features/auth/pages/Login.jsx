@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAuth from "../features/auth/hooks/useAuth";
-import AuthCard from "../features/auth/components/AuthCard";
-import AuthField from "../features/auth/components/AuthField";
-import AuthSubmitButton from "../features/auth/components/AuthSubmitButton";
-import FormMessage from "../components/ui/FormMessage";
+import useAuth from "../hooks/useAuth";
+import AuthCard from "../components/AuthCard";
+import AuthField from "../components/AuthField";
+import AuthSubmitButton from "../components/AuthSubmitButton";
+import FormMessage from "../../../components/ui/FormMessage";
 
 const getDashboardByRole = (role) => {
   switch (role) {
