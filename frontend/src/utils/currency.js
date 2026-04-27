@@ -1,13 +1,30 @@
-export const formatPrice = (value) => {
+/**
+ * currency.js
+ *
+ * Utility functions for formatting numeric values and currency.
+ *
+ * Responsibilities:
+ * - Formats numeric values with fixed decimal precision
+ * - Formats currency values using locale-aware formatting
+ * - Handles invalid or empty inputs safely
+ *
+ * Notes:
+ * - Uses Finnish locale (fi-FI) and EUR currency by default
+ * - Returns "-" for invalid or missing values
+ */
+
+const parseNumber = (value) => {
   if (value === null || value === undefined || value === "") {
-    return "-";
+    return null;
   }
 
   const number = Number(value);
+  return Number.isNaN(number) ? null : number;
+};
 
-  if (Number.isNaN(number)) {
-    return "-";
-  }
+export const formatPrice = (value) => {
+  const number = parseNumber(value);
+  if (number === null) return "-";
 
   return new Intl.NumberFormat("fi-FI", {
     minimumFractionDigits: 2,
@@ -16,15 +33,8 @@ export const formatPrice = (value) => {
 };
 
 export const formatCurrency = (value) => {
-  if (value === null || value === undefined || value === "") {
-    return "-";
-  }
-
-  const number = Number(value);
-
-  if (Number.isNaN(number)) {
-    return "-";
-  }
+  const number = parseNumber(value);
+  if (number === null) return "-";
 
   return new Intl.NumberFormat("fi-FI", {
     style: "currency",
