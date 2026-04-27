@@ -1,14 +1,19 @@
 /**
  * Navbar
  *
- * Main navigation component of the application.
+ * Main navigation component displayed at the top of the application.
  *
  * Responsibilities:
  * - Displays primary navigation links (home, menu, reservations)
- * - Handles authentication state (login icon vs profile dropdown)
- * - Shows role-based navigation (staff, admin)
- * - Controls mobile menu and profile dropdown state
+ * - Handles authentication-aware navigation (login link or profile menu)
+ * - Shows role-based links for user, staff and admin dashboards
+ * - Controls mobile menu and desktop profile dropdown state
+ * - Closes the profile dropdown when clicking outside of it
  * - Includes language switch functionality
+ *
+ * Notes:
+ * - Uses useAuth to determine authentication and role-based navigation
+ * - NavbarItem and NavbarSection keep navigation markup reusable
  */
 
 import { useEffect, useRef, useState } from "react";

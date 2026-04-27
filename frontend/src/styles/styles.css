@@ -1,3 +1,19 @@
+/**
+ * styles.css
+ *
+ * Global styles and base configuration for the application.
+ *
+ * Responsibilities:
+ * - Imports Tailwind CSS
+ * - Applies global reset styles
+ * - Defines base typography and colors
+ * - Sets default styles for common HTML elements
+ *
+ * Notes:
+ * - Most styling is handled with Tailwind utility classes
+ * - This file is only used for global defaults and resets
+ */
+
 @import "tailwindcss";
 
 /* Global reset */
@@ -11,9 +27,17 @@ body {
   background-color: #f9fafb;
   color: #111827;
   margin: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Links */
 a {
   text-decoration: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }

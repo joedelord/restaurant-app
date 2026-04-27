@@ -1,3 +1,19 @@
+/**
+ * LanguageToggle
+ *
+ * Component for switching the application language.
+ *
+ * Responsibilities:
+ * - Displays available language options (FI / EN)
+ * - Highlights the currently active language
+ * - Updates i18n language on user selection
+ * - Provides a compact UI suitable for navbar usage
+ *
+ * Notes:
+ * - Uses i18next for language management
+ * - Current language is derived from i18n.language
+ */
+
 import { useTranslation } from "react-i18next";
 
 const LanguageToggle = ({ className = "" }) => {

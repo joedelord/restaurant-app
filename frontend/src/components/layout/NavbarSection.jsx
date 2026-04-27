@@ -1,11 +1,15 @@
 /**
  * NavbarSection
  *
- * Layout wrapper for grouping navigation items.
+ * Layout wrapper for grouping navigation items in the Navbar.
  *
  * Responsibilities:
+ * - Groups navigation items into a single section
  * - Handles responsive layout (column on mobile, row on desktop)
- * - Provides consistent spacing between nav items
+ * - Provides consistent spacing between items
+ *
+ * Notes:
+ * - Used by Navbar to organize primary and mobile navigation links
  */
 
 const NavbarSection = ({ children }) => {

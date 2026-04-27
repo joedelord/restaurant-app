@@ -1,3 +1,20 @@
+/**
+ * Footer
+ *
+ * Global footer component displayed across the application.
+ *
+ * Responsibilities:
+ * - Displays restaurant branding and description
+ * - Provides navigation links to key pages
+ * - Shows contact information and opening hours
+ * - Displays social media links
+ * - Renders copyright information
+ *
+ * Notes:
+ * - Uses i18n for all text content
+ * - Included in MainLayout and visible on all pages
+ */
+
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
@@ -55,7 +72,10 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/reservation" className="hover:text-white transition">
+                <Link
+                  to="/reservations"
+                  className="hover:text-white transition"
+                >
                   {t("navbar.reservations")}
                 </Link>
               </li>
