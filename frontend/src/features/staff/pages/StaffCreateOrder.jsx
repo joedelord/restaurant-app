@@ -1,3 +1,19 @@
+/**
+ * StaffCreateOrder
+ *
+ * Staff page for creating new orders.
+ *
+ * Responsibilities:
+ * - Displays order creation options (reservation or walk-in)
+ * - Manages selected order creation mode state
+ * - Renders StaffOrderCreateForm based on selected mode
+ * - Provides navigation back to the staff dashboard
+ *
+ * Notes:
+ * - Order creation logic is handled in StaffOrderCreateForm
+ * - Mode selection determines whether the order is linked to a reservation or created as walk-in
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
@@ -85,6 +101,7 @@ const StaffCreateOrder = () => {
             modeLocked
             onCreated={() => {
               setSelectedMode(null);
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           />
         )}

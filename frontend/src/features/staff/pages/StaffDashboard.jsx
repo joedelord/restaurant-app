@@ -1,7 +1,22 @@
+/**
+ * StaffDashboard
+ *
+ * Main dashboard page for staff tools.
+ *
+ * Responsibilities:
+ * - Displays staff navigation cards
+ * - Provides quick access to reservation and order management
+ * - Uses localized labels and descriptions
+ * - Handles navigation to staff feature pages
+ *
+ * Notes:
+ * - This page only defines dashboard structure and navigation
+ * - Reservation and order logic are handled in their respective pages
+ */
+
 import {
   ClipboardDocumentListIcon,
   ShoppingBagIcon,
-  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -55,12 +70,12 @@ const StaffDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {cards.map((card, index) => {
+        {cards.map((card) => {
           const Icon = card.icon;
 
           return (
             <div
-              key={index}
+              key={card.title}
               className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition duration-300 hover:shadow-lg"
             >
               <div className="mb-4 flex items-center gap-3">
@@ -75,9 +90,9 @@ const StaffDashboard = () => {
               <p className="mb-6 text-sm text-gray-500">{card.description}</p>
 
               <div className="mt-auto flex flex-col gap-2">
-                {card.actions.map((action, i) => (
+                {card.actions.map((action) => (
                   <button
-                    key={i}
+                    key={action.path}
                     type="button"
                     onClick={() => navigate(action.path)}
                     className="w-full rounded-lg bg-gray-100 px-4 py-2 text-left text-sm font-medium transition hover:bg-gray-200"

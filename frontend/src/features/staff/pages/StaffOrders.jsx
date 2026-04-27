@@ -1,3 +1,21 @@
+/**
+ * StaffOrders
+ *
+ * Staff page for viewing and managing restaurant orders.
+ *
+ * Responsibilities:
+ * - Displays the staff order management layout
+ * - Uses useStaffOrders to handle order data and actions
+ * - Shows edit form state for the selected order
+ * - Displays order list with edit and delete actions
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the staff dashboard
+ *
+ * Notes:
+ * - Order API logic and state management are handled in useStaffOrders
+ * - Form and list rendering are delegated to StaffOrderForm and StaffOrderList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";

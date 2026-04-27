@@ -1,3 +1,21 @@
+/**
+ * StaffPendingReservations
+ *
+ * Staff page for handling reservations waiting for confirmation.
+ *
+ * Responsibilities:
+ * - Displays pending reservations that require staff action
+ * - Uses useStaffPendingReservations to load and refresh pending reservation data
+ * - Allows staff to confirm or cancel pending reservations
+ * - Shows action-specific loading state while a reservation is being processed
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the staff dashboard
+ *
+ * Notes:
+ * - Auto-refresh and reservation action logic are handled in useStaffPendingReservations
+ * - List rendering is delegated to StaffPendingReservationList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

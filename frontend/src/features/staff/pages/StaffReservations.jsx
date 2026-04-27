@@ -1,3 +1,20 @@
+/**
+ * StaffReservations
+ *
+ * Staff page for viewing and managing restaurant reservations.
+ *
+ * Responsibilities:
+ * - Displays upcoming and past reservations in separate sections
+ * - Uses useStaffReservations to handle reservation data and actions
+ * - Shows edit form state for selected reservations
+ * - Handles page-level loading, success and error messages
+ * - Provides navigation back to the staff dashboard
+ *
+ * Notes:
+ * - Reservation API logic and state management are handled in useStaffReservations
+ * - Form and list rendering are delegated to StaffReservationForm and StaffReservationList
+ */
+
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
