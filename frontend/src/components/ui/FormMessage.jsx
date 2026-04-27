@@ -1,3 +1,19 @@
+/**
+ * FormMessage
+ *
+ * Reusable component for displaying feedback messages in forms and pages.
+ *
+ * Responsibilities:
+ * - Displays success, error or informational messages
+ * - Applies variant-based styling
+ * - Provides accessible feedback using ARIA roles
+ * - Hides itself when no message is provided
+ *
+ * Notes:
+ * - Used across pages for consistent message UI
+ * - Variant defaults to "error" if not specified
+ */
+
 const stylesByVariant = {
   error: "border-red-300 bg-red-50 text-red-700",
   success: "border-green-300 bg-green-50 text-green-700",

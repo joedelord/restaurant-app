@@ -1,3 +1,20 @@
+/**
+ * Button
+ *
+ * Reusable UI button component with variants and sizes.
+ *
+ * Responsibilities:
+ * - Provides consistent button styling across the application
+ * - Supports multiple visual variants (primary, secondary, danger, ghost)
+ * - Supports multiple sizes (xs, sm, md, lg)
+ * - Handles disabled and interactive states
+ * - Accepts additional props and custom className overrides
+ *
+ * Notes:
+ * - Built with Tailwind utility classes
+ * - Variant and size fallbacks ensure safe defaults
+ */
+
 const baseClasses =
   "inline-flex items-center justify-center rounded-base font-medium shadow-xs transition-all duration-200 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50";
 
