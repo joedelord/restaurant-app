@@ -1,0 +1,113 @@
+/**
+ * StaffCreateOrder
+ *
+ * Staff page for creating new orders.
+ *
+ * Responsibilities:
+ * - Displays order creation options (reservation or walk-in)
+ * - Manages selected order creation mode state
+ * - Renders StaffOrderCreateForm based on selected mode
+ * - Provides navigation back to the staff dashboard
+ *
+ * Notes:
+ * - Order creation logic is handled in StaffOrderCreateForm
+ * - Mode selection determines whether the order is linked to a reservation or created as walk-in
+ */
+
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../components/ui/Button";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import StaffOrderCreateForm from "../components/StaffOrderCreateForm";
+
+const StaffCreateOrder = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [selectedMode, setSelectedMode] = useState(null);
+
+  return (
+    <div className="px-4 py-6">
+      <div className="mb-6">
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() => navigate("/staff")}
+          className="inline-flex items-center gap-2"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          {t("staff.navigation.backToDashboard")}
+        </Button>
+      </div>
+      <h1 className="text-center text-3xl font-bold">
+        {t("staff.orders.createTitle")}
+      </h1>
+
+      <div className="mx-auto w-full max-w-5xl space-y-6">
+        <p className="mt-2 text-center text-gray-500">
+          {t("staff.orders.createSubtitle")}
+        </p>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => setSelectedMode("reservation")}
+            className={`rounded-xl border px-5 py-5 text-center shadow-sm transition ${
+              selectedMode === "reservation"
+                ? "border-black bg-gray-900 text-white"
+                : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
+            }`}
+          >
+            <p className="text-base font-semibold">
+              {t("staff.orders.types.reservation")}
+            </p>
+            <p
+              className={`mt-2 text-sm ${
+                selectedMode === "reservation"
+                  ? "text-white/90"
+                  : "text-gray-500"
+              }`}
+            >
+              {t("staff.orders.modeDescriptions.reservation")}
+            </p>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedMode("walkIn")}
+            className={`rounded-xl border px-5 py-5 text-center shadow-sm transition ${
+              selectedMode === "walkIn"
+                ? "border-black bg-gray-900 text-white"
+                : "border-gray-200 bg-white hover:border-brand hover:shadow-md"
+            }`}
+          >
+            <p className="text-base font-semibold">
+              {t("staff.orders.types.walkIn")}
+            </p>
+            <p
+              className={`mt-2 text-sm ${
+                selectedMode === "walkIn" ? "text-white/90" : "text-gray-500"
+              }`}
+            >
+              {t("staff.orders.modeDescriptions.walkIn")}
+            </p>
+          </button>
+        </div>
+
+        {selectedMode && (
+          <StaffOrderCreateForm
+            initialMode={selectedMode}
+            modeLocked
+            onCreated={() => {
+              setSelectedMode(null);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default StaffCreateOrder;

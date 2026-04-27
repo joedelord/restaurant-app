@@ -166,7 +166,13 @@
       "categoryRequired": "Category is required."
     },
     "messages": {
-      "saveError": "Failed to save menu item."
+      "fetchError": "Failed to fetch menu items.",
+      "created": "Menu item created successfully.",
+      "updated": "Menu item updated successfully.",
+      "deleted": "Menu item deleted successfully.",
+      "saveError": "Failed to save menu item.",
+      "deleteError": "Failed to delete menu item.",
+      "confirmDelete": "Are you sure you want to delete menu item \"{{name}}\"?"
     },
     "empty": "No menu items found."
   },
@@ -204,7 +210,13 @@
       "displayOrderRequired": "Display order must be 0 or greater."
     },
     "messages": {
-      "saveError": "Failed to save category."
+      "fetchError": "Failed to fetch categories.",
+      "created": "Category created successfully.",
+      "updated": "Category updated successfully.",
+      "deleted": "Category deleted successfully.",
+      "saveError": "Failed to save category.",
+      "deleteError": "Failed to delete category.",
+      "confirmDelete": "Are you sure you want to delete category \"{{name}}\"?"
     },
     "empty": "No categories found."
   },

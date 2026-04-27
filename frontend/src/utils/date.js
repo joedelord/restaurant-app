@@ -1,3 +1,19 @@
+/**
+ * date.js
+ *
+ * Utility functions for formatting dates and handling reservation date logic.
+ *
+ * Responsibilities:
+ * - Formats dates, times and date-time values for display
+ * - Converts Date values into HTML date input format
+ * - Provides a default reservation date based on restaurant closing time
+ * - Checks whether a selected reservation time slot is in the past
+ *
+ * Notes:
+ * - Uses Finnish locale (fi-FI) for display formatting
+ * - Returns safe fallback values for invalid or missing dates
+ */
+
 export const formatDate = (value) => {
   if (!value) return "-";
 

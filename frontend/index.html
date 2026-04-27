@@ -1,10 +1,33 @@
+<!--
+  index.html
+
+  Root HTML file for the React application.
+
+  Responsibilities:
+  - Defines the base HTML structure
+  - Provides metadata for SEO and responsiveness
+  - Mounts the React application to the DOM (#root)
+  - Loads the main React entry point (main.jsx)
+-->
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restaurant</title>
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Restaurant reservation and management system. Browse menu, book tables, and manage orders."
+    />
+    <meta property="og:title" content="RestaurantApp" />
+    <meta
+      property="og:description"
+      content="Book tables and manage restaurant operations."
+    />
+    <meta property="og:type" content="website" />
+    <title>RestaurantApp</title>
   </head>
   <body>
     <div id="root"></div>
