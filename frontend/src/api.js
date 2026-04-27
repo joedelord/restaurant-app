@@ -9,6 +9,10 @@
  * - Adds JWT access token to authenticated requests
  * - Refreshes expired access tokens and retries failed requests
  * - Clears tokens and redirects to login when authentication fails
+ *
+ * Notes:
+ * - Used by feature services instead of importing axios directly
+ * - Token refresh is handled globally to keep services simple
  */
 
 import axios from "axios";

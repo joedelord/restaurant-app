@@ -1,3 +1,20 @@
+/**
+ * i18n
+ *
+ * Internationalization configuration using i18next and react-i18next.
+ *
+ * Responsibilities:
+ * - Loads translation resources for supported languages (fi, en)
+ * - Initializes i18n instance for React usage
+ * - Sets default and fallback languages
+ * - Persists selected language in localStorage
+ * - Updates HTML lang attribute on language change
+ *
+ * Notes:
+ * - Translation files are split by feature (auth, admin, menu, etc.)
+ * - Language can be changed dynamically via LanguageToggle component
+ */
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 

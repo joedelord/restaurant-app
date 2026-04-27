@@ -1,182 +1,134 @@
+/**
+ * App
+ *
+ * Root application component that defines the main route structure.
+ *
+ * Responsibilities:
+ * - Defines public, protected and role-based routes
+ * - Wraps pages with the main layout
+ * - Uses route guards for authentication and authorization
+ * - Provides fallback route for unknown paths
+ */
+
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./features/auth/pages/Login";
-import Register from "./features/auth/pages/Register";
-import Menu from "./features/menu/pages/Menu";
-import Reservations from "./features/reservations/pages/Reservations";
-import AdminDashboard from "./features/admin/pages/AdminDashboard";
-import StaffDashboard from "./features/staff/pages/StaffDashboard";
+
+import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import RoleRoute from "./routes/RoleRoute";
-import MainLayout from "./layouts/MainLayout";
+
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+
+import Login from "./features/auth/pages/Login";
+import Register from "./features/auth/pages/Register";
+
+import Menu from "./features/menu/pages/Menu";
+import Reservations from "./features/reservations/pages/Reservations";
+
 import UserDashboard from "./features/user/pages/UserDashboard";
 import UserProfile from "./features/user/pages/UserProfile";
 import UserReservations from "./features/user/pages/UserReservations";
-import UserOrders from "./features/user/pages/UsertOrders";
+import UserOrders from "./features/user/pages/UserOrders";
 import ChangePassword from "./features/user/pages/ChangePassword";
+
+import AdminDashboard from "./features/admin/pages/AdminDashboard";
 import AdminCategories from "./features/admin/pages/AdminCategories";
 import AdminMenuItems from "./features/admin/pages/AdminMenuItems";
 import AdminUsers from "./features/admin/pages/AdminUsers";
 import AdminTables from "./features/admin/pages/AdminTables";
+import AdminSales from "./features/admin/pages/AdminSales";
+
+import StaffDashboard from "./features/staff/pages/StaffDashboard";
 import StaffReservations from "./features/staff/pages/StaffReservations";
 import StaffOrders from "./features/staff/pages/StaffOrders";
 import StaffCreateOrder from "./features/staff/pages/StaffCreateOrder";
 import StaffPendingReservations from "./features/staff/pages/StaffPendingReservations";
-import NotFound from "./pages/NotFound";
-import AdminSales from "./features/admin/pages/AdminSales";
+
+const STAFF_ROLES = ["staff", "admin"];
+const ADMIN_ROLES = ["admin"];
+
+const publicOnly = (page) => <PublicRoute>{page}</PublicRoute>;
+const protectedRoute = (page) => <ProtectedRoute>{page}</ProtectedRoute>;
+const roleRoute = (page, roles) => (
+  <RoleRoute allowedRoles={roles}>{page}</RoleRoute>
+);
 
 function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+        {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/reservations" element={<Reservations />} />
+
+        {/* Auth routes */}
+        <Route path="/login" element={publicOnly(<Login />)} />
+        <Route path="/register" element={publicOnly(<Register />)} />
+
+        {/* User routes */}
+        <Route path="/user" element={protectedRoute(<UserDashboard />)} />
+        <Route path="/user/profile" element={protectedRoute(<UserProfile />)} />
         <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
+          path="/user/change-password"
+          element={protectedRoute(<ChangePassword />)}
         />
         <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
+          path="/user/reservations"
+          element={protectedRoute(<UserReservations />)}
         />
-        <Route
-          path="/user"
-          element={
-            <ProtectedRoute>
-              <UserDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="user/profile"
-          element={
-            <ProtectedRoute>
-              <UserProfile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="user/change-password"
-          element={
-            <ProtectedRoute>
-              <ChangePassword />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="user/reservations"
-          element={
-            <ProtectedRoute>
-              <UserReservations />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="user/orders"
-          element={
-            <ProtectedRoute>
-              <UserOrders />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/staff"
-          element={
-            <RoleRoute allowedRoles={["staff", "admin"]}>
-              <StaffDashboard />
-            </RoleRoute>
-          }
-        />
+        <Route path="/user/orders" element={protectedRoute(<UserOrders />)} />
+
+        {/* Admin routes */}
         <Route
           path="/admin"
-          element={
-            <RoleRoute allowedRoles={["admin"]}>
-              <AdminDashboard />
-            </RoleRoute>
-          }
+          element={roleRoute(<AdminDashboard />, ADMIN_ROLES)}
         />
         <Route
           path="/admin/categories"
-          element={
-            <RoleRoute allowedRoles={["admin"]}>
-              <AdminCategories />
-            </RoleRoute>
-          }
+          element={roleRoute(<AdminCategories />, ADMIN_ROLES)}
         />
         <Route
           path="/admin/menu"
-          element={
-            <RoleRoute allowedRoles={["admin"]}>
-              <AdminMenuItems />
-            </RoleRoute>
-          }
+          element={roleRoute(<AdminMenuItems />, ADMIN_ROLES)}
         />
         <Route
           path="/admin/users"
-          element={
-            <RoleRoute allowedRoles={["admin"]}>
-              <AdminUsers />
-            </RoleRoute>
-          }
+          element={roleRoute(<AdminUsers />, ADMIN_ROLES)}
         />
         <Route
           path="/admin/tables"
-          element={
-            <RoleRoute allowedRoles={["admin"]}>
-              <AdminTables />
-            </RoleRoute>
-          }
+          element={roleRoute(<AdminTables />, ADMIN_ROLES)}
         />
         <Route
           path="/admin/sales"
-          element={
-            <RoleRoute allowedRoles={["admin"]}>
-              <AdminSales />
-            </RoleRoute>
-          }
+          element={roleRoute(<AdminSales />, ADMIN_ROLES)}
+        />
+
+        {/* Staff routes */}
+        <Route
+          path="/staff"
+          element={roleRoute(<StaffDashboard />, STAFF_ROLES)}
         />
         <Route
           path="/staff/reservations"
-          element={
-            <RoleRoute allowedRoles={["staff", "admin"]}>
-              <StaffReservations />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path="/staff/orders"
-          element={
-            <RoleRoute allowedRoles={["staff", "admin"]}>
-              <StaffOrders />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path="/staff/orders/new"
-          element={
-            <RoleRoute allowedRoles={["staff", "admin"]}>
-              <StaffCreateOrder />
-            </RoleRoute>
-          }
+          element={roleRoute(<StaffReservations />, STAFF_ROLES)}
         />
         <Route
           path="/staff/reservations/pending"
-          element={
-            <RoleRoute allowedRoles={["staff", "admin"]}>
-              <StaffPendingReservations />
-            </RoleRoute>
-          }
+          element={roleRoute(<StaffPendingReservations />, STAFF_ROLES)}
         />
+        <Route
+          path="/staff/orders"
+          element={roleRoute(<StaffOrders />, STAFF_ROLES)}
+        />
+        <Route
+          path="/staff/orders/new"
+          element={roleRoute(<StaffCreateOrder />, STAFF_ROLES)}
+        />
+
+        {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
