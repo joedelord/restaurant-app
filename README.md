@@ -54,14 +54,24 @@ The application allows customers to browse menus and make reservations, while st
 
 - Staff can create and manage orders
 - Orders linked to reservations or tables
+- Walk-in order support
 
-### 🛠️ Admin Dashboard
+### 🛠️ Dashboards
 
-- Manage users
-- Manage menu
-- Manage tables
-- View reservations
-- Sales overview (basic)
+Admin dashboard
+
+- Manage users, menu, tables
+- View sales statistics
+
+Staff dashboard
+
+- Manage reservations
+- Create and update orders
+
+User dashboard
+
+- View personal reservations and orders
+- Manage profile
 
 ---
 
@@ -80,23 +90,38 @@ restaurant-app/
 │ │ ├── permissions.py
 │ │ └── urls.py
 │ ├── config/
-│ ├── locale/
+│ ├── .env.example
 │ ├── manage.py
 │ └── requirements.txt
 │
 ├── frontend/
+│ ├── public/
 │ ├── src/
 │ │ ├── components/
-│ │ ├── pages/
-│ │ ├── hooks/
-│ │ ├── services/
-│ │ ├── context/
+│ │ ├── features/
+│ │ │ ├── auth/
+│ │ │ ├── reservations/
+│ │ │ ├── menu/
+│ │ │ ├── admin/
+│ │ │ ├── staff/
+│ │ │ └── user/
 │ │ ├── layouts/
-│ │ └── routes/
+│ │ ├── locales/
+│ │ ├── pages/
+│ │ ├── routes/
+│ │ ├── utils/
+│ │ ├── api.js
+│ │ ├── App.jsx
+│ │ ├── constants.js
+│ │ ├── i18n.js
+│ │ └── main.jsx
+│ ├── tests/
+│ ├── eslint.config.js
+│ ├── index.html
 │ ├── package.json
+│ ├── playwright.config.js
 │ └── vite.config.js
 │
-├── .env.example
 ├── .gitignore
 └── README.md
 ```
@@ -203,12 +228,25 @@ VITE_API_URL=http://127.0.0.1:8000/api
 
 ## 🧪 Testing
 
-Backend tests are organized by feature area under `backend/api/tests/`.
+### Backend
+
+Tests are organized per feature: `backend/api/tests/`.
 
 Run all tests:
 
-```bash
+```
 python manage.py test
+```
+
+### Frontend
+
+Tests are organized per feature: `frontend/tests/`.
+
+Run all tests:
+
+```
+npx playwright test
+```
 
 ---
 
@@ -226,15 +264,14 @@ python manage.py test
 
 - JWT authentication
 - Role-based access
-- Reservation system
-- Admin dashboard
-- Staff dashboard
-- User dashboard
+- Reservation system with availability logic
+- Admin / Staff / User dashboards
 - Multi-language support
 
 ### 🚧 In Progress
 
 - UI/UX refinements
+- Admin sales dashboard improvements
 
 ### 🔮 Planned
 
@@ -262,4 +299,7 @@ GitHub: https://github.com/joedelord
 ## 📄 License
 
 This project is for educational and portfolio purposes.
+
+```
+
 ```
