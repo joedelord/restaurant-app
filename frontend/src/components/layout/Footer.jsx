@@ -23,7 +23,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="mt-16 border-t border-white/10 bg-black text-sm text-gray-300">
+    <footer className="mt-16 border-t border-white/10 bg-neutral-800 text-sm text-gray-300">
       <div className="mx-auto max-w-7xl px-6 py-6 text-center md:text-left">
         <div className="grid gap-10 text-center md:text-left md:grid-cols-2 lg:grid-cols-4">
           <div>

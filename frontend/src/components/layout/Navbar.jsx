@@ -57,7 +57,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="border-b border-white/10 bg-gray-900 text-white">
+    <nav className="border-b border-white/10 bg-neutral-800 text-white">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-16 items-center justify-between gap-4">
           <div className="flex items-center gap-8">
