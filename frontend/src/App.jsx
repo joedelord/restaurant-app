@@ -26,11 +26,13 @@ import Register from "./features/auth/pages/Register";
 import Menu from "./features/menu/pages/Menu";
 import Reservations from "./features/reservations/pages/Reservations";
 
-import UserDashboard from "./features/user/pages/UserDashboard";
-import UserProfile from "./features/user/pages/UserProfile";
-import UserReservations from "./features/user/pages/UserReservations";
-import UserOrders from "./features/user/pages/UserOrders";
-import UserChangePassword from "./features/user/pages/UserChangePassword";
+import {
+  UserDashboard,
+  UserProfile,
+  UserReservations,
+  UserOrders,
+  UserChangePassword,
+} from "@/features/user";
 
 import AdminDashboard from "./features/admin/pages/AdminDashboard";
 import AdminCategories from "./features/admin/pages/AdminCategories";

@@ -23,7 +23,7 @@ const initialFormData = {
   confirm_password: "",
 };
 
-const ChangePasswordForm = () => {
+const UserChangePasswordForm = () => {
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState(initialFormData);
@@ -155,4 +155,4 @@ const PasswordInput = ({ id, name, label, value, onChange, disabled }) => {
   );
 };
 
-export default ChangePasswordForm;
+export default UserChangePasswordForm;
