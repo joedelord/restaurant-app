@@ -41,11 +41,13 @@ import AdminUsers from "./features/admin/pages/AdminUsers";
 import AdminTables from "./features/admin/pages/AdminTables";
 import AdminSales from "./features/admin/pages/AdminSales";
 
-import StaffDashboard from "./features/staff/pages/StaffDashboard";
-import StaffReservations from "./features/staff/pages/StaffReservations";
-import StaffOrders from "./features/staff/pages/StaffOrders";
-import StaffCreateOrder from "./features/staff/pages/StaffCreateOrder";
-import StaffPendingReservations from "./features/staff/pages/StaffPendingReservations";
+import {
+  StaffDashboard,
+  StaffReservations,
+  StaffOrders,
+  StaffCreateOrder,
+  StaffPendingReservations,
+} from "@/features/staff";
 
 const STAFF_ROLES = ["staff", "admin"];
 const ADMIN_ROLES = ["admin"];
