@@ -20,8 +20,7 @@ import RoleRoute from "./routes/RoleRoute";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
-import Login from "./features/auth/pages/Login";
-import Register from "./features/auth/pages/Register";
+import { Login, Register } from "@/features/auth";
 
 import Menu from "./features/menu/pages/Menu";
 import Reservations from "./features/reservations/pages/Reservations";
