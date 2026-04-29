@@ -34,12 +34,14 @@ import {
   UserChangePassword,
 } from "@/features/user";
 
-import AdminDashboard from "./features/admin/pages/AdminDashboard";
-import AdminCategories from "./features/admin/pages/AdminCategories";
-import AdminMenuItems from "./features/admin/pages/AdminMenuItems";
-import AdminUsers from "./features/admin/pages/AdminUsers";
-import AdminTables from "./features/admin/pages/AdminTables";
-import AdminSales from "./features/admin/pages/AdminSales";
+import {
+  AdminDashboard,
+  AdminCategories,
+  AdminMenuItems,
+  AdminUsers,
+  AdminTables,
+  AdminSales,
+} from "@/features/admin";
 
 import {
   StaffDashboard,
