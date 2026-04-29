@@ -4,8 +4,8 @@
  * Public exports for the user feature.
  *
  * Responsibilities:
- * - Exposes user pages for routing
- * - Exposes reusable user components
+ * - Exposes user pages
+ * - Exposes user components
  * - Exposes user hooks
  * - Exposes user services
  */

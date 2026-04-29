@@ -6,6 +6,7 @@
  * Responsibilities:
  * - Shows reservation customer, table, party size, time and status
  * - Provides edit and delete actions
+ * - Displays responsive desktop table and mobile cards
  * - Displays an empty state when there are no reservations
  */
 
@@ -44,7 +45,7 @@ const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
 
   return (
     <div className="mx-auto w-full rounded-md border border-black p-5">
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-default-medium">
             <tr className="text-heading">
@@ -118,6 +119,59 @@ const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="space-y-4 md:hidden">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="rounded-lg border border-default-medium p-4 text-sm"
+          >
+            <p className="font-medium text-heading">
+              {getCustomerName(item.user)}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("staff.reservations.fields.table")}:</strong>{" "}
+              {item.table?.table_number || "-"}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("staff.reservations.fields.partySize")}:</strong>{" "}
+              {item.party_size}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("staff.reservations.fields.time")}:</strong>{" "}
+              {formatDateTime(item.reservation_time)}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("staff.reservations.fields.status")}:</strong>{" "}
+              {t(`staff.reservations.statuses.${item.status || "pending"}`)}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="secondary"
+                onClick={() => onEdit(item)}
+              >
+                {t("staff.reservations.actions.edit")}
+              </Button>
+
+              <Button
+                type="button"
+                size="sm"
+                variant="danger"
+                onClick={() => onDelete(item)}
+              >
+                {t("staff.reservations.actions.delete")}
+              </Button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

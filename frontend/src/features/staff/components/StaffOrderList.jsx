@@ -60,8 +60,19 @@ const getTableLabel = (item, t) => {
     : "-";
 };
 
+const COMPLETED_STATUSES = ["paid", "cancelled"];
+
+const getActiveOrders = (items) =>
+  items.filter((item) => !COMPLETED_STATUSES.includes(item.status));
+
+const getCompletedOrders = (items) =>
+  items.filter((item) => COMPLETED_STATUSES.includes(item.status));
+
 const StaffOrderList = ({ items, onEdit, onDelete }) => {
   const { t } = useTranslation();
+
+  const activeOrders = getActiveOrders(items);
+  const completedOrders = getCompletedOrders(items);
 
   const columns = [
     { key: "id", label: t("staff.orders.fields.orderId") },
@@ -72,61 +83,95 @@ const StaffOrderList = ({ items, onEdit, onDelete }) => {
     { key: "createdAt", label: t("staff.orders.fields.createdAt") },
   ];
 
-  return (
-    <AdminResponsiveList
-      items={items}
-      columns={columns}
-      emptyText={t("staff.orders.empty")}
-      onEdit={onEdit}
-      onDelete={onDelete}
-      editLabel={t("staff.orders.actions.edit")}
-      deleteLabel={t("staff.orders.actions.delete")}
-      renderTableRow={(item) => [
-        `#${item.id}`,
-        getTableLabel(item, t),
-        item.items?.length || 0,
-        formatCurrency(item.total_price || 0),
+  const renderTableRow = (item) => [
+    `#${item.id}`,
+    getTableLabel(item, t),
+    item.items?.length || 0,
+    formatCurrency(item.total_price || 0),
+    <OrderStatusBadge
+      key={`status-${item.id}`}
+      status={item.status}
+      label={t(`staff.orders.statuses.${item.status || "pending"}`)}
+    />,
+    formatDateTime(item.created_at),
+  ];
+
+  const renderMobileCard = (item) => (
+    <div className="space-y-2 text-sm">
+      <p className="font-medium text-heading">#{item.id}</p>
+
+      <p>
+        <strong>{t("staff.orders.fields.table")}:</strong>{" "}
+        {getTableLabel(item, t)}
+      </p>
+
+      <p>
+        <strong>{t("staff.orders.fields.items")}:</strong>{" "}
+        {item.items?.length || 0}
+      </p>
+
+      <p>
+        <strong>{t("staff.orders.fields.total")}:</strong>{" "}
+        {formatCurrency(item.total_price || 0)}
+      </p>
+
+      <p>
+        <strong>{t("staff.orders.fields.status")}:</strong>{" "}
         <OrderStatusBadge
-          key={`status-${item.id}`}
           status={item.status}
           label={t(`staff.orders.statuses.${item.status || "pending"}`)}
-        />,
-        formatDateTime(item.created_at),
-      ]}
-      renderMobileCard={(item) => (
-        <div className="space-y-2 text-sm">
-          <p className="font-medium text-heading">#{item.id}</p>
+        />
+      </p>
 
-          <p>
-            <strong>{t("staff.orders.fields.table")}:</strong>{" "}
-            {getTableLabel(item, t)}
-          </p>
+      <p>
+        <strong>{t("staff.orders.fields.createdAt")}:</strong>{" "}
+        {formatDateTime(item.created_at)}
+      </p>
+    </div>
+  );
 
-          <p>
-            <strong>{t("staff.orders.fields.items")}:</strong>{" "}
-            {item.items?.length || 0}
-          </p>
+  return (
+    <div className="space-y-8">
+      <section>
+        <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+          {t("staff.orders.sections.active", {
+            count: activeOrders.length,
+          })}
+        </h2>
 
-          <p>
-            <strong>{t("staff.orders.fields.total")}:</strong>{" "}
-            {formatCurrency(item.total_price || 0)}
-          </p>
+        <AdminResponsiveList
+          items={activeOrders}
+          columns={columns}
+          emptyText={t("staff.orders.emptyActive")}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          editLabel={t("staff.orders.actions.edit")}
+          deleteLabel={t("staff.orders.actions.delete")}
+          renderTableRow={renderTableRow}
+          renderMobileCard={renderMobileCard}
+        />
+      </section>
 
-          <p>
-            <strong>{t("staff.orders.fields.status")}:</strong>{" "}
-            <OrderStatusBadge
-              status={item.status}
-              label={t(`staff.orders.statuses.${item.status || "pending"}`)}
-            />
-          </p>
+      <section>
+        <h2 className="mb-3 text-center text-lg font-semibold text-heading">
+          {t("staff.orders.sections.completed", {
+            count: completedOrders.length,
+          })}
+        </h2>
 
-          <p>
-            <strong>{t("staff.orders.fields.createdAt")}:</strong>{" "}
-            {formatDateTime(item.created_at)}
-          </p>
-        </div>
-      )}
-    />
+        <AdminResponsiveList
+          items={completedOrders}
+          columns={columns}
+          emptyText={t("staff.orders.emptyCompleted")}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          editLabel={t("staff.orders.actions.edit")}
+          deleteLabel={t("staff.orders.actions.delete")}
+          renderTableRow={renderTableRow}
+          renderMobileCard={renderMobileCard}
+        />
+      </section>
+    </div>
   );
 };
 

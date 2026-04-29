@@ -86,10 +86,6 @@ const StaffOrders = () => {
           )}
 
           <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("staff.orders.listTitle", { count: orders.length })}
-            </h2>
-
             {loading ? (
               <div className="mx-auto w-full rounded-md border border-black p-5">
                 <PageLoader />
