@@ -4,7 +4,7 @@
  * Public exports for the admin feature.
  *
  * Responsibilities:
- * - Exposes pages components
+ * - Exposes admin pages
  * - Exposes admin components
  * - Exposes admin hooks
  * - Exposes admin services
