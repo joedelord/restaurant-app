@@ -59,7 +59,7 @@ const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
 
   return (
     <div className="mx-auto w-full rounded-md border border-black p-5">
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-default-medium">
             <tr className="text-heading">
@@ -122,6 +122,53 @@ const UserReservationList = ({ items, emptyText, onCancel, canCancel }) => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="space-y-4 md:hidden">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="rounded-lg border border-default-medium p-4 text-sm"
+          >
+            <p className="font-medium text-heading">
+              {t("user.reservations.fields.table")}{" "}
+              {item.table?.table_number || "-"}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("user.reservations.fields.partySize")}:</strong>{" "}
+              {item.party_size}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("user.reservations.fields.time")}:</strong>{" "}
+              {formatDateTime(item.reservation_time)}
+            </p>
+
+            <p className="mt-2">
+              <strong>{t("user.reservations.fields.status")}:</strong>{" "}
+              <ReservationStatusBadge
+                status={item.status}
+                label={t(`user.reservations.statuses.${item.status}`)}
+              />
+            </p>
+
+            <div className="mt-4">
+              {canCancel(item) ? (
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="danger"
+                  onClick={() => onCancel(item)}
+                >
+                  {t("user.reservations.actions.cancel")}
+                </Button>
+              ) : (
+                <span className="text-sm text-gray-400">-</span>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
