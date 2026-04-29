@@ -292,6 +292,7 @@ npx playwright test
 ## 👨‍💻 Author
 
 Jouni Seppänen
+
 GitHub: https://github.com/joedelord
 
 ---
@@ -300,6 +301,4 @@ GitHub: https://github.com/joedelord
 
 This project is for educational and portfolio purposes.
 
-```
-
-```
+---
