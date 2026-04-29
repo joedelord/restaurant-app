@@ -1,26 +1,22 @@
 /**
- * UserProfile
+ * ChaUserngePassword
  *
- * User page for viewing and updating personal profile information.
+ * User page for changing the authenticated user's password.
  *
  * Responsibilities:
- * - Renders the profile page layout
+ * - Renders the page layout
  * - Shows page title and subtitle
  * - Provides navigation back to the user dashboard
- * - Renders the profile form
- *
- * Notes:
- * - Profile form handles fetching, updating and form state
- * - Password changes are handled on a separate page
+ * - Renders the password change form
  */
 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
-import UserProfileForm from "../components/UserProfileForm";
+import UserChangePasswordForm from "../components/UserChangePasswordForm";
 
-const UserProfile = () => {
+const UserChangePassword = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -42,15 +38,15 @@ const UserProfile = () => {
 
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-heading">
-            {t("profile.title")}
+            {t("user.password.title")}
           </h1>
-          <p className="mt-2 text-gray-500">{t("profile.subtitle")}</p>
+          <p className="mt-2 text-gray-500">{t("user.password.subtitle")}</p>
         </div>
 
-        <UserProfileForm />
+        <UserChangePasswordForm />
       </div>
     </div>
   );
 };
 
-export default UserProfile;
+export default UserChangePassword;

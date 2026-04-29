@@ -30,7 +30,7 @@ import UserDashboard from "./features/user/pages/UserDashboard";
 import UserProfile from "./features/user/pages/UserProfile";
 import UserReservations from "./features/user/pages/UserReservations";
 import UserOrders from "./features/user/pages/UserOrders";
-import ChangePassword from "./features/user/pages/ChangePassword";
+import UserChangePassword from "./features/user/pages/UserChangePassword";
 
 import AdminDashboard from "./features/admin/pages/AdminDashboard";
 import AdminCategories from "./features/admin/pages/AdminCategories";
@@ -72,7 +72,7 @@ function App() {
         <Route path="/user/profile" element={protectedRoute(<UserProfile />)} />
         <Route
           path="/user/change-password"
-          element={protectedRoute(<ChangePassword />)}
+          element={protectedRoute(<UserChangePassword />)}
         />
         <Route
           path="/user/reservations"
