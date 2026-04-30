@@ -13,7 +13,7 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/ui/Button";
+import { BackButton } from "@/components";
 import UserChangePasswordForm from "../components/UserChangePasswordForm";
 
 const UserChangePassword = () => {
@@ -24,24 +24,17 @@ const UserChangePassword = () => {
     <div className="px-4 py-6">
       <div className="mx-auto w-full max-w-3xl">
         <div className="mb-6">
-          <Button
-            type="button"
-            size="sm"
-            variant="secondary"
-            onClick={() => navigate("/user")}
-            className="inline-flex items-center gap-2"
-          >
-            <ArrowLeftIcon className="h-4 w-4" />
-            {t("user.navigation.backToDashboard")}
-          </Button>
+          <BackButton />
         </div>
 
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-heading">
+        <header className="mb-10 text-center">
+          <h1 className="mt-3 text-4xl font-bold text-gray-900">
             {t("user.password.title")}
           </h1>
-          <p className="mt-2 text-gray-500">{t("user.password.subtitle")}</p>
-        </div>
+          <p className="mx-auto mt-3 max-w-2xl text-gray-600">
+            {t("user.password.subtitle")}
+          </p>
+        </header>
 
         <UserChangePasswordForm />
       </div>

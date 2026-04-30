@@ -42,5 +42,11 @@ export default defineConfig([
         process: "readonly",
       },
     },
+    compilerOptions: {
+      baseUrl: "src",
+      paths: {
+        "@/*": ["*"],
+      },
+    },
   },
 ]);

@@ -18,9 +18,7 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../../../components/ui/Button";
-import PageLoader from "../../../components/ui/PageLoader";
-import FormMessage from "../../../components/ui/FormMessage";
+import { BackButton, PageLoader, FormMessage } from "@/components";
 import UserOrderList from "../components/UserOrderList";
 import useUserOrders from "../hooks/useUserOrders";
 
@@ -34,24 +32,17 @@ const UserOrders = () => {
     <div className="px-4 py-6">
       <div className="mx-auto w-full max-w-5xl">
         <div className="mb-6">
-          <Button
-            type="button"
-            size="sm"
-            variant="secondary"
-            onClick={() => navigate("/user")}
-            className="inline-flex items-center gap-2"
-          >
-            <ArrowLeftIcon className="h-4 w-4" />
-            {t("user.navigation.backToDashboard")}
-          </Button>
+          <BackButton />
         </div>
 
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-heading">
+        <header className="mb-10 text-center">
+          <h1 className="mt-3 text-4xl font-bold text-gray-900">
             {t("user.orders.title")}
           </h1>
-          <p className="mt-2 text-gray-500">{t("user.orders.subtitle")}</p>
-        </div>
+          <p className="mx-auto mt-3 max-w-2xl text-gray-600">
+            {t("user.orders.subtitle")}
+          </p>
+        </header>
 
         <FormMessage message={message} variant="success" />
         <FormMessage message={error} variant="error" />

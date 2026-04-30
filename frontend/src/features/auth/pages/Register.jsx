@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import api from "../../../api";
 import AuthCard from "../components/AuthCard";
 import AuthField from "../components/AuthField";
-import AuthSubmitButton from "../components/AuthSubmitButton";
+import AuthSubmitButton from "../../../components/ui/SubmitButton";
 import FormMessage from "../../../components/ui/FormMessage";
 
 const Register = () => {

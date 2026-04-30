@@ -16,7 +16,7 @@ export { default as Register } from "./pages/Register";
 
 export { default as AuthCard } from "./components/AuthCard";
 export { default as AuthField } from "./components/AuthField";
-export { default as AuthSubmitButton } from "./components/AuthSubmitButton";
+export { default as AuthSubmitButton } from "../../components/ui/SubmitButton";
 export { default as LogoutButton } from "./components/LogoutButton";
 
 export { default as useAuth } from "./hooks/useAuth";

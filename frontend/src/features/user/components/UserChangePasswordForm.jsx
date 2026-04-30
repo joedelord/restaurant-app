@@ -13,8 +13,8 @@
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
-import FormMessage from "../../../components/ui/FormMessage";
+import { AuthSubmitButton } from "@/features/auth";
+import { FormMessage } from "@/components";
 import { changeMyPassword } from "@/features/user";
 
 const initialFormData = {
@@ -90,7 +90,7 @@ const UserChangePasswordForm = () => {
       <FormMessage message={message} variant="success" />
       <FormMessage message={error} variant="error" />
 
-      <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
+      <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="mx-auto max-w-sm">
           <form onSubmit={handleSubmit}>
             <PasswordInput

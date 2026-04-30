@@ -9,7 +9,7 @@
  * - Uses the shared Button component for consistent styling
  */
 
-import Button from "../../../components/ui/Button";
+import Button from "./Button";
 
 const AuthSubmitButton = ({
   loading,
