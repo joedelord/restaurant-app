@@ -57,7 +57,7 @@ const UserReservations = () => {
         <FormMessage message={error} variant="error" />
 
         {loading ? (
-          <div className="mx-auto w-full rounded-md border border-black p-5">
+          <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <PageLoader />
           </div>
         ) : (
