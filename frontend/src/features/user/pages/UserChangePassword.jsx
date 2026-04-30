@@ -1,5 +1,5 @@
 /**
- * ChaUserngePassword
+ * UserChangePassword
  *
  * User page for changing the authenticated user's password.
  *

@@ -63,7 +63,7 @@ const Menu = () => {
 
   if (error) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      <div className="mx-auto max-w-5xl px-4 py-10">
         <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
           {t(error)}
         </div>
@@ -72,13 +72,12 @@ const Menu = () => {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="mb-10">
-        <h1 className="mt-3 text-center text-4xl font-bold text-gray-900">
+    <div className="mx-auto max-w-5xl px-4 py-10">
+      <header className="mb-10 text-center">
+        <h1 className="mt-3 text-4xl font-bold text-gray-900">
           {t("menu.title")}
         </h1>
-
-        <p className="mx-auto mt-3 max-w-2xl text-center text-gray-600">
+        <p className="mx-auto mt-3 max-w-2xl text-gray-600">
           {t("menu.subtitle")}
         </p>
       </header>

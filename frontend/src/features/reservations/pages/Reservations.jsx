@@ -21,7 +21,7 @@ const Reservations = () => {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
       <header className="mb-10 text-center">
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="mt-3 text-4xl font-bold text-gray-900">
           {t("reservation.page.title")}
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-gray-600">
