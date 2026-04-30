@@ -12,8 +12,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
-import Button from "../../../components/ui/Button";
+import { SubmitButton, Button } from "@/components";
 
 const getFormValues = (initialData) => ({
   table_number: initialData?.table_number ?? "",
@@ -146,7 +145,7 @@ const TableForm = ({ onSubmit, initialData = null, submitText, onCancel }) => {
           </div>
 
           <div className="flex gap-3">
-            <AuthSubmitButton
+            <SubmitButton
               loading={loading}
               idleText={submitText || t("admin.tables.actions.save")}
               loadingText={

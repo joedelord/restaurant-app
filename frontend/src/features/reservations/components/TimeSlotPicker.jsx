@@ -11,7 +11,7 @@
  */
 
 import { useTranslation } from "react-i18next";
-import { isPastTimeSlot } from "../../../utils/date";
+import { isPastTimeSlot } from "@/utils";
 
 const getSlotClasses = ({ isSelected, isPast, isAvailable }) => {
   if (isSelected) return "bg-black text-white";

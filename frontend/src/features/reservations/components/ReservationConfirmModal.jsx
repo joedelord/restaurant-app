@@ -10,8 +10,8 @@
  */
 
 import { useTranslation } from "react-i18next";
-import { formatDate } from "../../../utils/date";
-import Button from "../../../components/ui/Button";
+import { formatDate } from "@/utils";
+import { Button } from "@/components";
 
 const SummaryRow = ({ label, value }) => (
   <div className="flex justify-between gap-4">

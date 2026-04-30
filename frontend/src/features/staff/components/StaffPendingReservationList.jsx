@@ -10,7 +10,7 @@
  */
 
 import { useTranslation } from "react-i18next";
-import Button from "../../../components/ui/Button";
+import { Button } from "@/components";
 
 const formatDateTime = (value) => {
   if (!value) return "-";

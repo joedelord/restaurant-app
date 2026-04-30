@@ -11,8 +11,8 @@
  */
 
 import { useTranslation } from "react-i18next";
-import { formatCurrency } from "../../../utils/currency";
-import AdminResponsiveList from "../../admin/components/AdminResponsiveList";
+import { formatCurrency } from "@/utils";
+import { AdminResponsiveList } from "@/features/admin";
 
 const formatDateTime = (value) => {
   if (!value) return "-";

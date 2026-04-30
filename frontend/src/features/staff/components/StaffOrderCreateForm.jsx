@@ -15,11 +15,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
-import Button from "../../../components/ui/Button";
-import api from "../../../api";
+import { SubmitButton, Button } from "@/components";
+import api from "@/api";
 import { createOrder } from "../services/staffOrderService";
-import { formatCurrency } from "../../../utils/currency";
+import { formatCurrency } from "@/utils";
 
 import {
   emptyOrderItemRow,
@@ -607,7 +606,7 @@ const StaffOrderCreateForm = ({
           </div>
 
           <div className="flex gap-3">
-            <AuthSubmitButton
+            <SubmitButton
               loading={loadingSubmit}
               idleText={t("staff.orders.actions.create")}
               loadingText={t("staff.orders.actions.creating")}

@@ -10,7 +10,7 @@
  * - Keeps admin UI consistent across different resources
  */
 
-import Button from "../../../components/ui/Button";
+import { Button } from "@/components";
 
 const AdminResponsiveList = ({
   items = [],
