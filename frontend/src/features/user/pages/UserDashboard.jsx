@@ -59,15 +59,15 @@ const UserDashboard = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-7xl p-6">
-      <div className="mb-8">
-        <h1 className="text-center text-3xl font-bold text-gray-900">
+    <div className="mx-auto max-w-5xl px-4 py-10">
+      <header className="mb-10 text-center">
+        <h1 className="mt-3 text-4xl font-bold text-gray-900">
           {t("user.dashboard.title")}
         </h1>
-        <p className="mt-2 text-center text-gray-500">
+        <p className="mx-auto mt-3 max-w-2xl text-gray-600">
           {t("user.dashboard.subtitle")}
         </p>
-      </div>
+      </header>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {cards.map((card) => {
