@@ -16,7 +16,6 @@
  * - Form and list rendering are delegated to StaffOrderForm and StaffOrderList
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { BackButton, PageLoader, FormMessage } from "@/components/";
 import { useTranslation } from "react-i18next";

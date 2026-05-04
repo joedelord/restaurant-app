@@ -16,7 +16,6 @@
  * - List rendering is delegated to UserReservationList
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { BackButton, PageLoader, FormMessage } from "@/components";

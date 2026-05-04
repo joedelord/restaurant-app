@@ -15,7 +15,6 @@
  * - Form and list rendering are delegated to StaffReservationForm and StaffReservationList
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { BackButton, PageLoader, FormMessage } from "@/components/";

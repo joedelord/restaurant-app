@@ -14,7 +14,6 @@
  * - Mode selection determines whether the order is linked to a reservation or created as walk-in
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "@/components";
 import { useState } from "react";

@@ -16,13 +16,10 @@
  * - Backend calculates the statistics and this page only presents them
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/ui/Button";
-import FormMessage from "../../../components/ui/FormMessage";
+import { BackButton, PageLoader, FormMessage } from "@/components/";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import PageLoader from "../../../components/ui/PageLoader";
 import { getSalesStats } from "../services/salesStatsService";
 import { formatCurrency } from "../../../utils/currency";
 
@@ -57,16 +54,7 @@ const AdminSales = () => {
   return (
     <div className="px-4 py-6">
       <div className="mb-6">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/admin")}
-          className="inline-flex items-center gap-2"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          {t("admin.navigation.backToDashboard")}
-        </Button>
+        <BackButton />
       </div>
       <h1 className="text-3xl font-bold text-center">
         {t("admin.sales.title")}

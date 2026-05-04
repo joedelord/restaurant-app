@@ -16,11 +16,8 @@
  * - Form and list rendering are delegated to TableForm and TableList
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/ui/Button";
-import PageLoader from "../../../components/ui/PageLoader";
-import FormMessage from "../../../components/ui/FormMessage";
+import { BackButton, PageLoader, FormMessage } from "@/components";
 import { useTranslation } from "react-i18next";
 import TableForm from "../components/TableForm";
 import TableList from "../components/TableList";
@@ -46,16 +43,7 @@ const AdminTables = () => {
   return (
     <div className="px-4 py-6">
       <div className="mb-6">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/admin")}
-          className="inline-flex items-center gap-2"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          {t("admin.navigation.backToDashboard")}
-        </Button>
+        <BackButton />
       </div>
       <h1 className="text-center text-3xl font-bold">
         {t("admin.tables.title")}

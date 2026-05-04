@@ -16,15 +16,12 @@
  * - Form and list rendering are delegated to CategoryForm and CategoryList
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../../../components/ui/Button";
-import FormMessage from "../../../components/ui/FormMessage";
+import { BackButton, PageLoader, FormMessage } from "@/components/";
 import CategoryForm from "../components/CategoryForm";
 import CategoryList from "../components/CategoryList";
 import useCategories from "../hooks/useCategories";
-import PageLoader from "../../../components/ui/PageLoader";
 
 const AdminCategories = () => {
   const navigate = useNavigate();
@@ -46,16 +43,7 @@ const AdminCategories = () => {
   return (
     <div className="px-4 py-6">
       <div className="mb-6">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/admin")}
-          className="inline-flex items-center gap-2"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          {t("admin.navigation.backToDashboard")}
-        </Button>
+        <BackButton />
       </div>
 
       <h1 className="text-3xl font-bold text-center">
