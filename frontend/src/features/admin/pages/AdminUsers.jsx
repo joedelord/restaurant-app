@@ -4,28 +4,27 @@
  * Admin page for managing application users.
  *
  * Responsibilities:
- * - Displays the user management layout
- * - Uses useUsers to handle user data and actions
- * - Shows create and edit form states
- * - Displays user list with edit and delete actions
- * - Handles page-level loading, success and error messages
- * - Provides navigation back to the admin dashboard
+ * - Uses AdminCrudPage for shared admin layout
+ * - Uses useUsers for user CRUD logic
+ * - Controls form visibility with useCrudForm
+ * - Handles create and update actions through a unified submit handler
+ * - Passes form and list rendering to AdminCrudPage
  *
  * Notes:
- * - User API logic and state management are handled in useUsers
- * - Form and list rendering are delegated to UserForm and UserList
+ * - Form is only shown when adding or editing (not by default)
+ * - UserForm handles form UI and validation
+ * - UserList handles list rendering and actions
  */
 
-import { useNavigate } from "react-router-dom";
-import { BackButton, PageLoader, FormMessage } from "@/components/";
 import { useTranslation } from "react-i18next";
+import AdminCrudPage from "../components/AdminCrudPage";
 import UserForm from "../components/UserForm";
 import UserList from "../components/UserList";
 import useUsers from "../hooks/useUsers";
+import { useCrudForm } from "../hooks/useCrudForm";
 
 const AdminUsers = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const {
     users,
@@ -40,64 +39,73 @@ const AdminUsers = () => {
     cancelEditing,
   } = useUsers();
 
+  const {
+    showForm,
+    openCreateForm,
+    openEditForm,
+    closeForm,
+    closeAfterSubmit,
+  } = useCrudForm();
+
+  const handleAddClick = () => {
+    openCreateForm(cancelEditing);
+  };
+
+  const handleEditClick = (user) => {
+    openEditForm(user, startEditing);
+  };
+
+  const handleCancelForm = () => {
+    closeForm(cancelEditing);
+  };
+
+  const handleSubmit = async (data) => {
+    if (editingUser) {
+      await handleUpdate(data);
+    } else {
+      await handleCreate(data);
+    }
+
+    closeAfterSubmit();
+  };
+
   return (
-    <div className="px-4 py-6">
-      <div className="mb-6">
-        <BackButton />
-      </div>
-      <h1 className="text-3xl font-bold text-center">
-        {t("admin.users.title")}
-      </h1>
-
-      <div className="mx-auto w-full max-w-4xl space-y-6">
-        <p className="mt-2 text-center text-gray-500">
-          {t("admin.users.subtitle")}
-        </p>
-
-        {message && <FormMessage type="success">{message}</FormMessage>}
-        {error && <FormMessage type="error">{error}</FormMessage>}
-
-        <section className="space-y-6">
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingUser
-                ? t("admin.users.editTitle")
-                : t("admin.users.addTitle")}
-            </h2>
-
-            <UserForm
-              key={editingUser?.id ?? "new"}
-              initialData={editingUser}
-              submitText={
-                editingUser
-                  ? t("admin.users.actions.update")
-                  : t("admin.users.actions.add")
-              }
-              onSubmit={editingUser ? handleUpdate : handleCreate}
-              onCancel={editingUser ? cancelEditing : undefined}
-            />
-          </div>
-
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("admin.users.listTitle", { count: users.length })}
-            </h2>
-
-            {loading ? (
-              <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <PageLoader />
-              </div>
-            ) : (
-              <UserList
-                items={users}
-                onEdit={startEditing}
-                onDelete={handleDelete}
-              />
-            )}
-          </div>
-        </section>
-      </div>
-    </div>
+    <AdminCrudPage
+      title={t("admin.users.title")}
+      subtitle={t("admin.users.subtitle")}
+      listTitle={t("admin.users.listTitle", {
+        count: users.length,
+      })}
+      addButtonText={t("admin.users.actions.add")}
+      formTitle={
+        editingUser ? t("admin.users.editTitle") : t("admin.users.addTitle")
+      }
+      showForm={showForm}
+      loading={loading}
+      message={message}
+      error={error}
+      onAddClick={handleAddClick}
+      renderForm={() => (
+        <UserForm
+          key={editingUser?.id ?? "new"}
+          initialData={editingUser}
+          submitText={
+            editingUser
+              ? t("admin.users.actions.update")
+              : t("admin.users.actions.add")
+          }
+          onSubmit={handleSubmit}
+          onCancel={handleCancelForm}
+        />
+      )}
+      renderList={() => (
+        <UserList
+          items={users}
+          onEdit={handleEditClick}
+          onDelete={handleDelete}
+        />
+      )}
+    />
   );
 };
 
