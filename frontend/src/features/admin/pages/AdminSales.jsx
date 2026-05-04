@@ -69,12 +69,12 @@ const AdminSales = () => {
         {error && <FormMessage type="error">{error}</FormMessage>}
 
         {loading ? (
-          <div className="mx-auto w-full rounded-md border border-black p-5">
+          <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <PageLoader />
           </div>
         ) : (
           <section className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <div className="mx-auto w-full rounded-md border border-black p-5">
+            <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
               <h2 className="mb-4 text-center text-lg font-semibold text-heading">
                 {t("admin.sales.topItems.title", { count: topItems.length })}
               </h2>
@@ -115,7 +115,7 @@ const AdminSales = () => {
               )}
             </div>
 
-            <div className="mx-auto w-full rounded-md border border-black p-5">
+            <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
               <h2 className="mb-4 text-center text-lg font-semibold text-heading">
                 {t("admin.sales.categories.title", {
                   count: salesByCategory.length,

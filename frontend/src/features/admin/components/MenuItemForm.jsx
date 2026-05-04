@@ -103,7 +103,7 @@ const MenuItemForm = ({
   };
 
   return (
-    <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
+    <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       <div className="mx-auto max-w-sm">
         <form onSubmit={handleSubmit}>
           {error && (
