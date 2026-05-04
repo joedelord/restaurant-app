@@ -35,7 +35,7 @@ const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
 
   if (!items.length) {
     return (
-      <div className="mx-auto w-full rounded-md border border-black p-5">
+      <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <p className="text-sm text-body">
           {emptyText || t("staff.reservations.empty")}
         </p>
@@ -44,7 +44,7 @@ const StaffReservationList = ({ items, onEdit, onDelete, emptyText }) => {
   }
 
   return (
-    <div className="mx-auto w-full rounded-md border border-black p-5">
+    <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-default-medium">
