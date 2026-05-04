@@ -1,7 +1,22 @@
 /**
  * AdminCrudPage
  *
- * Reusable admin CRUD page layout.
+ * Reusable layout component for admin CRUD pages.
+ *
+ * Responsibilities:
+ * - Provides a consistent layout for all admin management pages
+ * - Displays page title, subtitle, and navigation (BackButton)
+ * - Handles global UI states such as loading, success, and error messages
+ * - Renders a configurable "Add" button for opening forms
+ * - Conditionally displays a form section for create/edit actions
+ * - Displays a list section with loading fallback'
+ *
+ * Notes:
+ * - Designed to be used with useCrudForm for form state management
+ * - Keeps layout and UI concerns separate from business logic
+ * - Enables DRY pattern across admin pages (Users, Tables, Categories, MenuItems)
+ * - Uses render props (renderForm, renderList) for maximum flexibility
+ * - Ensures consistent spacing, typography, and responsive behavior
  */
 
 import { BackButton, PageLoader, FormMessage, Button } from "@/components/";
