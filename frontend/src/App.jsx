@@ -21,7 +21,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
 import { Login, Register } from "@/features/auth";
-import { Menu } from "@/features/Menu";
+import { Menu } from "@/features/menu";
 import { Reservations } from "@/features/reservations";
 
 import {
