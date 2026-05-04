@@ -21,21 +21,19 @@ import {
   getReservationAvailability,
   getTables,
 } from "../services/reservationService";
+
 import {
   STORAGE_KEY,
   buildReservationDraft,
   getReservationErrorMessage,
 } from "../utils/reservationHelpers";
-import useAuth from "../../auth/hooks/useAuth";
-import {
-  getDefaultReservationDate,
-  toDateInputValue,
-} from "../../../utils/date";
 
+import { useAuth } from "@/features/auth";
+import { getDefaultReservationDate, toDateInputValue } from "@/utils";
 import TimeSlotPicker from "./TimeSlotPicker";
 import TablePicker from "./TablePicker";
 import ReservationConfirmModal from "./ReservationConfirmModal";
-import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
+import { SubmitButton } from "@/components";
 
 const ReservationForm = () => {
   const { t } = useTranslation();
@@ -353,7 +351,7 @@ const ReservationForm = () => {
             />
           </section>
 
-          <AuthSubmitButton
+          <SubmitButton
             loading={loadingSubmit}
             idleText={t("reservation.actions.review")}
             loadingText={t("reservation.actions.saving")}

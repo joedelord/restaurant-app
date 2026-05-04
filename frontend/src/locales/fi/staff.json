@@ -75,6 +75,8 @@
     "empty": "Tilauksia ei löytynyt.",
     "createTitle": "Luo uusi tilaus",
     "createSubtitle": "Kirjaa asiakkaalle uusi tilaus joko varaukseen liitettynä tai walk-in-tilauksena.",
+    "emptyActive": "Ei aktiivisia tilauksia.",
+    "emptyCompleted": "Ei valmiita tilauksia.",
     "fields": {
       "orderId": "Tilaus",
       "table": "Pöytä",
@@ -131,7 +133,9 @@
       "form": "Ladataan tilauslomakkeen tietoja..."
     },
     "sections": {
-      "items": "Tilausrivit"
+      "items": "Tilausrivit",
+      "active": "Aktiiviset tilaukset ({{count}})",
+      "completed": "Valmiit tilaukset ({{count}})"
     },
     "types": {
       "reservation": "Varaukseen liittyvä",

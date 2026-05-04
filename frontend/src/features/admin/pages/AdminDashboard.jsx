@@ -79,18 +79,16 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 text-center">
+    <div className="mx-auto max-w-5xl px-4 py-10">
+      <header className="mb-10 text-center">
+        <h1 className="mt-3 text-4xl font-bold text-gray-900">
           {t("admin.dashboard.title")}
         </h1>
-        <p className="text-gray-500 mt-2 text-center">
+        <p className="mx-auto mt-3 max-w-2xl text-gray-600">
           {t("admin.dashboard.subtitle")}
         </p>
-      </div>
+      </header>
 
-      {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {cards.map((card) => {
           const Icon = card.icon;

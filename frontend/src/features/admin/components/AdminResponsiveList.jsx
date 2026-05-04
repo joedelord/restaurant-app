@@ -10,7 +10,7 @@
  * - Keeps admin UI consistent across different resources
  */
 
-import Button from "../../../components/ui/Button";
+import { Button } from "@/components";
 
 const AdminResponsiveList = ({
   items = [],
@@ -25,14 +25,14 @@ const AdminResponsiveList = ({
 }) => {
   if (!items.length) {
     return (
-      <div className="mx-auto w-full rounded-md border border-black p-5">
+      <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <p className="text-sm text-body">{emptyText}</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full rounded-md border border-black p-4 sm:p-5">
+    <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       {/* 📱 Mobile */}
       <div className="space-y-4 md:hidden">
         {items.map((item) => (

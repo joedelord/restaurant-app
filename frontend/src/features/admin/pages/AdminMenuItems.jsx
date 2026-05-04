@@ -4,34 +4,36 @@
  * Admin page for managing restaurant menu items.
  *
  * Responsibilities:
- * - Displays the menu item management layout
- * - Uses useMenuItems to handle menu item data and actions
- * - Fetches categories for the menu item form
- * - Shows create and edit form states
- * - Displays menu item list with edit and delete actions
- * - Handles page-level loading, success and error messages
- * - Provides navigation back to the admin dashboard
+ * - Uses AdminCrudPage for shared admin layout
+ * - Uses useMenuItems for menu item CRUD logic
+ * - Fetches categories for the form select field
+ * - Controls form visibility with useCrudForm
+ * - Handles create and update actions through a unified submit handler
+ * - Passes form and list rendering to AdminCrudPage
  *
  * Notes:
- * - Menu item CRUD logic is handled in useMenuItems
- * - Category data is fetched separately because it is needed for the form select field
- * - Form and list rendering are delegated to MenuItemForm and MenuItemList
+ * - Form is only shown when adding or editing (not by default)
+ * - MenuItemForm handles form UI and validation
+ * - MenuItemList handles list rendering and actions
+ * - Category data is required for menu item creation/editing
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
+/**
+ * AdminMenuItems
+ *
+ * Admin page for managing restaurant menu items.
+ */
+
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import Button from "../../../components/ui/Button";
-import FormMessage from "../../../components/ui/FormMessage";
+import AdminCrudPage from "../components/AdminCrudPage";
 import MenuItemForm from "../components/MenuItemForm";
 import MenuItemList from "../components/MenuItemList";
 import useMenuItems from "../hooks/useMenuItems";
 import { getCategories } from "../services/categoryService";
-import PageLoader from "../../../components/ui/PageLoader";
+import { useCrudForm } from "../hooks/useCrudForm";
 
 const AdminMenuItems = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const {
@@ -47,6 +49,14 @@ const AdminMenuItems = () => {
     cancelEditing,
   } = useMenuItems();
 
+  const {
+    showForm,
+    openCreateForm,
+    openEditForm,
+    closeForm,
+    closeAfterSubmit,
+  } = useCrudForm();
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -55,82 +65,75 @@ const AdminMenuItems = () => {
         const data = await getCategories();
         setCategories(data);
       } catch (err) {
-        console.error("Failed to fetch categories for menu items form:", err);
+        console.error("Failed to fetch categories:", err);
       }
     };
 
     fetchCategories();
   }, []);
 
+  const handleAddClick = () => {
+    openCreateForm(cancelEditing);
+  };
+
+  const handleEditClick = (item) => {
+    openEditForm(item, startEditing);
+  };
+
+  const handleCancelForm = () => {
+    closeForm(cancelEditing);
+  };
+
+  const handleSubmit = async (data) => {
+    if (editingMenuItem) {
+      await handleUpdate(data);
+    } else {
+      await handleCreate(data);
+    }
+
+    closeAfterSubmit();
+  };
+
   return (
-    <div className="px-4 py-6">
-      <div className="mb-6">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/admin")}
-          className="inline-flex items-center gap-2"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          {t("admin.navigation.backToDashboard")}
-        </Button>
-      </div>
-
-      <h1 className="text-3xl font-bold text-center">
-        {t("admin.menuItems.title")}
-      </h1>
-
-      <div className="mx-auto w-full max-w-4xl space-y-6">
-        <p className="mt-2 text-center text-gray-500">
-          {t("admin.menuItems.subtitle")}
-        </p>
-
-        {message && <FormMessage type="success">{message}</FormMessage>}
-        {error && <FormMessage type="error">{error}</FormMessage>}
-
-        <section className="space-y-6">
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingMenuItem
-                ? t("admin.menuItems.editTitle")
-                : t("admin.menuItems.addTitle")}
-            </h2>
-
-            <MenuItemForm
-              key={editingMenuItem?.id ?? "new"}
-              categories={categories}
-              initialData={editingMenuItem}
-              submitText={
-                editingMenuItem
-                  ? t("admin.menuItems.actions.update")
-                  : t("admin.menuItems.actions.add")
-              }
-              onSubmit={editingMenuItem ? handleUpdate : handleCreate}
-              onCancel={editingMenuItem ? cancelEditing : undefined}
-            />
-          </div>
-
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("admin.menuItems.listTitle", { count: menuItems.length })}
-            </h2>
-
-            {loading ? (
-              <div className="mx-auto w-full rounded-md border border-black p-5">
-                <PageLoader />
-              </div>
-            ) : (
-              <MenuItemList
-                items={menuItems}
-                onEdit={startEditing}
-                onDelete={handleDelete}
-              />
-            )}
-          </div>
-        </section>
-      </div>
-    </div>
+    <AdminCrudPage
+      title={t("admin.menuItems.title")}
+      subtitle={t("admin.menuItems.subtitle")}
+      listTitle={t("admin.menuItems.listTitle", {
+        count: menuItems.length,
+      })}
+      addButtonText={t("admin.menuItems.actions.add")}
+      formTitle={
+        editingMenuItem
+          ? t("admin.menuItems.editTitle")
+          : t("admin.menuItems.addTitle")
+      }
+      showForm={showForm}
+      loading={loading}
+      message={message}
+      error={error}
+      onAddClick={handleAddClick}
+      renderForm={() => (
+        <MenuItemForm
+          key={editingMenuItem?.id ?? "new"}
+          categories={categories}
+          initialData={editingMenuItem}
+          submitText={
+            editingMenuItem
+              ? t("admin.menuItems.actions.update")
+              : t("admin.menuItems.actions.add")
+          }
+          onSubmit={handleSubmit}
+          onCancel={handleCancelForm}
+        />
+      )}
+      renderList={() => (
+        <MenuItemList
+          items={menuItems}
+          onEdit={handleEditClick}
+          onDelete={handleDelete}
+        />
+      )}
+    />
   );
 };
 

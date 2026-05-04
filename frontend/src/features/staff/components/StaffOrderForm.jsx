@@ -13,11 +13,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
-import Button from "../../../components/ui/Button";
-import api from "../../../api";
-import { formatCurrency } from "../../../utils/currency";
+import api from "@/api";
+import { SubmitButton, Button } from "@/components";
+import { formatCurrency } from "@/utils";
 
 import {
   emptyOrderItemRow,
@@ -192,7 +190,7 @@ const StaffOrderForm = ({
   };
 
   return (
-    <div className="mx-auto w-full max-w-5xl rounded-md border border-black p-5">
+    <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
           <div className="rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -379,7 +377,7 @@ const StaffOrderForm = ({
         </div>
 
         <div className="flex gap-3">
-          <AuthSubmitButton
+          <SubmitButton
             loading={loading}
             idleText={submitText}
             loadingText={submitText}

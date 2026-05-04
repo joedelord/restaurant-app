@@ -4,30 +4,26 @@
  * Admin page for managing menu categories.
  *
  * Responsibilities:
- * - Displays the category management layout
- * - Uses useCategories to handle category data and actions
- * - Shows create and edit form states
- * - Displays category list with edit and delete actions
- * - Handles page-level loading, success and error messages
- * - Provides navigation back to the admin dashboard
+ * - Uses AdminCrudPage for shared admin layout
+ * - Uses useCategories for category CRUD logic
+ * - Controls form visibility with useCrudForm
+ * - Handles create and update actions through a unified submit handler
+ * - Passes form and list rendering to AdminCrudPage
  *
  * Notes:
- * - Category API logic and state management are handled in useCategories
- * - Form and list rendering are delegated to CategoryForm and CategoryList
+ * - Form is only shown when adding or editing (not by default)
+ * - CategoryForm handles form UI and validation
+ * - CategoryList handles list rendering and actions
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../../../components/ui/Button";
-import FormMessage from "../../../components/ui/FormMessage";
+import AdminCrudPage from "../components/AdminCrudPage";
 import CategoryForm from "../components/CategoryForm";
 import CategoryList from "../components/CategoryList";
 import useCategories from "../hooks/useCategories";
-import PageLoader from "../../../components/ui/PageLoader";
+import { useCrudForm } from "../hooks/useCrudForm";
 
 const AdminCategories = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const {
@@ -43,74 +39,75 @@ const AdminCategories = () => {
     cancelEditing,
   } = useCategories();
 
+  const {
+    showForm,
+    openCreateForm,
+    openEditForm,
+    closeForm,
+    closeAfterSubmit,
+  } = useCrudForm();
+
+  const handleAddClick = () => {
+    openCreateForm(cancelEditing);
+  };
+
+  const handleEditClick = (category) => {
+    openEditForm(category, startEditing);
+  };
+
+  const handleCancelForm = () => {
+    closeForm(cancelEditing);
+  };
+
+  const handleSubmit = async (data) => {
+    if (editingCategory) {
+      await handleUpdate(data);
+    } else {
+      await handleCreate(data);
+    }
+
+    closeAfterSubmit();
+  };
+
   return (
-    <div className="px-4 py-6">
-      <div className="mb-6">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/admin")}
-          className="inline-flex items-center gap-2"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          {t("admin.navigation.backToDashboard")}
-        </Button>
-      </div>
-
-      <h1 className="text-3xl font-bold text-center">
-        {t("admin.categories.title")}
-      </h1>
-
-      <div className="mx-auto w-full max-w-4xl space-y-6">
-        <p className="mt-2 text-center text-gray-500">
-          {t("admin.categories.subtitle")}
-        </p>
-
-        {message && <FormMessage type="success">{message}</FormMessage>}
-        {error && <FormMessage type="error">{error}</FormMessage>}
-
-        <section className="space-y-6">
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {editingCategory
-                ? t("admin.categories.editTitle")
-                : t("admin.categories.addTitle")}
-            </h2>
-
-            <CategoryForm
-              key={editingCategory?.id ?? "new"}
-              initialData={editingCategory}
-              submitText={
-                editingCategory
-                  ? t("admin.categories.actions.update")
-                  : t("admin.categories.actions.add")
-              }
-              onSubmit={editingCategory ? handleUpdate : handleCreate}
-              onCancel={editingCategory ? cancelEditing : undefined}
-            />
-          </div>
-
-          <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("admin.categories.listTitle", { count: categories.length })}
-            </h2>
-
-            {loading ? (
-              <div className="mx-auto w-full rounded-md border border-black p-5">
-                <PageLoader />
-              </div>
-            ) : (
-              <CategoryList
-                items={categories}
-                onEdit={startEditing}
-                onDelete={handleDelete}
-              />
-            )}
-          </div>
-        </section>
-      </div>
-    </div>
+    <AdminCrudPage
+      title={t("admin.categories.title")}
+      subtitle={t("admin.categories.subtitle")}
+      listTitle={t("admin.categories.listTitle", {
+        count: categories.length,
+      })}
+      addButtonText={t("admin.categories.actions.add")}
+      formTitle={
+        editingCategory
+          ? t("admin.categories.editTitle")
+          : t("admin.categories.addTitle")
+      }
+      showForm={showForm}
+      loading={loading}
+      message={message}
+      error={error}
+      onAddClick={handleAddClick}
+      renderForm={() => (
+        <CategoryForm
+          key={editingCategory?.id ?? "new"}
+          initialData={editingCategory}
+          submitText={
+            editingCategory
+              ? t("admin.categories.actions.update")
+              : t("admin.categories.actions.add")
+          }
+          onSubmit={handleSubmit}
+          onCancel={handleCancelForm}
+        />
+      )}
+      renderList={() => (
+        <CategoryList
+          items={categories}
+          onEdit={handleEditClick}
+          onDelete={handleDelete}
+        />
+      )}
+    />
   );
 };
 

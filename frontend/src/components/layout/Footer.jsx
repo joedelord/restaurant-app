@@ -23,16 +23,16 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="mt-16 border-t border-white/10 bg-black text-sm text-gray-300">
-      <div className="mx-auto max-w-7xl px-6 py-6">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-16 border-t border-white/10 bg-neutral-800 text-sm text-gray-300">
+      <div className="mx-auto max-w-7xl px-6 py-6 text-center md:text-left">
+        <div className="grid gap-10 text-center md:text-left md:grid-cols-2 lg:grid-cols-4">
           <div>
             <h2 className="mb-4 text-lg font-semibold text-white">
               RestaurantApp
             </h2>
             <p className="mb-4 text-gray-400">{t("footer.description")}</p>
 
-            <div className="flex gap-4">
+            <div className="flex justify-center md:justify-start gap-4">
               <a
                 href="#"
                 className="group rounded-full border border-white/10 p-2 hover:bg-white/10 hover:scale-110 transition"

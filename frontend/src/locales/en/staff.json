@@ -88,6 +88,8 @@
     "empty": "No orders found.",
     "createTitle": "Create new order",
     "createSubtitle": "Create a new customer order linked to a reservation or as a walk-in order.",
+    "emptyActive": "No active orders.",
+    "emptyCompleted": "No completed orders.",
     "fields": {
       "orderId": "Order",
       "table": "Table",
@@ -149,7 +151,9 @@
       "walkIn": "Walk-in order"
     },
     "sections": {
-      "items": "Order items"
+      "items": "Order items",
+      "active": "Active orders ({{count}})",
+      "completed": "Completed orders ({{count}})"
     },
     "loading": {
       "form": "Loading order form data..."

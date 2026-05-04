@@ -20,30 +20,34 @@ import RoleRoute from "./routes/RoleRoute";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
-import Login from "./features/auth/pages/Login";
-import Register from "./features/auth/pages/Register";
+import { Login, Register } from "@/features/auth";
+import { Menu } from "@/features/Menu";
+import { Reservations } from "@/features/reservations";
 
-import Menu from "./features/menu/pages/Menu";
-import Reservations from "./features/reservations/pages/Reservations";
+import {
+  UserDashboard,
+  UserProfile,
+  UserReservations,
+  UserOrders,
+  UserChangePassword,
+} from "@/features/user";
 
-import UserDashboard from "./features/user/pages/UserDashboard";
-import UserProfile from "./features/user/pages/UserProfile";
-import UserReservations from "./features/user/pages/UserReservations";
-import UserOrders from "./features/user/pages/UserOrders";
-import ChangePassword from "./features/user/pages/ChangePassword";
+import {
+  AdminDashboard,
+  AdminCategories,
+  AdminMenuItems,
+  AdminUsers,
+  AdminTables,
+  AdminSales,
+} from "@/features/admin";
 
-import AdminDashboard from "./features/admin/pages/AdminDashboard";
-import AdminCategories from "./features/admin/pages/AdminCategories";
-import AdminMenuItems from "./features/admin/pages/AdminMenuItems";
-import AdminUsers from "./features/admin/pages/AdminUsers";
-import AdminTables from "./features/admin/pages/AdminTables";
-import AdminSales from "./features/admin/pages/AdminSales";
-
-import StaffDashboard from "./features/staff/pages/StaffDashboard";
-import StaffReservations from "./features/staff/pages/StaffReservations";
-import StaffOrders from "./features/staff/pages/StaffOrders";
-import StaffCreateOrder from "./features/staff/pages/StaffCreateOrder";
-import StaffPendingReservations from "./features/staff/pages/StaffPendingReservations";
+import {
+  StaffDashboard,
+  StaffReservations,
+  StaffOrders,
+  StaffCreateOrder,
+  StaffPendingReservations,
+} from "@/features/staff";
 
 const STAFF_ROLES = ["staff", "admin"];
 const ADMIN_ROLES = ["admin"];
@@ -72,7 +76,7 @@ function App() {
         <Route path="/user/profile" element={protectedRoute(<UserProfile />)} />
         <Route
           path="/user/change-password"
-          element={protectedRoute(<ChangePassword />)}
+          element={protectedRoute(<UserChangePassword />)}
         />
         <Route
           path="/user/reservations"

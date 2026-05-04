@@ -4,14 +4,20 @@
  * Public exports for the menu feature.
  *
  * Responsibilities:
- * - Provides a single import entry point for menu components
- * - Re-exports menu-related helper functions
+ * - Exposes menu pages
+ * - Exposes menu components
+ * - Exposes menu utils
  * - Exposes menu services
  */
 
+// Pages
+export { default as Menu } from "./pages/Menu";
+
+// Components
 export { default as MenuItemCard } from "./components/MenuItemCard";
 export { default as MenuSection } from "./components/MenuSection";
 
+// Utils
 export {
   getLocalizedMenuItemName,
   getLocalizedMenuItemDescription,
@@ -21,4 +27,5 @@ export {
   groupMenuItemsByCategory,
 } from "./utils/menuHelpers";
 
+// Services
 export { getMenuItems, getMenuCategories } from "./services/menuService";

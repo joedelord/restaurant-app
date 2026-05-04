@@ -12,8 +12,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AuthSubmitButton from "../../auth/components/AuthSubmitButton";
-import Button from "../../../components/ui/Button";
+import { SubmitButton, Button } from "@/components";
 
 const getFormValues = (initialData) => ({
   email: initialData?.email ?? "",
@@ -108,7 +107,7 @@ const UserForm = ({
   };
 
   return (
-    <div className="mx-auto w-full max-w-xl rounded-md border border-black p-5">
+    <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       <div className="mx-auto max-w-sm">
         <form onSubmit={handleSubmit}>
           {error && (
@@ -257,7 +256,7 @@ const UserForm = ({
           </div>
 
           <div className="flex gap-3">
-            <AuthSubmitButton
+            <SubmitButton
               loading={loading}
               idleText={submitText}
               loadingText={

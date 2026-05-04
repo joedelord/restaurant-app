@@ -4,16 +4,22 @@
  * Public exports for the reservations feature.
  *
  * Responsibilities:
- * - Provides a single import entry point for reservation components
- * - Re-exports reservation services
- * - Re-exports reservation helpers
+ * - Exposes reservations pages
+ * - Exposes reservations components
+ * - Exposes reservations services
+ * - Exposes reservations utils
  */
 
+// Pages
+export { default as Reservations } from "./pages/Reservations";
+
+// Components
 export { default as ReservationForm } from "./components/ReservationForm";
 export { default as ReservationConfirmModal } from "./components/ReservationConfirmModal";
 export { default as TablePicker } from "./components/TablePicker";
 export { default as TimeSlotPicker } from "./components/TimeSlotPicker";
 
+// Services
 export {
   createReservation,
   getReservationAvailability,
@@ -23,6 +29,7 @@ export {
   updateReservationStatus,
 } from "./services/reservationService";
 
+// Utils
 export {
   STORAGE_KEY,
   buildReservationDraft,

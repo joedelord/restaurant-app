@@ -16,12 +16,9 @@
  * - Form and list rendering are delegated to StaffOrderForm and StaffOrderList
  */
 
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/ui/Button";
-import FormMessage from "../../../components/ui/FormMessage";
+import { BackButton, PageLoader, FormMessage } from "@/components/";
 import { useTranslation } from "react-i18next";
-import PageLoader from "../../../components/ui/PageLoader";
 import StaffOrderForm from "../components/StaffOrderForm";
 import StaffOrderList from "../components/StaffOrderList";
 import useStaffOrders from "../hooks/useStaffOrders";
@@ -45,16 +42,7 @@ const StaffOrders = () => {
   return (
     <div className="px-4 py-6">
       <div className="mb-6">
-        <Button
-          type="button"
-          size="sm"
-          variant="secondary"
-          onClick={() => navigate("/staff")}
-          className="inline-flex items-center gap-2"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          {t("staff.navigation.backToDashboard")}
-        </Button>
+        <BackButton />
       </div>
       <h1 className="text-center text-3xl font-bold">
         {t("staff.orders.title")}
@@ -86,12 +74,8 @@ const StaffOrders = () => {
           )}
 
           <div>
-            <h2 className="mb-3 text-center text-lg font-semibold text-heading">
-              {t("staff.orders.listTitle", { count: orders.length })}
-            </h2>
-
             {loading ? (
-              <div className="mx-auto w-full rounded-md border border-black p-5">
+              <div className="mx-auto w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                 <PageLoader />
               </div>
             ) : (
