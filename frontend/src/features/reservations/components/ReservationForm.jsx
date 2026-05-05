@@ -278,7 +278,9 @@ const ReservationForm = () => {
                 min="1"
                 value={partySize}
                 onChange={(e) => {
-                  setPartySize(Number(e.target.value));
+                  const value = e.target.value;
+
+                  setPartySize(value === "" ? "" : Number(value));
                   clearFeedback();
                 }}
                 className="block min-w-0 w-full max-w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
