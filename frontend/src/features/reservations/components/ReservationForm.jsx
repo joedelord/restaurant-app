@@ -253,7 +253,7 @@ const ReservationForm = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div>
+            <div className="min-w-0">
               <label className="mb-2 block text-sm font-medium text-gray-900">
                 {t("reservation.fields.date")}
               </label>
@@ -265,11 +265,11 @@ const ReservationForm = () => {
                   setDate(e.target.value);
                   clearFeedback();
                 }}
-                className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
+                className="block min-w-0 w-full max-w-full appearance-none rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
               />
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label className="mb-2 block text-sm font-medium text-gray-900">
                 {t("reservation.fields.partySize")}
               </label>
@@ -281,7 +281,7 @@ const ReservationForm = () => {
                   setPartySize(Number(e.target.value));
                   clearFeedback();
                 }}
-                className="block w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
+                className="block min-w-0 w-full max-w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
               />
             </div>
           </div>
