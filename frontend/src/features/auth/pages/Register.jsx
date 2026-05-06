@@ -164,7 +164,6 @@ const Register = () => {
     >
       <form onSubmit={handleSubmit} noValidate>
         <FormMessage message={formError} variant="error" />
-
         <AuthField
           id="email"
           label={t("auth.register.email")}
@@ -177,7 +176,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.email}
         />
-
         <AuthField
           id="firstName"
           label={t("auth.register.firstName")}
@@ -189,7 +187,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.firstName}
         />
-
         <AuthField
           id="lastName"
           label={t("auth.register.lastName")}
@@ -201,10 +198,17 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.lastName}
         />
-
         <AuthField
           id="phoneNumber"
-          label={t("auth.register.phone")}
+          label={
+            <>
+              {t("auth.register.phone")}
+
+              <span className="ml-1 text-xs font-normal text-body">
+                ({t("auth.register.optional")})
+              </span>
+            </>
+          }
           type="tel"
           value={formData.phoneNumber}
           onChange={handleChange}
@@ -226,7 +230,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.password}
         />
-
         <PasswordField
           id="confirmPassword"
           label={t("auth.register.confirmPassword")}
@@ -239,7 +242,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.confirmPassword}
         />
-
         <label htmlFor="marketingConsent" className="mb-5 flex items-center">
           <input
             id="marketingConsent"
@@ -253,7 +255,6 @@ const Register = () => {
             {t("auth.register.marketing")}
           </p>
         </label>
-
         <SubmitButton
           loading={loading}
           idleText={t("auth.register.submit")}
