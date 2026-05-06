@@ -76,5 +76,12 @@
   },
   "validation": {
     "selectionRequired": "Please select a date, time, and table."
+  },
+  "success": {
+    "title": "Reservation submitted!",
+    "subtitle": "Your reservation was created successfully and is waiting for staff confirmation.",
+    "cancelInfo": "You can review or cancel your reservation later from your reservations page.",
+    "close": "Close",
+    "myReservations": "My Reservations"
   }
 }
