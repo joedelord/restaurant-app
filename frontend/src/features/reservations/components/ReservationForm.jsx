@@ -15,6 +15,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ReservationSuccessModal from "./ReservationSuccessModal";
 
 import {
   createReservation,
@@ -57,6 +58,9 @@ const ReservationForm = () => {
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [pendingReservation, setPendingReservation] = useState(null);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [createdReservation, setCreatedReservation] = useState(null);
 
   const clearFeedback = () => {
     setMessage("");
@@ -223,7 +227,8 @@ const ReservationForm = () => {
         special_requests: pendingReservation.special_requests,
       });
 
-      setMessage(t("reservation.messages.created"));
+      setCreatedReservation(pendingReservation);
+      setShowSuccessModal(true);
       resetForm();
     } catch (err) {
       console.error(err);
@@ -278,7 +283,9 @@ const ReservationForm = () => {
                 min="1"
                 value={partySize}
                 onChange={(e) => {
-                  setPartySize(Number(e.target.value));
+                  const value = e.target.value;
+
+                  setPartySize(value === "" ? "" : Number(value));
                   clearFeedback();
                 }}
                 className="block min-w-0 w-full max-w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-black focus:outline-none"
@@ -367,6 +374,12 @@ const ReservationForm = () => {
         onClose={() => setShowConfirmModal(false)}
         onConfirm={handleFinalConfirm}
         onLogin={handleLoginRedirect}
+      />
+
+      <ReservationSuccessModal
+        open={showSuccessModal}
+        reservation={createdReservation}
+        onClose={() => setShowSuccessModal(false)}
       />
     </>
   );

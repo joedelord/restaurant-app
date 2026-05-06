@@ -11,6 +11,11 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from ..utils.passwords import validate_password_strength
+from ..utils.phones import validate_phone_number
+from ..utils.names import validate_first_name, validate_last_name
+from ..utils.emails import validate_email_address
+
 User = get_user_model()
 
 
@@ -30,7 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=8)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
@@ -42,6 +47,22 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "phone_number",
             "marketing_consent",
         ]
+
+    def validate_email(self, value):
+        return validate_email_address(value)
+
+    def validate_first_name(self, value):
+        return validate_first_name(value)
+
+    def validate_last_name(self, value):
+        return validate_last_name(value)
+
+    def validate_phone_number(self, value):
+        return validate_phone_number(value)
+
+    def validate_password(self, value):
+        validate_password_strength(value)
+        return value
 
     def create(self, validated_data):
         password = validated_data.pop("password")
@@ -88,6 +109,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["id", "role", "email"]
 
+    def validate_first_name(self, value):
+        return validate_first_name(value)
+
+    def validate_last_name(self, value):
+        return validate_last_name(value)
+
+    def validate_phone_number(self, value):
+        return validate_phone_number(value)
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     current_password = serializers.CharField(write_only=True)
@@ -118,3 +148,7 @@ class ChangePasswordSerializer(serializers.Serializer):
             )
 
         return attrs
+    
+    def validate_new_password(self, value):
+        validate_password_strength(value)
+        return value

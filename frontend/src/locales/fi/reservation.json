@@ -76,5 +76,12 @@
   },
   "validation": {
     "selectionRequired": "Valitse päivä, aika ja pöytä."
+  },
+  "success": {
+    "title": "Varaus lähetetty!",
+    "subtitle": "Varaus on luotu onnistuneesti ja odottaa henkilökunnan vahvistusta.",
+    "cancelInfo": "Voit tarkastella tai perua varauksen myöhemmin omista varauksistasi.",
+    "close": "Sulje",
+    "myReservations": "Omat varaukset"
   }
 }

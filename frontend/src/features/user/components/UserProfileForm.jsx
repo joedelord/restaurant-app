@@ -14,6 +14,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PageLoader, FormMessage, SubmitButton } from "@/components";
+import { AuthField } from "@/features/auth";
 import { getMyProfile, updateMyProfile } from "@/features/user";
 
 const initialFormData = {
@@ -114,8 +115,9 @@ const UserProfileForm = () => {
       <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="mx-auto max-w-sm">
           <form onSubmit={handleSubmit}>
-            <ProfileInput
+            <AuthField
               id="email"
+              name="email"
               type="email"
               label={t("profile.fields.email")}
               value={formData.email}
@@ -123,7 +125,7 @@ const UserProfileForm = () => {
               readOnly
             />
 
-            <ProfileInput
+            <AuthField
               id="first_name"
               name="first_name"
               label={t("profile.fields.firstName")}
@@ -131,7 +133,7 @@ const UserProfileForm = () => {
               onChange={handleChange}
             />
 
-            <ProfileInput
+            <AuthField
               id="last_name"
               name="last_name"
               label={t("profile.fields.lastName")}
@@ -139,12 +141,14 @@ const UserProfileForm = () => {
               onChange={handleChange}
             />
 
-            <ProfileInput
+            <AuthField
               id="phone_number"
               name="phone_number"
+              type="tel"
               label={t("profile.fields.phone")}
               value={formData.phone_number}
               onChange={handleChange}
+              autoComplete="tel"
             />
 
             <div className="mb-5">
@@ -154,6 +158,7 @@ const UserProfileForm = () => {
                   name="marketing_consent"
                   checked={formData.marketing_consent}
                   onChange={handleChange}
+                  className="h-4 w-4 rounded border-default-medium text-brand focus:ring-brand"
                 />
                 {t("profile.fields.marketing")}
               </label>
@@ -168,43 +173,6 @@ const UserProfileForm = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const ProfileInput = ({
-  id,
-  name,
-  type = "text",
-  label,
-  value,
-  onChange,
-  disabled = false,
-  readOnly = false,
-}) => {
-  const inputClassName = disabled
-    ? "block w-full rounded-base border border-default-medium bg-gray-100 px-3 py-2.5 text-sm text-heading shadow-xs"
-    : "block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand";
-
-  return (
-    <div className="mb-5">
-      <label
-        htmlFor={id}
-        className="mb-2.5 block text-sm font-medium text-heading"
-      >
-        {label}
-      </label>
-
-      <input
-        id={id}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        readOnly={readOnly}
-        className={inputClassName}
-      />
-    </div>
   );
 };
 

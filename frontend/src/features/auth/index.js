@@ -18,6 +18,7 @@ export { default as AuthCard } from "./components/AuthCard";
 export { default as AuthField } from "./components/AuthField";
 export { default as AuthSubmitButton } from "../../components/ui/SubmitButton";
 export { default as LogoutButton } from "./components/LogoutButton";
+export { default as PasswordField } from "./components/PasswordField";
 
 export { default as useAuth } from "./hooks/useAuth";
 

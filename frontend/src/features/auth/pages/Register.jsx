@@ -18,8 +18,8 @@ import { useTranslation } from "react-i18next";
 import api from "../../../api";
 import AuthCard from "../components/AuthCard";
 import AuthField from "../components/AuthField";
-import AuthSubmitButton from "../../../components/ui/SubmitButton";
-import FormMessage from "../../../components/ui/FormMessage";
+import { SubmitButton, FormMessage } from "@/components";
+import PasswordField from "../components/PasswordField";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -164,7 +164,6 @@ const Register = () => {
     >
       <form onSubmit={handleSubmit} noValidate>
         <FormMessage message={formError} variant="error" />
-
         <AuthField
           id="email"
           label={t("auth.register.email")}
@@ -177,7 +176,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.email}
         />
-
         <AuthField
           id="firstName"
           label={t("auth.register.firstName")}
@@ -189,7 +187,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.firstName}
         />
-
         <AuthField
           id="lastName"
           label={t("auth.register.lastName")}
@@ -201,10 +198,17 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.lastName}
         />
-
         <AuthField
           id="phoneNumber"
-          label={t("auth.register.phone")}
+          label={
+            <>
+              {t("auth.register.phone")}
+
+              <span className="ml-1 text-xs font-normal text-body">
+                ({t("auth.register.optional")})
+              </span>
+            </>
+          }
           type="tel"
           value={formData.phoneNumber}
           onChange={handleChange}
@@ -214,7 +218,7 @@ const Register = () => {
           error={fieldErrors.phoneNumber}
         />
 
-        <AuthField
+        <PasswordField
           id="password"
           label={t("auth.register.password")}
           type="password"
@@ -226,8 +230,7 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.password}
         />
-
-        <AuthField
+        <PasswordField
           id="confirmPassword"
           label={t("auth.register.confirmPassword")}
           type="password"
@@ -239,7 +242,6 @@ const Register = () => {
           disabled={loading}
           error={fieldErrors.confirmPassword}
         />
-
         <label htmlFor="marketingConsent" className="mb-5 flex items-center">
           <input
             id="marketingConsent"
@@ -253,8 +255,7 @@ const Register = () => {
             {t("auth.register.marketing")}
           </p>
         </label>
-
-        <AuthSubmitButton
+        <SubmitButton
           loading={loading}
           idleText={t("auth.register.submit")}
           loadingText={t("auth.register.submitting")}

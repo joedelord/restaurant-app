@@ -30,7 +30,7 @@ const AuthCard = ({
           {(footerText || footerLinkText) && (
             <p className="mt-4 text-sm text-body">
               {footerText}{" "}
-              <Link to={footerLinkTo} className="underline">
+              <Link to={footerLinkTo} className="underline!">
                 {footerLinkText}
               </Link>
             </p>

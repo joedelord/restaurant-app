@@ -5,6 +5,7 @@
     "reservations": {
       "title": "Reservations",
       "description": "View all reservations and update their status.",
+      "viewAll": "View reservations",
       "view": "View pending reservations",
       "manage": "Manage reservations"
     },

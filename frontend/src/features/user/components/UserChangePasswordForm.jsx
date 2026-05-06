@@ -13,9 +13,9 @@
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AuthSubmitButton } from "@/features/auth";
-import { FormMessage } from "@/components";
+import { SubmitButton, FormMessage } from "@/components";
 import { changeMyPassword } from "@/features/user";
+import { PasswordField } from "@/features/auth";
 
 const initialFormData = {
   current_password: "",
@@ -93,34 +93,46 @@ const UserChangePasswordForm = () => {
       <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="mx-auto max-w-sm">
           <form onSubmit={handleSubmit}>
-            <PasswordInput
+            <input
+              type="text"
+              name="username"
+              autoComplete="username"
+              value=""
+              readOnly
+              hidden
+            />
+
+            <PasswordField
               id="current_password"
               name="current_password"
               label={t("user.password.fields.currentPassword")}
               value={formData.current_password}
+              autoComplete="current-password"
               onChange={handleChange}
               disabled={saving}
             />
 
-            <PasswordInput
+            <PasswordField
               id="new_password"
               name="new_password"
               label={t("user.password.fields.newPassword")}
               value={formData.new_password}
+              autoComplete="new-password"
               onChange={handleChange}
               disabled={saving}
             />
 
-            <PasswordInput
+            <PasswordField
               id="confirm_password"
               name="confirm_password"
               label={t("user.password.fields.confirmPassword")}
+              autoComplete="new-password"
               value={formData.confirm_password}
               onChange={handleChange}
               disabled={saving}
             />
 
-            <AuthSubmitButton
+            <SubmitButton
               loading={saving}
               idleText={t("user.password.buttons.save")}
               loadingText={t("user.password.buttons.saving")}
@@ -129,29 +141,6 @@ const UserChangePasswordForm = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const PasswordInput = ({ id, name, label, value, onChange, disabled }) => {
-  return (
-    <div className="mb-5">
-      <label
-        htmlFor={id}
-        className="mb-2.5 block text-sm font-medium text-heading"
-      >
-        {label}
-      </label>
-
-      <input
-        id={id}
-        type="password"
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand disabled:opacity-50"
-      />
-    </div>
   );
 };
 
