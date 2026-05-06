@@ -12,7 +12,8 @@
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SubmitButton, Button } from "@/components";
+import { SubmitButton, Button, FormMessage } from "@/components";
+import { AuthField, PasswordField } from "@/features/auth";
 
 const getFormValues = (initialData) => ({
   email: initialData?.email ?? "",
@@ -49,6 +50,8 @@ const UserForm = ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -72,6 +75,11 @@ const UserForm = ({
       return;
     }
 
+    if (!initialData && !formData.password.trim()) {
+      setError(t("admin.users.validation.passwordRequired"));
+      return;
+    }
+
     const payload = {
       email: formData.email.trim(),
       first_name: formData.first_name.trim(),
@@ -81,11 +89,6 @@ const UserForm = ({
       marketing_consent: formData.marketing_consent,
       is_active: formData.is_active,
     };
-
-    if (!initialData && !formData.password.trim()) {
-      setError(t("admin.users.validation.passwordRequired"));
-      return;
-    }
 
     if (!initialData) {
       payload.password = formData.password.trim();
@@ -110,102 +113,64 @@ const UserForm = ({
     <div className="mx-auto w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       <div className="mx-auto max-w-sm">
         <form onSubmit={handleSubmit}>
-          {error && (
-            <div className="mb-5 rounded-base border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
-          )}
+          <FormMessage message={error} variant="error" />
 
-          <div className="mb-5">
-            <label
-              htmlFor="email"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("admin.users.fields.email")}
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-            />
-          </div>
+          <AuthField
+            id="email"
+            name="email"
+            type="email"
+            label={t("admin.users.fields.email")}
+            value={formData.email}
+            onChange={handleChange}
+            autoComplete="email"
+            disabled={loading}
+            required
+          />
 
-          <div className="mb-5">
-            <label
-              htmlFor="first_name"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("admin.users.fields.firstName")}
-            </label>
-            <input
-              id="first_name"
-              type="text"
-              name="first_name"
-              value={formData.first_name}
-              onChange={handleChange}
-              disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-            />
-          </div>
+          <AuthField
+            id="first_name"
+            name="first_name"
+            label={t("admin.users.fields.firstName")}
+            value={formData.first_name}
+            onChange={handleChange}
+            autoComplete="given-name"
+            disabled={loading}
+            required
+          />
 
-          <div className="mb-5">
-            <label
-              htmlFor="last_name"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("admin.users.fields.lastName")}
-            </label>
-            <input
-              id="last_name"
-              type="text"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleChange}
-              disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-            />
-          </div>
+          <AuthField
+            id="last_name"
+            name="last_name"
+            label={t("admin.users.fields.lastName")}
+            value={formData.last_name}
+            onChange={handleChange}
+            autoComplete="family-name"
+            disabled={loading}
+            required
+          />
 
-          <div className="mb-5">
-            <label
-              htmlFor="phone_number"
-              className="mb-2.5 block text-sm font-medium text-heading"
-            >
-              {t("admin.users.fields.phone")}
-            </label>
-            <input
-              id="phone_number"
-              type="text"
-              name="phone_number"
-              value={formData.phone_number}
-              onChange={handleChange}
-              disabled={loading}
-              className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-            />
-          </div>
+          <AuthField
+            id="phone_number"
+            name="phone_number"
+            type="tel"
+            label={t("admin.users.fields.phone")}
+            value={formData.phone_number}
+            onChange={handleChange}
+            autoComplete="tel"
+            disabled={loading}
+          />
 
           {!initialData && (
-            <div className="mb-5">
-              <label
-                htmlFor="password"
-                className="mb-2.5 block text-sm font-medium text-heading"
-              >
-                {t("admin.users.fields.password")}
-              </label>
-              <input
-                id="password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                disabled={loading}
-                className="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand disabled:opacity-50"
-              />
-            </div>
+            <PasswordField
+              id="password"
+              name="password"
+              label={t("admin.users.fields.password")}
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="new-password"
+              disabled={loading}
+              required
+            />
           )}
 
           <div className="mb-5">
@@ -215,6 +180,7 @@ const UserForm = ({
             >
               {t("admin.users.fields.role")}
             </label>
+
             <select
               id="role"
               name="role"
@@ -239,6 +205,7 @@ const UserForm = ({
                 checked={formData.marketing_consent}
                 onChange={handleChange}
                 disabled={loading}
+                className="h-4 w-4 rounded border-default-medium text-brand focus:ring-brand disabled:opacity-50"
               />
               {t("admin.users.fields.marketing")}
             </label>
@@ -250,6 +217,7 @@ const UserForm = ({
                 checked={formData.is_active}
                 onChange={handleChange}
                 disabled={loading}
+                className="h-4 w-4 rounded border-default-medium text-brand focus:ring-brand disabled:opacity-50"
               />
               {t("admin.users.fields.active")}
             </label>
