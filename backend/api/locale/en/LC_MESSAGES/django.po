@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2026-04-23 12:54+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-06 12:40+0300\n"
 "PO-Revision-Date: 2026-04-23 12:54+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -109,21 +110,33 @@ msgstr "This table is not available at the selected time."
 msgid "Authentication required."
 msgstr "Authentication required."
 
-#: .\api\serializers\user.py:66
+#: .\api\serializers\user.py:72
 msgid "Invalid email or password."
 msgstr "Invalid email or password."
 
-#: .\api\serializers\user.py:101
+#: .\api\serializers\user.py:107
 msgid "Current password is incorrect."
 msgstr "Current password is incorrect."
 
-#: .\api\serializers\user.py:108
+#: .\api\serializers\user.py:114
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
 
-#: .\api\serializers\user.py:115
+#: .\api\serializers\user.py:121
 msgid "New password must be different from the current password."
 msgstr "New password must be different from the current password."
+
+#: .\api\utils\passwords.py:26
+msgid "Password must contain at least 8 characters."
+msgstr "Password must contain at least 8 characters."
+
+#: .\api\utils\passwords.py:31
+msgid "Password must contain at least one uppercase letter."
+msgstr "Password must contain at least one uppercase letter."
+
+#: .\api\utils\passwords.py:36
+msgid "Password must contain at least one number."
+msgstr "Password must contain at least one number."
 
 #: .\api\views\auth.py:46
 msgid "Refresh token is required."

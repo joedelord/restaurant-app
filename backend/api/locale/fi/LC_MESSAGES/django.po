@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2026-04-23 12:54+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-06 12:40+0300\n"
 "PO-Revision-Date: 2026-04-23 12:54+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -43,7 +44,9 @@ msgstr "Tilauksen on sisällettävä vähintään yksi tuote."
 
 #: .\api\serializers\order.py:122 .\api\serializers\order.py:255
 msgid "Duplicate menu items are not allowed. Combine quantities into one row."
-msgstr "Samoja ruoka-annoksia ei saa olla usealla rivillä. Yhdistä määrät samalle riville."
+msgstr ""
+"Samoja ruoka-annoksia ei saa olla usealla rivillä. Yhdistä määrät samalle "
+"riville."
 
 #: .\api\serializers\order.py:135 .\api\serializers\reservation.py:95
 msgid "Table is required."
@@ -109,21 +112,33 @@ msgstr "Tämä pöytä ei ole saatavilla valittuna ajankohtana."
 msgid "Authentication required."
 msgstr "Tunnistautuminen vaaditaan."
 
-#: .\api\serializers\user.py:66
+#: .\api\serializers\user.py:72
 msgid "Invalid email or password."
 msgstr "Virheellinen sähköposti tai salasana."
 
-#: .\api\serializers\user.py:101
+#: .\api\serializers\user.py:107
 msgid "Current password is incorrect."
 msgstr "Nykyinen salasana on virheellinen."
 
-#: .\api\serializers\user.py:108
+#: .\api\serializers\user.py:114
 msgid "Passwords do not match."
 msgstr "Salasanat eivät täsmää."
 
-#: .\api\serializers\user.py:115
+#: .\api\serializers\user.py:121
 msgid "New password must be different from the current password."
 msgstr "Uuden salasanan täytyy olla eri kuin nykyinen salasana."
+
+#: .\api\utils\passwords.py:26
+msgid "Password must contain at least 8 characters."
+msgstr "Salasanan täytyy sisältää vähintään 8 merkkiä."
+
+#: .\api\utils\passwords.py:31
+msgid "Password must contain at least one uppercase letter."
+msgstr "Salasanan täytyy sisältää vähintään yksi iso kirjain."
+
+#: .\api\utils\passwords.py:36
+msgid "Password must contain at least one number."
+msgstr "Salasanan täytyy sisältää vähintään yksi numero."
 
 #: .\api\views\auth.py:46
 msgid "Refresh token is required."
