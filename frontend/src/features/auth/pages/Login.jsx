@@ -18,8 +18,8 @@ import { useTranslation } from "react-i18next";
 import useAuth from "../hooks/useAuth";
 import AuthCard from "../components/AuthCard";
 import AuthField from "../components/AuthField";
-import AuthSubmitButton from "../../../components/ui/SubmitButton";
-import FormMessage from "../../../components/ui/FormMessage";
+import { SubmitButton, FormMessage } from "@/components";
+import PasswordField from "../components/PasswordField";
 
 const getDashboardByRole = (role) => {
   switch (role) {
@@ -173,20 +173,19 @@ const Login = () => {
           error={fieldErrors.email}
         />
 
-        <AuthField
+        <PasswordField
           id="password"
           label={t("auth.login.passwordLabel")}
-          type="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder=""
+          placeholder={t("auth.login.passwordLabel")}
           autoComplete="current-password"
           required
           disabled={loading}
           error={fieldErrors.password}
         />
 
-        <AuthSubmitButton
+        <SubmitButton
           loading={loading}
           idleText={t("auth.login.submit")}
           loadingText={t("auth.login.submitting")}

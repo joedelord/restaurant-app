@@ -18,8 +18,8 @@ import { useTranslation } from "react-i18next";
 import api from "../../../api";
 import AuthCard from "../components/AuthCard";
 import AuthField from "../components/AuthField";
-import AuthSubmitButton from "../../../components/ui/SubmitButton";
-import FormMessage from "../../../components/ui/FormMessage";
+import { SubmitButton, FormMessage } from "@/components";
+import PasswordField from "../components/PasswordField";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -214,7 +214,7 @@ const Register = () => {
           error={fieldErrors.phoneNumber}
         />
 
-        <AuthField
+        <PasswordField
           id="password"
           label={t("auth.register.password")}
           type="password"
@@ -227,7 +227,7 @@ const Register = () => {
           error={fieldErrors.password}
         />
 
-        <AuthField
+        <PasswordField
           id="confirmPassword"
           label={t("auth.register.confirmPassword")}
           type="password"
@@ -254,7 +254,7 @@ const Register = () => {
           </p>
         </label>
 
-        <AuthSubmitButton
+        <SubmitButton
           loading={loading}
           idleText={t("auth.register.submit")}
           loadingText={t("auth.register.submitting")}
