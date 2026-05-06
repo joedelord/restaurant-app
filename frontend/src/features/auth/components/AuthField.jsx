@@ -1,17 +1,18 @@
 /**
  * AuthField
  *
- * Reusable input field for authentication forms.
+ * Reusable form input field.
  *
  * Responsibilities:
  * - Renders a labeled input field
  * - Supports validation error messages
  * - Adds accessibility attributes for invalid fields
- * - Handles disabled and required states
+ * - Handles disabled, readonly and required states
  */
 
 const AuthField = ({
   id,
+  name,
   label,
   type = "text",
   value,
@@ -20,6 +21,7 @@ const AuthField = ({
   autoComplete,
   required = false,
   disabled = false,
+  readOnly = false,
   error = "",
 }) => {
   const hasError = Boolean(error);
@@ -36,18 +38,22 @@ const AuthField = ({
       <input
         type={type}
         id={id}
+        name={name || id}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         autoComplete={autoComplete}
         required={required}
         disabled={disabled}
+        readOnly={readOnly}
         aria-invalid={hasError}
         aria-describedby={hasError ? `${id}-error` : undefined}
         className={`block w-full rounded-base border px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body disabled:opacity-50 ${
           hasError
             ? "border-red-400 bg-red-50/30 focus:border-red-500 focus:ring-red-500"
-            : "border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand"
+            : disabled || readOnly
+              ? "border-default-medium bg-gray-100"
+              : "border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand"
         }`}
       />
 
