@@ -12,6 +12,9 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from ..utils.passwords import validate_password_strength
+from ..utils.phones import validate_phone_number
+from ..utils.names import validate_first_name, validate_last_name
+from ..utils.emails import validate_email_address
 
 User = get_user_model()
 
@@ -44,6 +47,18 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "phone_number",
             "marketing_consent",
         ]
+
+    def validate_email(self, value):
+        return validate_email_address(value)
+
+    def validate_first_name(self, value):
+        return validate_first_name(value)
+
+    def validate_last_name(self, value):
+        return validate_last_name(value)
+
+    def validate_phone_number(self, value):
+        return validate_phone_number(value)
 
     def validate_password(self, value):
         validate_password_strength(value)
@@ -93,6 +108,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "role",
         ]
         read_only_fields = ["id", "role", "email"]
+
+    def validate_first_name(self, value):
+        return validate_first_name(value)
+
+    def validate_last_name(self, value):
+        return validate_last_name(value)
+
+    def validate_phone_number(self, value):
+        return validate_phone_number(value)
 
 
 class ChangePasswordSerializer(serializers.Serializer):

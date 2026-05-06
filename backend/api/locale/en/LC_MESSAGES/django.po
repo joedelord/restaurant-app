@@ -177,3 +177,11 @@ msgstr "Invalid date format."
 #: .\api\views\users.py:43
 msgid "Password changed successfully."
 msgstr "Password changed successfully."
+
+#: .\api\utils\phones.py:24
+msgid "Phone number can only contain numbers, spaces, +, -, ( and )."
+msgstr "Phone number can only contain numbers, spaces, +, -, ( and )."
+
+#: .\api\utils\phones.py:31
+msgid "Phone number must contain 7-15 digits."
+msgstr "Phone number must contain 7-15 digits."
