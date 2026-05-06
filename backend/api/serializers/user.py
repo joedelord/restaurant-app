@@ -11,6 +11,8 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from ..utils.passwords import validate_password_strength
+
 User = get_user_model()
 
 
@@ -30,7 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=8)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
@@ -42,6 +44,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "phone_number",
             "marketing_consent",
         ]
+
+    def validate_password(self, value):
+        validate_password_strength(value)
+        return value
 
     def create(self, validated_data):
         password = validated_data.pop("password")
@@ -118,3 +124,7 @@ class ChangePasswordSerializer(serializers.Serializer):
             )
 
         return attrs
+    
+    def validate_new_password(self, value):
+        validate_password_strength(value)
+        return value
